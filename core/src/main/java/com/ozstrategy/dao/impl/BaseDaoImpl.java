@@ -6,6 +6,7 @@ import com.ozstrategy.jdbc.QueryField;
 import com.ozstrategy.jdbc.QuerySearch;
 import com.ozstrategy.jdbc.SqlBuilder;
 import com.ozstrategy.model.BaseEntity;
+import com.ozstrategy.model.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.ArgumentPreparedStatementSetter;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -56,30 +57,24 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
         return (List<T>) jdbcTemplate.query(sql, args, BeanPropertyRowMapper.newInstance(this.clazz));
     }
 
-    public List<T> findByNamedQuery(String queryName) {
-        return findByNamedQuery(queryName,new HashMap<String, Object>());
+    public <D> List<D> findByNamedQuery(String queryName,Class<D> dClass) {
+        return findByNamedQuery(queryName,dClass,new HashMap<String, Object>());
     }
 
-    public List<T> findByNamedQuery(String queryName, Map<String, Object> params) {
-        return findByNamedQueryPage(queryName,params,0,Integer.MAX_VALUE);
+    public <D> List<D> findByNamedQuery(String queryName,Class<D> dClass, Map<String, Object> params) {
+        return findByNamedQueryPage(queryName,dClass,params,0,Integer.MAX_VALUE);
     }
 
-    public List<T> findByNamedQueryPage(String queryName, Map<String, Object> params, Integer start, Integer limit) {
+    public <D> List<D> findByNamedQueryPage(String queryName,Class<D> dClass, Map<String, Object> params, Integer start, Integer limit) {
         String sql=EntityBuilder.nameQueries(this.clazz,queryName);
-        Object[] args = EntityBuilder.nameQueriesArgs(sql, params);
-        return (List<T>) jdbcTemplate.query(sql, args, BeanPropertyRowMapper.newInstance(this.clazz));
+        Object[] args = EntityBuilder.nameQueriesArgs(this.clazz,queryName, params);
+        return (List<D>) jdbcTemplate.query(sql, args, BeanPropertyRowMapper.newInstance(dClass));
     }
 
-    public T findByNamedQueryBean(String queryName, Map<String, Object> params) {
+    public <D> D findByNamedQueryBean(String queryName,Class<D> dClass, Map<String, Object> params) {
         String sql=EntityBuilder.nameQueries(this.clazz,queryName);
-        Object[] args = EntityBuilder.nameQueriesArgs(sql,params);
-        return (T) jdbcTemplate.queryForObject(sql, args, BeanPropertyRowMapper.newInstance(this.clazz));
-    }
-
-    public Integer findByNamedQueryCount(String queryName, Map<String, Object> params) {
-        String sql=EntityBuilder.nameQueries(this.clazz,queryName);
-        Object[] args = EntityBuilder.nameQueriesArgs(sql,params);
-        return jdbcTemplate.queryForObject(sql, Integer.class, args);
+        Object[] args = EntityBuilder.nameQueriesArgs(this.clazz,queryName,params);
+        return (D) jdbcTemplate.queryForObject(sql, args, BeanPropertyRowMapper.newInstance(dClass));
     }
 
     public Integer listPageCount(Map<String, Object> params) {
@@ -129,6 +124,14 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
         sql=querySearch.sql();
         Object[] args=querySearch.getArgs();
         return (T) jdbcTemplate.queryForObject(sql, args, BeanPropertyRowMapper.newInstance(this.clazz));
+    }
+
+    public T getByParam(Map<String, Object> map) {
+        List<T> list=listAll(map);
+        if(list!=null && list.size()>0){
+            return list.get(0);
+        }
+        return null;
     }
 
     public void deleteById(Serializable id) {

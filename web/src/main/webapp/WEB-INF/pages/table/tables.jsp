@@ -53,7 +53,7 @@
 
 </head>
 <body class="navbar-fixed">
-<%@ include file="../header.jsp"%>
+<%@ include file="../admin/header.jsp"%>
 <div class="main-container" id="main-container">
     <script type="text/javascript">
         try{ace.settings.check('main-container' , 'fixed')}catch(e){}
@@ -64,7 +64,7 @@
             <span class="menu-text"></span>
         </a>
 
-        <%@include file="../menu.jsp"%>
+        <%@include file="../admin/menu.jsp"%>
 
         <div class="main-content">
             <div class="breadcrumbs" id="breadcrumbs">

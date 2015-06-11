@@ -39,14 +39,14 @@
 
 </head>
 <body class="navbar-fixed">
-<%@ include file="header.jsp"%>
+<%@ include file="admin/header.jsp"%>
 <div class="main-container" id="main-container">
 
     <div class="main-container-inner">
         <a class="menu-toggler" id="menu-toggler" href="#">
             <span class="menu-text"></span>
         </a>
-        <%@ include file="menu.jsp"%>
+        <%@ include file="admin/menu.jsp"%>
 
         <div class="main-content">
             <div class="breadcrumbs" id="breadcrumbs">

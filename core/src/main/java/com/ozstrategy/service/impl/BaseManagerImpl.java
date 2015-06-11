@@ -12,11 +12,6 @@ import java.util.Map;
  * Created by lihao1 on 6/8/15.
  */
 public abstract class BaseManagerImpl<T> implements BaseManager<T> {
-//    protected BaseDao<T> baseDao;
-//
-//    public BaseManagerImpl(BaseDao<T> baseDao) {
-//        this.baseDao=baseDao;
-//    }
     public abstract BaseDao<T> baseDao();
 
     public List<T> list(Map<String, Object> map, Integer start, Integer limit) {
@@ -39,6 +34,10 @@ public abstract class BaseManagerImpl<T> implements BaseManager<T> {
         return baseDao().get(id);
     }
 
+    public T getByParam(Map<String, Object> map) {
+        return baseDao().getByParam(map);
+    }
+
     public T save(T obj) {
         return baseDao().save(obj);
     }
@@ -58,23 +57,39 @@ public abstract class BaseManagerImpl<T> implements BaseManager<T> {
 
     }
 
-    public List<T> findByNamedQuery(String queryName) {
-        return baseDao().findByNamedQuery(queryName);
+    public void batchSave(List<T> list) {
+        for(T obj:list){
+            baseDao().save(obj);
+        }
     }
 
-    public List<T> findByNamedQuery(String queryName, Map<String, Object> map) {
-        return baseDao().findByNamedQuery(queryName,map);
+    public void batchUpdate(List<T> list) {
+        for(T obj:list){
+            baseDao().update(obj);
+        }
     }
 
-    public List<T> findByNamedQueryPage(String queryName, Map<String, Object> map, Integer start, Integer limit) {
-        return baseDao().findByNamedQueryPage(queryName, map, start, limit);
+    public void batchDelete(List<T> list) {
+        for(T obj:list){
+            baseDao().delete(obj);
+        }
     }
 
-    public T findByNamedQueryBean(String queryName, Map<String, Object> map) {
-        return baseDao().findByNamedQueryBean(queryName, map);
+    public <D> List<D> findByNamedQuery(String queryName, Class<D> dClass) {
+        return baseDao().findByNamedQuery(queryName, dClass);
     }
 
-    public Integer findByNamedQueryCount(String queryName, Map<String, Object> map) {
-        return baseDao().findByNamedQueryCount(queryName, map);
+    public <D> List<D> findByNamedQuery(String queryName, Class<D> dClass, Map<String, Object> map) {
+        return baseDao().findByNamedQuery(queryName, dClass,map);
     }
+
+    public <D> List<D> findByNamedQueryPage(String queryName, Class<D> dClass, Map<String, Object> map, Integer start, Integer limit) {
+        return baseDao().findByNamedQueryPage(queryName, dClass, map, start, limit);
+    }
+
+    public <D> D findByNamedQueryBean(String queryName, Class<D> dClass, Map<String, Object> map) {
+        return baseDao().findByNamedQueryBean(queryName, dClass, map);
+    }
+
+
 }

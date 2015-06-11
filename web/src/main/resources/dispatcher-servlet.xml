@@ -27,4 +27,6 @@
     </bean>
     <mvc:resources mapping="/resources/**" location="/resources/"/>
     <mvc:view-controller path="/" view-name="home"/>
+
+
 </beans>

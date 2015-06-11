@@ -47,8 +47,8 @@ public class EntityBuilder {
     public static String nameQueries(Class cl,String queryName){
         return new Builder().nameQueries(cl, queryName);
     }
-    public static Object[] nameQueriesArgs(String sql,Map<String,Object> map){
-        return new Builder().nameQueriesArgs(sql, map);
+    public static Object[] nameQueriesArgs(Class cl,String queryName,Map<String,Object> params){
+        return new Builder().nameQueriesArgs(cl, queryName, params);
     }
     static public void writeIdField(Object obj,Long id){
         new Builder().writeIdField(obj,id);
@@ -194,12 +194,14 @@ public class EntityBuilder {
             }
             return null;
         }
-        public Object[] nameQueriesArgs(String sql,Map<String,Object> map){
-            List<String> params=ParserHelper.parseQueryName(sql);
+        public Object[] nameQueriesArgs(Class cl,String queryName,Map<String,Object> params){
+            Map<String,String> map=nameQueries.get(cl.getName());
+            String sql=map.get(queryName);
+            List<String> paramList=ParserHelper.parseQueryName(sql);
             List<Object> list=new ArrayList<Object>();
-            if(params!=null && params.size()>0){
-                for(String param:params){
-                    list.add(map.get(param));
+            if(paramList!=null && paramList.size()>0){
+                for(String param:paramList){
+                    list.add(params.get(param));
                 }
             }
             return list.toArray();

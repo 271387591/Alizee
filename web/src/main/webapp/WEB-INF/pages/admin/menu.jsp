@@ -8,12 +8,11 @@
 <%@ page language="java" pageEncoding="UTF-8" contentType="text/html;charset=utf-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <div class="sidebar sidebar-fixed" id="sidebar">
-
     <ul class="nav nav-list">
         <li class="active" id="menu-home">
             <a href="<c:url value="home"/>">
                 <i class="icon-dashboard"></i>
-                <span class="menu-text"> 主页 </span>
+                <span class="menu-text"> 系统设置 </span>
             </a>
         </li>
 
@@ -122,10 +121,13 @@
 
     <script type="text/javascript">
         try{ace.settings.check('sidebar' , 'collapsed')}catch(e){}
-        $('ul > li[id^=menu-]').each(function(){
-            if($(this).hasClass('active')){
-                $(this).removeClass('active')
-            }
-        });
+        var changeNav=function(id){
+            $('ul > li[id!='+id+']').each(function(){
+                if($(this).hasClass('active')){
+                    $(this).removeClass('active')
+                }
+            });
+            $('#'+id).addClass('active');
+        }
     </script>
 </div>

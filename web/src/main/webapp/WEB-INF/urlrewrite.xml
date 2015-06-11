@@ -4,37 +4,7 @@
 
 <urlrewrite default-match-type="wildcard">
     <rule>
-        <from>/images/**</from>
-        <to>/images/$1</to>
+        <from>/login</from>
+        <to>/login.jsp</to>
     </rule>
-    <rule>
-        <from>/scripts/**</from>
-        <to>/scripts/$1</to>
-    </rule>
-    <rule>
-        <from>/demo/**</from>
-        <to>/demo/$1</to>
-    </rule>
-    <rule>
-        <from>/jscripts/**</from>
-        <to>/jscripts/$1</to>
-    </rule>
-    <rule>
-        <from>/html/**</from>
-        <to>/html/$1</to>
-    </rule>
-    <rule>
-        <from>/</from>
-        <to type="redirect" last="true">desktop</to>
-    </rule>
-
-    <rule>
-        <from>/**</from>
-        <to type="forward">/html/$1</to>
-    </rule>
-    <outbound-rule encodefirst="true" match-type="regex">
-        <name>Strip URL Session ID's</name>
-        <from>^(.*?)(?:\;jsessionid=[^\?#]*)?(\?[^#]*)?(#.*)?$</from>
-        <to>$1$2$3</to>
-    </outbound-rule>
 </urlrewrite>

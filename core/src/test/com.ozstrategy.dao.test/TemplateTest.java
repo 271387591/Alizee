@@ -1,7 +1,9 @@
 package com.ozstrategy.dao.test;
 
+import com.ozstrategy.model.system.ApplicationConfig;
 import com.ozstrategy.model.user.Role;
 import com.ozstrategy.model.user.User;
+import com.ozstrategy.model.user.ValidateCode;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -22,12 +24,12 @@ public class TemplateTest {
     public static String webRootPath=System.getProperty("user.dir")+"/web/src/main/java/";
     public static List<Class> list=new ArrayList<Class>();
     static {
-        list.add(User.class);
-        list.add(Role.class);
+        list.add(ApplicationConfig.class);
+//        list.add(Role.class);
     }
     public static void main(String[] args){
-//        daoTemp();
-//        managerTemp();
+        daoTemp();
+        managerTemp();
         commandTemp();
         controllerTemp();
 

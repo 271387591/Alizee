@@ -1,9 +1,15 @@
 package com.ozstrategy.dao.test;
 
+import com.ozstrategy.dao.user.RoleDao;
+import com.ozstrategy.dao.user.UserDao;
 import com.ozstrategy.model.user.Role;
 import com.ozstrategy.model.user.User;
+import com.ozstrategy.service.user.RoleManager;
+import com.ozstrategy.service.user.UserManager;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.annotation.Rollback;
 
 import java.util.HashMap;
@@ -14,24 +20,40 @@ import java.util.Map;
  * Created by lihao1 on 6/7/15.
  */
 public class UserDaoTest extends BaseManagerTestCase {
-//    @Autowired
-//    private UserDao userDao;
-//    @Autowired
-//    private RoleDao roleDao;
-//    @Autowired
-//    private RoleManager roleManager;
-//
-//
-//    @Test
-//    @Rollback(value = false)
-//    public void testGet(){
-//        Role role = roleManager.get(1L);
-//        System.out.println("ddd");
-//        System.out.println("ddd");
-//        System.out.println("ddd");
-//        System.out.println("ddd");
-//        System.out.println("ddd");
-//    }
+    @Autowired
+    private UserDao userDao;
+    @Autowired
+    private RoleDao roleDao;
+    @Autowired
+    private RoleManager roleManager;
+    @Autowired
+    private UserManager userManager;
+    @Autowired
+    private Md5PasswordEncoder passwordEncoder;
+
+
+
+
+    @Test
+    public void testPasswordEncoder(){
+        String pwd="tomcat";
+        String encode = passwordEncoder.encodePassword(pwd, null);
+
+
+        System.out.println("ddd===="+encode);
+    }
+
+    @Test
+    public void testGet(){
+        UserDetails user=userManager.loadUserByUsername("admin");
+        Role role = roleManager.get(1L);
+        System.out.println("ddd");
+        System.out.println("ddd");
+        System.out.println("ddd");
+        System.out.println("ddd");
+        System.out.println("ddd");
+    }
+
 //    @Test
 //    @Rollback(value = false)
 //    public void testInsert(){

@@ -25,21 +25,13 @@ public class SimpleMVController implements InitializingBean {
 
     public void afterPropertiesSet() throws Exception {
     }
-    @RequestMapping("/home")
-    public ModelAndView index(HttpServletRequest request, HttpServletResponse response) {
 
-        return new ModelAndView("home");
-    }
-    @RequestMapping("/table")
-    public ModelAndView tables(HttpServletRequest request, HttpServletResponse response) {
 
-        return new ModelAndView("table/tables");
-    }
 
     @RequestMapping("/desktopRes.js")
     public ModelAndView getGlobalRes(HttpServletRequest request, HttpServletResponse response) {
 
-        UserCommand userCommand=null;
+        UserCommand userCommand=new UserCommand();
 
         return new ModelAndView("res/desktopRes", "command", userCommand);
     }
