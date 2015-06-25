@@ -9,111 +9,73 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <div class="sidebar sidebar-fixed" id="sidebar">
     <ul class="nav nav-list">
+
         <li class="active" id="menu-home">
-            <a href="<c:url value="home"/>">
+            <a href="<c:url value="/html/security/about"/>">
                 <i class="icon-dashboard"></i>
-                <span class="menu-text"> 系统设置 </span>
+                <span class="menu-text"> 关于我们 </span>
             </a>
         </li>
 
-        <li id="menu-table">
-            <a href="<c:url value="table"/> ">
-                <i class="icon-text-width"></i>
-                <span class="menu-text"> 表格 </span>
-            </a>
-        </li>
 
-        <li id="menu-ui">
+
+        <li>
             <a href="#" class="dropdown-toggle">
-                <i class="icon-desktop"></i>
-                <span class="menu-text"> UI 组件 </span>
+                <i class="icon-user"></i>
+                <span class="menu-text">用户模块</span>
 
                 <b class="arrow icon-angle-down"></b>
             </a>
 
             <ul class="submenu">
-                <li>
-                    <a href="elements.html">
+                <li id="menu-user">
+                    <a href="<c:url value="/html/security/user"/> ">
                         <i class="icon-double-angle-right"></i>
-                        组件
+                        用户管理
                     </a>
                 </li>
 
                 <li>
                     <a href="buttons.html">
                         <i class="icon-double-angle-right"></i>
-                        按钮 &amp; 图表
+                        角色管理
                     </a>
                 </li>
+            </ul>
+        </li>
+        <li id="menu-ui">
+            <a href="#" class="dropdown-toggle">
+                <i class="icon-desktop"></i>
+                <span class="menu-text">系统设置</span>
 
-                <li>
-                    <a href="treeview.html">
+                <b class="arrow icon-angle-down"></b>
+            </a>
+
+            <ul class="submenu">
+                <li id="menu-advert">
+                    <a href="<c:url value="/html/security/advert"/>">
                         <i class="icon-double-angle-right"></i>
-                        树菜单
+                        广告管理
                     </a>
                 </li>
-
-                <li>
-                    <a href="jquery-ui.html">
+                <li id="menu-food">
+                    <a href="<c:url value="/html/security/food"/>">
                         <i class="icon-double-angle-right"></i>
-                        jQuery UI
+                        美食故事
                     </a>
                 </li>
 
-                <li>
-                    <a href="nestable-list.html">
-                        <i class="icon-double-angle-right"></i>
-                        可拖拽列表
-                    </a>
-                </li>
 
-                <li>
-                    <a href="#" class="dropdown-toggle">
-                        <i class="icon-double-angle-right"></i>
-
-                        三级菜单
-                        <b class="arrow icon-angle-down"></b>
-                    </a>
-
-                    <ul class="submenu">
-                        <li>
-                            <a href="#">
-                                <i class="icon-leaf"></i>
-                                第一级
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#" class="dropdown-toggle">
-                                <i class="icon-pencil"></i>
-
-                                第四级
-                                <b class="arrow icon-angle-down"></b>
-                            </a>
-
-                            <ul class="submenu">
-                                <li>
-                                    <a href="#">
-                                        <i class="icon-plus"></i>
-                                        添加产品
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="#">
-                                        <i class="icon-eye-open"></i>
-                                        查看商品
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
             </ul>
         </li>
 
 
-    </ul><!-- /.nav-list -->
+
+
+
+
+
+    </ul>
 
     <div class="sidebar-collapse" id="sidebar-collapse">
         <i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
@@ -126,7 +88,13 @@
                 if($(this).hasClass('active')){
                     $(this).removeClass('active')
                 }
+//                if($(this).parent().hasClass('submenu')){
+//                    $(this).parent('ul').hide();
+//                }
             });
+            if($('#'+id).parent().hasClass('submenu')){
+                $('#'+id).parent('ul').show();
+            }
             $('#'+id).addClass('active');
         }
     </script>

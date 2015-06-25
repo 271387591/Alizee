@@ -117,7 +117,11 @@ public class QuerySearch {
         if (as != null && as.length == 3) {
             QueryField queryField = new QueryField(as[1], as[2]);
             commands.add(queryField);
-            values.add(value);
+            if(as[2].equals("LK")){
+                values.add("%"+value+"%");
+            }else{
+                values.add(value);
+            }
         }
     }
     private void orFilter(String property, Object value) {
@@ -130,7 +134,11 @@ public class QuerySearch {
         if(as != null && as.length == 4){/*Q_title_LK_OR*/
             QueryField queryField = new QueryField(as[1], as[2]);
             orCommands.add(queryField);
-            values.add(value);
+            if(as[2].equals("LK")){
+                values.add("%"+value+"%");
+            }else{
+                values.add(value);
+            }
         }
     }
 

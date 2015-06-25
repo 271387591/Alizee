@@ -1,5 +1,5 @@
 <%@ page language="java" errorPage="/error.jsp" pageEncoding="UTF-8" contentType="text/html;charset=utf-8" %>
-<%@ include file="/common/taglibs.jsp" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 
@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="<c:url value="/resources/css/ace.min.css"/>" />
     <link rel="stylesheet" href="<c:url value="/resources/css/ace-rtl.min.css"/>" />
 
-    <!--[if lte IE 8]>
+    <!--[if lte IE 8]-->
     <link rel="stylesheet" href="<c:url value="/resources/css/ace-ie.min.css"/>" />
     <!--[endif]-->
 
@@ -33,15 +33,15 @@
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 
-    <!--[if lt IE 9]>
+    <!--[if lt IE 9]-->
     <script src="<c:url value="/resources/lib/html5shiv.js"/>"></script>
     <script src="<c:url value="/resources/lib/respond.min.js"/>"></script>
-    <![endif]-->
+    <!--[endif]-->
     <!--[if !IE]> -->
     <script src="<c:url value="/resources/lib/jquery/jquery-2.0.3.min.js"/>"></script>
      <!--<![endif]-->
 
-    <!--[if IE]>
+    <!--[if IE]-->
     <script src="<c:url value="/resources/lib/jquery/jquery-1.10.2.min.js"/>"></script>
     <!--[endif]-->
 

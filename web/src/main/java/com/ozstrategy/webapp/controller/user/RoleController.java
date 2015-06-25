@@ -23,7 +23,7 @@ import java.util.Map;
 public class RoleController extends BaseController {
     @Autowired
     private RoleManager roleManager;
-    @RequestMapping("list")
+    @RequestMapping("security/list")
     public JsonReaderResponse<RoleCommand> list(HttpServletRequest request){
         List<RoleCommand> commands=new ArrayList<RoleCommand>();
             Map<String,Object> map=requestMap(request);

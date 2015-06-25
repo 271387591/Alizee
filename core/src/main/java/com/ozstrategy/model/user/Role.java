@@ -1,6 +1,8 @@
 package com.ozstrategy.model.user;
 
 import com.ozstrategy.annotations.Id;
+import com.ozstrategy.annotations.NamedQueries;
+import com.ozstrategy.annotations.NamedQuery;
 import com.ozstrategy.annotations.Table;
 import com.ozstrategy.model.BaseEntity;
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -15,6 +17,9 @@ import java.util.Set;
  * Created by lihao1 on 5/10/15.
  */
 @Table(name = "t_role")
+@NamedQueries({
+        @NamedQuery(name = "getFeatures",query = "select r.* from t_feature f join t_rolefeature rf on f.id=rf.featureId where rf.roleId=:roleId")
+})
 public class Role extends BaseEntity implements GrantedAuthority {
     @Id
     private Long id;

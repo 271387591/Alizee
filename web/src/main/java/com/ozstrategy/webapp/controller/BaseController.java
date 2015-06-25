@@ -167,4 +167,15 @@ public class BaseController {
         }
         return  Constants.LIMIT;
     }
+    public String toHttpUrl(HttpServletRequest request,boolean hasPort){
+        String host=request.getServerName();
+        String contextPath=request.getContextPath();
+        int port = request.getServerPort();
+        if(hasPort){
+            return  "http://"+host+":"+port+contextPath+"/";
+        }else{
+            return  "http://"+host+contextPath+"/";
+        }
+
+    }
 }

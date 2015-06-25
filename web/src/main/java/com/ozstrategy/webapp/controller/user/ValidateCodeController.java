@@ -1,11 +1,15 @@
 package com.ozstrategy.webapp.controller.user;
 
+import com.ozstrategy.model.user.User;
 import com.ozstrategy.model.user.ValidateCode;
+import com.ozstrategy.model.user.ValidateCodeType;
+import com.ozstrategy.service.user.UserManager;
 import com.ozstrategy.service.user.ValidateCodeManager;
 import com.ozstrategy.webapp.command.JsonReaderResponse;
 import com.ozstrategy.webapp.command.JsonReaderSingleResponse;
 import com.ozstrategy.webapp.command.user.ValidateCodeCommand;
 import com.ozstrategy.webapp.controller.BaseController;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,18 +27,29 @@ import java.util.Map;
 public class ValidateCodeController extends BaseController {
     @Autowired
     private ValidateCodeManager validateCodeManager;
+    @Autowired
+    private UserManager userManager;
+
     @RequestMapping("getCode")
     public JsonReaderSingleResponse<ValidateCodeCommand> save(HttpServletRequest request){
         try{
-
-
-
-
-
-            return new JsonReaderSingleResponse(true);
+            String mobile=request.getParameter("mobile");
+            String type=request.getParameter("type");
+            if(StringUtils.isEmpty(mobile)){
+                return new JsonReaderSingleResponse(null,false,"请填写手机号");
+            }
+            ValidateCodeType validateCodeType=ValidateCodeType.valueOf(type);
+            if(validateCodeType==ValidateCodeType.GetBackPwd){
+                User user=userManager.getUserByUsername(mobile);
+                if(user==null){
+                    return new JsonReaderSingleResponse(null,false,"该用户不存在");
+                }
+            }
+            boolean ret = validateCodeManager.sendCode(mobile, validateCodeType);
+            return new JsonReaderSingleResponse(ret);
         }catch (Exception e){
             logger.error("save fail",e);
         }
-        return new JsonReaderSingleResponse(null,false,"保存失败");
+        return new JsonReaderSingleResponse(null,false,"参数错误");
     }
 }

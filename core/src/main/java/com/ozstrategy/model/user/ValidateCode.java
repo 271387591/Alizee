@@ -18,6 +18,7 @@ public class ValidateCode extends BaseEntity{
     private String mobile;
     private String code;
     private Date loseDate;
+    private Integer type;
 
     public ValidateCode() {
     }
@@ -53,6 +54,15 @@ public class ValidateCode extends BaseEntity{
     public void setLoseDate(Date loseDate) {
         this.loseDate = loseDate;
     }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

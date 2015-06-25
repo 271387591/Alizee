@@ -15,6 +15,7 @@ public interface BaseManager<T> {
     T get(Serializable id);
     T getByParam(Map<String,Object> map);
     T save(T obj);
+    T saveOrUpdate(T obj);
     void update(T obj);
     void delete(T obj);
     void deleteById(Serializable id);
@@ -22,6 +23,7 @@ public interface BaseManager<T> {
     void batchSave(List<T> list);
     void batchUpdate(List<T> list);
     void batchDelete(List<T> list);
+
 
 
     <D> List<D> findByNamedQuery(String queryName,Class<D> dClass);

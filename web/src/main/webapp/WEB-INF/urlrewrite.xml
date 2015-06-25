@@ -7,4 +7,65 @@
         <from>/login</from>
         <to>/login.jsp</to>
     </rule>
+    <rule>
+        <from>/app/register</from>
+        <to>/html/user/register</to>
+    </rule>
+    <rule>
+        <from>/app/getValidateCode</from>
+        <to>/html/validateCode/getCode</to>
+    </rule>
+    <rule>
+        <from>/app/login</from>
+        <to>/j_security_check</to>
+    </rule>
+    <rule>
+        <from>/app/getBackPwd</from>
+        <to>/html/user/getBackPwd</to>
+    </rule>
+    <rule>
+        <from>/app/commend</from>
+        <to>/html/commend/web/save</to>
+    </rule>
+    <rule>
+        <from>/app/getCommendCount</from>
+        <to>/html/commend/listCount</to>
+    </rule>
+
+    <rule>
+        <from>/app/checkCommend</from>
+        <to>/html/commend/web/check</to>
+    </rule>
+    <rule>
+        <from>/app/cancelCommend</from>
+        <to>/html/commend/web/delete</to>
+    </rule>
+    <rule>
+        <from>/app/comment</from>
+        <to>/html/comment/web/save</to>
+    </rule>
+    <rule>
+        <from>/app/checkComment</from>
+        <to>/html/comment/web/check</to>
+    </rule>
+    <rule>
+        <from>/app/cancelComment</from>
+        <to>/html/comment/web/delete</to>
+    </rule>
+    <rule>
+        <from>/app/getAdverts</from>
+        <to>/html/advert/list</to>
+    </rule>
+    <rule>
+        <from>/app/getFoods</from>
+        <to>/html/food/list</to>
+    </rule>
+
+
+
+
+
+
+
+
 </urlrewrite>

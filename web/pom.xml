@@ -52,7 +52,7 @@
             </manifestEntries>
           </archive>
           <dependentWarExcludes>
-            **/jdbc.properties,**/hibernate.cfg.xml,**/sql-map-config.xml,**/web.xml,WEB-INF/classes/META-INF/**,**/license.bin
+            **/jdbc.properties,**/sql-map-config.xml,**/web.xml,WEB-INF/classes/META-INF/**,**/license.bin
           </dependentWarExcludes>
         </configuration>
       </plugin>
@@ -191,4 +191,150 @@
 
       
   </dependencies>
+
+    <profiles>
+        <profile>
+            <id>prod</id>
+            <activation>
+                <property>
+                    <name>!dev</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>net.alchim31.maven</groupId>
+                        <artifactId>yuicompressor-maven-plugin</artifactId>
+                        <version>1.4.0</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>compress</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <nosuffix>true</nosuffix>
+                            <jswarn>false</jswarn>
+                            <gzip>false</gzip>
+                            <preserveAllSemiColons>true</preserveAllSemiColons>
+                            <disableOptimizations>false</disableOptimizations>
+                            <nomunge>false</nomunge>
+                            <excludes>
+                                <exclude>**/*.xml</exclude>
+                            </excludes>
+                            <resources>
+                                <resource>${basedir}/src/main/webapp/**/*</resource>
+                            </resources>
+
+
+
+                            <aggregations>
+                                <aggregation>
+                                    <removeIncluded>true</removeIncluded>
+                                    <!--insert new line after each concatenation (default: false)-->
+                                    <insertNewLine>false</insertNewLine>
+                                    <output>${project.build.directory}/${project.build.finalName}/runtime/js/runtime.js</output>
+                                    <inputDir>${project.build.directory}/${project.build.finalName}/</inputDir>
+                                    <!--files to include, path relative to output's directory or absolute path-->
+                                    <includes>
+                                        <include>resources/lib/bootstrap/bootstrap.min.js</include>
+                                        <include>resources/lib/bootstrap/typeahead-bs2.min.js</include>
+                                        <include>resources/lib/jquery/jquery.autosize.min.js</include>
+                                        <include>resources/lib/jquery/jquery.inputlimiter.1.3.1.min.js</include>
+                                        <include>resources/lib/jquery/jNotify.jquery.js</include>
+                                        <include>resources/lib/jquery/jquery.simplePagination.js</include>
+                                        <include>resources/lib/jquery/jquery.knob.min.js</include>
+                                        <include>resources/lib/jquery/ajaxfileupload.js</include>
+                                        <!--<include>resources/lib/jquery/jquery.multi-select.js</include>-->
+                                        <include>resources/lib/ace/ace-extra.min.js</include>
+                                        <include>resources/lib/ace/ace-elements.min.js</include>
+                                        <include>resources/lib/ace/ace.min.js</include>
+                                        <include>resources/lib/common.js</include>
+                                    </includes>
+                                </aggregation>
+                                <aggregation>
+                                    <removeIncluded>true</removeIncluded>
+                                    <!--insert new line after each concatenation (default: false)-->
+                                    <insertNewLine>false</insertNewLine>
+                                    <output>${project.build.directory}/${project.build.finalName}/runtime/css/runtime.css</output>
+                                    <inputDir>${project.build.directory}/${project.build.finalName}/</inputDir>
+                                    <!--files to include, path relative to output's directory or absolute path-->
+                                    <includes>
+
+                                        <include>resources/css/bootstrap.min.css</include>
+                                        <include>resources/css/font-awesome.min.css</include>
+                                        <include>resources/css/chosen.css</include>
+                                        <include>resources/css/ace.min.css</include>
+                                        <!--<include>resources/css/ace-ie.min.css</include>-->
+                                        <include>resources/css/ace-rtl.min.css</include>
+                                        <include>resources/css/ace-skins.min.css</include>
+                                        <include>resources/css/jNotify.jquery.css</include>
+                                        <include>resources/css/simplePagination.css</include>
+                                        <!--<include>resources/css/multi-select.css</include>-->
+                                        <include>resources/css/style.css</include>
+
+                                    </includes>
+                                </aggregation>
+
+
+
+                            </aggregations>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.2</version>
+                        <executions>
+                            <execution>
+                                <id>prepare-deploy</id>
+                                <phase>generate-resources</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <tasks>
+                                        <copy todir="${project.build.directory}/${project.build.finalName}/common/" file="${basedir}/src/main/webapp/deploy/pages/taglibs.jsp" overwrite="true">
+                                        </copy>
+                                        <copy todir="${project.build.directory}/${project.build.finalName}/" file="${basedir}/src/main/webapp/deploy/pages/login.jsp" overwrite="true">
+                                        </copy>
+
+                                        <echo>Copy deploy file ...</echo>
+
+                                        <echo>Copy deploy file ...</echo>
+
+                                        <copy todir="${project.build.directory}/${project.build.finalName}/runtime/css/image" overwrite="true">
+                                            <fileset dir="${basedir}/src/main/webapp/resources/css/image"/>
+                                        </copy>
+                                        <copy todir="${project.build.directory}/${project.build.finalName}/runtime/css/font" overwrite="true">
+                                            <fileset dir="${basedir}/src/main/webapp/resources/css/font"/>
+                                        </copy>
+
+                                        <echo>Copy deploy file ...</echo>
+
+
+
+
+                                    </tasks>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-war-plugin</artifactId>
+                        <configuration>
+                            <warSourceExcludes>
+                                updload/**
+                            </warSourceExcludes>
+                            <packagingExcludes>updload/**</packagingExcludes>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+
 </project>

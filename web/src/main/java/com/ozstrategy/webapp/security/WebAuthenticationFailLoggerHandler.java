@@ -1,7 +1,7 @@
 package com.ozstrategy.webapp.security;
 
 
-import com.ozstrategy.webapp.command.BaseResultCommand;
+import com.ozstrategy.webapp.command.JsonReaderSingleResponse;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -27,7 +27,7 @@ public class WebAuthenticationFailLoggerHandler extends WebAuthenticationLoggerH
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
         if(StringUtils.equals(request.getMethod(), "GET")){
-            BaseResultCommand command=new BaseResultCommand("请求方式错误，不支持GET请求",false);
+            JsonReaderSingleResponse command=new JsonReaderSingleResponse(null,false,"请求方式错误，不支持GET请求");
             response.getWriter().print(objectMapper.writeValueAsString(command));
             return;
         }

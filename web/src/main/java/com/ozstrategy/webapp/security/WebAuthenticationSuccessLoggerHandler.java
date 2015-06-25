@@ -1,6 +1,7 @@
 package com.ozstrategy.webapp.security;
 
 import com.ozstrategy.model.user.User;
+import com.ozstrategy.webapp.command.user.UserCommand;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.security.core.Authentication;
@@ -30,7 +31,7 @@ public class WebAuthenticationSuccessLoggerHandler extends WebAuthenticationLogg
       response.setContentType("text/html;charset=UTF-8");
       String platform=request.getParameter("platform");
       if(StringUtils.equals(PLATFORM, platform)){
-          response.sendRedirect("html/security/home");
+          response.sendRedirect("html/security/about");
           return;
       }
       User user = (User)authentication.getPrincipal();
@@ -38,15 +39,8 @@ public class WebAuthenticationSuccessLoggerHandler extends WebAuthenticationLogg
       if (user == null) {
         return;
       }
-      Map<String,Object> map=new HashMap<String, Object>();
-      map.put("result",1);
-      map.put("result_text","");
-      Map<String,Object> data=new HashMap<String, Object>();
-      data.put("user_id",user.getId());
-      data.put("username",user.getUsername());
-      data.put("phone",user.getMobile());
-      map.put("data",data);
-      String result=objectMapper.writeValueAsString(map);
+      UserCommand userCommand=new UserCommand(user);
+      String result=objectMapper.writeValueAsString(userCommand);
       response.getWriter().print(result);
   }
 }

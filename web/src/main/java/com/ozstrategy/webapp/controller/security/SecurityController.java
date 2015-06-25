@@ -21,22 +21,29 @@ import java.util.Map;
 @RestController
 @RequestMapping("security")
 public class SecurityController extends BaseController{
-    @Autowired
-    private ApplicationConfigManager applicationConfigManager;
-    @RequestMapping("home")
+    @RequestMapping("about")
     public ModelAndView home(HttpServletRequest request, HttpServletResponse response) {
-        Map<String,Object> map=new HashMap<String, Object>();
-//        List<ApplicationConfig> configs= applicationConfigManager.listAll();
-//        if(configs!=null && configs.size()>0){
-//            for(ApplicationConfig model:configs){
-//                map.put(model.getSystemKey(),model.getSystemValue());
-//            }
-//        }
-        return new ModelAndView("admin/home",map);
+        return new ModelAndView("admin/system/about");
     }
-    @RequestMapping("table")
+    @RequestMapping("advert")
+    public ModelAndView advert(HttpServletRequest request, HttpServletResponse response) {
+        return new ModelAndView("admin/system/advert");
+    }
+    @RequestMapping("food")
+    public ModelAndView food(HttpServletRequest request, HttpServletResponse response) {
+        return new ModelAndView("admin/system/food");
+    }
+
+
+    @RequestMapping("games")
+    public ModelAndView games(HttpServletRequest request, HttpServletResponse response) {
+        return new ModelAndView("admin/games");
+    }
+    @RequestMapping("user")
     public ModelAndView tables(HttpServletRequest request, HttpServletResponse response) {
 
-        return new ModelAndView("table/tables");
+        return new ModelAndView("admin/user/user");
     }
+
+
 }

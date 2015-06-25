@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page language="java" pageEncoding="UTF-8" contentType="text/html;charset=utf-8" %>
-<%@ include file="/common/taglibs.jsp" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,7 +20,7 @@
 
     <link href="<c:url value="/resources/css/bootstrap.min.css"/> " rel="stylesheet" />
     <link href="<c:url value="/resources/css/simplePagination.css"/> " rel="stylesheet" />
-    <link rel="stylesheet" href="<c:url value="/resources/css/popModal.min.css"/>" />
+    <link rel="stylesheet" href="<c:url value="/resources/css/font-awesome.min.css"/>" />
 
 
     <link href="<c:url value="/resources/css/style.css"/> " rel="stylesheet" />
@@ -35,11 +35,10 @@
     <script src="<c:url value="/resources/lib/jquery/jquery-2.0.3.min.js"/>"></script>
     <script src="<c:url value="/resources/lib/bootstrap/bootstrap.min.js"/>"></script>
     <script src="<c:url value="/resources/lib/jquery/jquery.simplePagination.js"/>"></script>
-    <script src="<c:url value="/resources/lib/popModal.min.js"/>"></script>
 
 
 
-    <script src="<c:url value="/resources/js/common.js"/>"></script>
+    <script src="<c:url value="/resources/lib/common.js"/>"></script>
 
 </head>
 <body>

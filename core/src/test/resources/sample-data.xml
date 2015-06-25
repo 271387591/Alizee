@@ -1,116 +1,50 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <dataset>
-    <table name="Feature">
+    <table name="t_feature">
         <column>id</column>
-        <column>createDate</column>
-        <column>lastUpdateDate</column>
-        <column>criteria</column>
         <column>description</column>
         <column>displayName</column>
         <column>enabled</column>
         <column>name</column>
+        <column>parentId</column>
+
+    </table>
+    <table name="t_applicationconfig">
+        <column>id</column>
+        <column>systemKey</column>
+        <column>systemValue</column>
         <row>
             <value>1</value>
-            <value><![CDATA[2013-01-27 11:27:03.0]]></value>
-            <value><![CDATA[2014-07-25 13:51:42.0]]></value>
-            <value>user</value>
-            <value>添加角色</value>
-            <value>添加角色</value>
-            <value>1</value>
-            <value>addRole</value>
+            <value>advert</value>
+            <value>advert</value>
         </row>
         <row>
             <value>2</value>
-            <value><![CDATA[2013-01-27 11:27:03.0]]></value>
-            <value><![CDATA[2014-07-25 13:51:49.0]]></value>
-            <value>user</value>
-            <value>编辑角色</value>
-            <value>编辑角色</value>
-            <value>1</value>
-            <value>updateRole</value>
+            <value>messageContent</value>
+            <value>您本次注册的验证码为：{0}十分钟有效，请尽快使用。本条短信免费</value>
         </row>
         <row>
             <value>3</value>
-            <value><![CDATA[2013-01-27 11:27:03.0]]></value>
-            <value><![CDATA[2014-07-25 13:52:04.0]]></value>
-            <value>user</value>
-            <value>删除角色</value>
-            <value>删除角色</value>
-            <value>1</value>
-            <value>deleteRole</value>
+            <value>messageUsername</value>
+            <value>18941121875</value>
         </row>
         <row>
             <value>4</value>
-            <value><![CDATA[2014-07-25 13:46:30.0]]></value>
-            <value><![CDATA[2014-07-25 13:46:30.0]]></value>
-            <value>user</value>
-            <value>添加用户</value>
-            <value>添加用户</value>
-            <value>1</value>
-            <value>addUser</value>
+            <value>messagePwd</value>
+            <value>BDD87A19BAB16F4F5CE90FC3D546</value>
         </row>
         <row>
             <value>5</value>
-            <value><![CDATA[2014-07-25 13:47:55.0]]></value>
-            <value><![CDATA[2014-07-25 13:47:55.0]]></value>
-            <value>user</value>
-            <value>修改用户</value>
-            <value>修改用户</value>
-            <value>1</value>
-            <value>updateUser</value>
+            <value>messageSign</value>
+            <value>签名</value>
         </row>
-        <row>
-            <value>6</value>
-            <value><![CDATA[2014-07-25 13:48:38.0]]></value>
-            <value><![CDATA[2014-07-25 13:48:38.0]]></value>
-            <value>user</value>
-            <value>修改用户密码</value>
-            <value>修改用户密码</value>
-            <value>1</value>
-            <value>updateUserPassword</value>
-        </row>
-        <row>
-            <value>7</value>
-            <value><![CDATA[2014-07-25 13:49:06.0]]></value>
-            <value><![CDATA[2014-07-25 13:49:06.0]]></value>
-            <value>user</value>
-            <value>锁定用户</value>
-            <value>锁定用户</value>
-            <value>1</value>
-            <value>lockUser</value>
-        </row>
-        <row>
-            <value>8</value>
-            <value><![CDATA[2014-07-25 13:49:31.0]]></value>
-            <value><![CDATA[2014-07-25 13:49:31.0]]></value>
-            <value>user</value>
-            <value>解锁用户</value>
-            <value>解锁用户</value>
-            <value>1</value>
-            <value>unLockUser</value>
-        </row>
-        <row>
-            <value>9</value>
-            <value><![CDATA[2014-07-25 13:49:59.0]]></value>
-            <value><![CDATA[2014-07-25 13:49:59.0]]></value>
-            <value>user</value>
-            <value>禁用用户</value>
-            <value>禁用用户</value>
-            <value>1</value>
-            <value>disableUser</value>
-        </row>
-        <row>
-            <value>10</value>
-            <value><![CDATA[2014-07-25 13:50:23.0]]></value>
-            <value><![CDATA[2014-07-25 13:50:23.0]]></value>
-            <value>user</value>
-            <value>解禁用户</value>
-            <value>解禁用户</value>
-            <value>1</value>
-            <value>enableUser</value>
-        </row>
+
+
+
+
     </table>
-    <table name="Role">
+
+    <table name="t_role">
         <column>id</column>
         <column>createDate</column>
         <column>lastUpdateDate</column>
@@ -119,16 +53,7 @@
         <column>name</column>
         <column>enabled</column>
         <row>
-            <value>-2</value>
-            <value><![CDATA[2013-01-22 16:03:26.0]]></value>
-            <value><![CDATA[2013-01-22 16:03:28.0]]></value>
-            <value>分公司用户，录入分公司的销售数据</value>
-            <value>分公司用户</value>
-            <value>ROLE_USER</value>
             <value>1</value>
-        </row>
-        <row>
-            <value>-1</value>
             <value><![CDATA[2013-01-22 16:03:26.0]]></value>
             <value><![CDATA[2014-07-25 14:22:04.0]]></value>
             <value>超级管理员，具有管理的全部权限</value>
@@ -136,141 +61,68 @@
             <value>ROLE_ADMIN</value>
             <value>1</value>
         </row>
+        <row>
+            <value>2</value>
+            <value><![CDATA[2013-01-22 16:03:26.0]]></value>
+            <value><![CDATA[2013-01-22 16:03:28.0]]></value>
+            <value>商户用户</value>
+            <value>商户用户</value>
+            <value>ROLE_TENANT</value>
+            <value>1</value>
+        </row>
+        <row>
+            <value>3</value>
+            <value><![CDATA[2013-01-22 16:03:26.0]]></value>
+            <value><![CDATA[2013-01-22 16:03:28.0]]></value>
+            <value>普通用户</value>
+            <value>普通用户</value>
+            <value>ROLE_USER</value>
+            <value>1</value>
+        </row>
+
+
     </table>
-    <table name="RoleFeature">
-        <column>id</column>
-        <column>createDate</column>
-        <column>lastUpdateDate</column>
+    <table name="t_rolefeature">
         <column>featureId</column>
         <column>roleId</column>
-        <row>
-            <value>1</value>
-            <value><![CDATA[2014-07-25 14:22:04.0]]></value>
-            <value><![CDATA[2014-07-25 14:22:04.0]]></value>
-            <value>1</value>
-            <value>-1</value>
-        </row>
-        <row>
-            <value>2</value>
-            <value><![CDATA[2014-07-25 14:22:04.0]]></value>
-            <value><![CDATA[2014-07-25 14:22:04.0]]></value>
-            <value>2</value>
-            <value>-1</value>
-        </row>
-        <row>
-            <value>3</value>
-            <value><![CDATA[2014-07-25 14:22:04.0]]></value>
-            <value><![CDATA[2014-07-25 14:22:04.0]]></value>
-            <value>3</value>
-            <value>-1</value>
-        </row>
-        <row>
-            <value>4</value>
-            <value><![CDATA[2014-07-25 14:22:04.0]]></value>
-            <value><![CDATA[2014-07-25 14:22:04.0]]></value>
-            <value>4</value>
-            <value>-1</value>
-        </row>
-        <row>
-            <value>5</value>
-            <value><![CDATA[2014-07-25 14:22:04.0]]></value>
-            <value><![CDATA[2014-07-25 14:22:04.0]]></value>
-            <value>5</value>
-            <value>-1</value>
-        </row>
-        <row>
-            <value>6</value>
-            <value><![CDATA[2014-07-25 14:22:04.0]]></value>
-            <value><![CDATA[2014-07-25 14:22:04.0]]></value>
-            <value>6</value>
-            <value>-1</value>
-        </row>
-        <row>
-            <value>7</value>
-            <value><![CDATA[2014-07-25 14:22:04.0]]></value>
-            <value><![CDATA[2014-07-25 14:22:04.0]]></value>
-            <value>7</value>
-            <value>-1</value>
-        </row>
-        <row>
-            <value>8</value>
-            <value><![CDATA[2014-07-25 14:22:04.0]]></value>
-            <value><![CDATA[2014-07-25 14:22:04.0]]></value>
-            <value>8</value>
-            <value>-1</value>
-        </row>
-        <row>
-            <value>9</value>
-            <value><![CDATA[2014-07-25 14:22:04.0]]></value>
-            <value><![CDATA[2014-07-25 14:22:04.0]]></value>
-            <value>9</value>
-            <value>-1</value>
-        </row>
-        <row>
-            <value>10</value>
-            <value><![CDATA[2014-07-25 14:22:04.0]]></value>
-            <value><![CDATA[2014-07-25 14:22:04.0]]></value>
-            <value>10</value>
-            <value>-1</value>
-        </row>
     </table>
     
-    <table name="User">
+    <table name="t_user">
         <column>id</column>
         <column>createDate</column>
         <column>lastUpdateDate</column>
         <column>accountExpired</column>
         <column>accountLocked</column>
-        <column>address</column>
-        <column>city</column>
-        <column>country</column>
-        <column>postalCode</column>
-        <column>province</column>
         <column>credentialsExpired</column>
-        <column>email</column>
         <column>enabled</column>
-        <column>firstName</column>
         <column>gender</column>
-        <column>lastName</column>
         <column>mobile</column>
         <column>password</column>
-        <column>passwordHint</column>
-        <column>phoneNumber</column>
+        <column>nickName</column>
         <column>username</column>
-        <column>version</column>
-        <column>website</column>
+        <column>roleId</column>
         <row>
             <value>1</value>
             <value><![CDATA[2013-01-27 11:27:03.0]]></value>
             <value><![CDATA[2013-01-27 11:27:25.0]]></value>
-            <value>N</value>
-            <value>N</value>
-            <value>Denver</value>
-            <value>Denver</value>
-            <value>US</value>
-            <value>80210</value>
-            <value>CO</value>
-            <value>N</value>
-            <value>admin@ozstrategy.com</value>
-            <value>Y</value>
-            <value>李</value>
+            <value>0</value>
+            <value>0</value>
+            <value>0</value>
+            <value>1</value>
             <value>M</value>
-            <value>浩admin</value>
             <value>18583910581</value>
             <value>536c0b339345616c1b33caf454454d8b8a190d6c</value>
-            <value/>
-            <value>110</value>
+            <value>admin</value>
             <value>admin</value>
             <value>1</value>
-            <value>http://www.cnblogs.com/hk-jiujiu</value>
         </row>
     </table>
-    <table name="UserRole">
+    <table name="t_userrole">
         <column>userId</column>
         <column>roleId</column>
         <row>
             <value>1</value>
-            <value>-1</value>
+            <value>1</value>
         </row>
     </table>
 </dataset>

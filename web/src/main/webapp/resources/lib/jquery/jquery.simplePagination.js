@@ -26,7 +26,7 @@
 				ellipseText: '&hellip;',
 				cssStyle: 'light-theme',
 				selectOnClick: true,
-				onPageClick: function(pageNumber, event) {
+				onPageClick: function(pageNumber,start,limit, event) {
 					// Callback triggered when a page is clicked
 					// Page number is given as an optional parameter
 				},
@@ -112,8 +112,16 @@
 				i;
 
 			methods.destroy.call(this);
+            var totalText="第"+(o.currentPage+1)+'/'+o.pages+"页。";
+            var leftText= (o.items==0)?'没有数据':'显示'+ (o.currentPage* o.itemsOnPage+1)+'-'+Math.min((o.currentPage+1)* o.itemsOnPage,o.items)+'条，共'+ o.items+'条';
 
-			var $panel = this.prop("tagName") === "UL" ? this : $('<ul></ul>').appendTo(this);
+            var leftDiv=$('<h5 class="pull-right menu-text"><i class="icon-th-list"></i>'+totalText+leftText+'</h5>');
+            var rightDiv=$('<div class="pull-right" style="margin-top: 4px;"></div>');
+            leftDiv.appendTo(this);
+            rightDiv.appendTo(this);
+
+
+			var $panel = this.prop("tagName") === "UL" ? this : $('<ul></ul>').appendTo(rightDiv);
 
 			// Generate Prev link
 			if (o.prevText) {
@@ -207,7 +215,8 @@
 			if (o.selectOnClick) {
 				methods._draw.call(this);
 			}
-			return o.onPageClick(pageIndex + 1, event);
+            var start=(pageIndex + 1)* o.items,limit= o.displayedPages;
+			return o.onPageClick(pageIndex + 1, start,limit, event);
 		}
 
 	};

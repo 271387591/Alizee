@@ -1,7 +1,9 @@
 package com.ozstrategy.webapp.command.user;
 import com.ozstrategy.model.user.User;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
 * Created by lihao1 on 2015-06-10.
@@ -20,6 +22,7 @@ public class UserCommand {
     private Date createDate;
     private String mobile;
     private Long roleId;
+    private List<RoleCommand> roles=new ArrayList<RoleCommand>();
     public UserCommand() {
     }
     public UserCommand(User model) {
@@ -114,5 +117,13 @@ public class UserCommand {
     }
     public void setRoleId(Long roleId) {
         this.roleId = roleId;
+    }
+
+    public List<RoleCommand> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<RoleCommand> roles) {
+        this.roles = roles;
     }
 }

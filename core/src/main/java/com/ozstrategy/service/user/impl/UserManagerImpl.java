@@ -6,6 +6,7 @@ import com.ozstrategy.model.user.Role;
 import com.ozstrategy.model.user.User;
 import com.ozstrategy.service.impl.BaseManagerImpl;
 import com.ozstrategy.service.user.UserManager;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,10 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
 * Created by lihao1 on 6/8/15.
@@ -60,15 +58,44 @@ public class UserManagerImpl extends BaseManagerImpl<User> implements UserManage
             user.setCreateDate(new Date());
             user.setPassword(passwordEncoder.encodePassword(user.getPassword(), null));
             save=true;
-
         }
         user.setLastUpdateDate(new Date());
-
         if(save){
             userDao.save(user);
         }else{
             userDao.update(user);
         }
+        userDao.deleteRoles(user);
+        Set<Role> roles=user.getRoles();
+        if(roles!=null && roles.size()>0){
+            for(Role role:roles){
+                userDao.saveRoles(user,role);
+            }
+        }
         return user;
+    }
+
+    public boolean changePassword(User user,String newPassword, String oldPassword, boolean admin) {
+        String pwd=user.getPassword();
+        if(admin){
+            user.setPassword(passwordEncoder.encodePassword(newPassword, null));
+            userDao.update(user);
+            return true;
+        }else{
+            String encode=passwordEncoder.encodePassword(oldPassword, null);
+            if(StringUtils.equals(user.getPassword(),encode)){
+                return false;
+            }
+            user.setPassword(passwordEncoder.encodePassword(newPassword, null));
+            userDao.update(user);
+        }
+        return true;
+    }
+
+    public void batchDeleteUser(List<User> users) {
+        for(User user:users){
+            user.setEnabled(Boolean.FALSE);
+            userDao.update(user);
+        }
     }
 }

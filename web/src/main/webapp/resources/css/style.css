@@ -25,6 +25,153 @@ code {
     font-size: 80%;
 }
 .text-required{
-    border: solid 1px #f00 !important;
+    border: solid 1px red;
+    /*border: solid 1px #d16e6c;*/
     /*display: none;*/
 }
+body.modal-open,.modal-open .navbar-fixed-top,.modal-open .navbar-fixed-bottom{
+    margin-right:0px
+}
+.table-header{
+    /*background-color: #fcfcfc;*/
+}
+.table-title {
+    height: 40px;
+    line-height: 40px;
+    font-size: 14px;
+    background-image: -moz-linear-gradient(top, #f8f8f8, #ebebeb);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f8f8f8), to(#ebebeb));
+    background-image: -webkit-linear-gradient(top, #f8f8f8, #ebebeb);
+    background-image: -o-linear-gradient(top, #f8f8f8, #ebebeb);
+    background-image: linear-gradient(to bottom, #f8f8f8, #ebebeb);
+    background-repeat: repeat-x;
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#fff8f8f8', endColorstr='#ffebebeb', GradientType=0);
+    border: solid 1px #d5d5d5;
+    border-bottom: none;
+    border-radius: 3px 3px 0 0;
+    box-shadow: 0 1px 0 #fff inset;
+}
+.table-title > select {
+    float: left;
+    width: auto;
+    height: 25px;
+    line-height: 25px;
+    margin: 8px -8px 0 10px;
+    padding: 4px;
+}
+.table-title h5 {
+    height: 40px;
+    line-height: 40px;
+    font-weight: 100;
+    float: left;
+    text-indent: 1em;
+}
+.table-bottom {
+    background: #f1f1f1;
+    border: solid 1px #d5d5d5;
+    border-top: none;
+    /*min-height: 65px;*/
+    overflow: auto;
+    /*min-width: 700px;*/
+}
+
+.query-box {
+    margin: 0px 0px 2px 0px;
+}
+.query-title {
+    height: 30px;
+    line-height: 30px;
+    font-size: 14px;
+    text-indent: 1em;
+    background-image: -moz-linear-gradient(top, #f8f8f8, #ebebeb);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f8f8f8), to(#ebebeb));
+    background-image: -webkit-linear-gradient(top, #f8f8f8, #ebebeb);
+    background-image: -o-linear-gradient(top, #f8f8f8, #ebebeb);
+    background-image: linear-gradient(to bottom, #f8f8f8, #ebebeb);
+    background-repeat: repeat-x;
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#fff8f8f8', endColorstr='#ffebebeb', GradientType=0);
+    border: solid 1px #d5d5d5;
+    border-radius: 3px 3px 0 0;
+    box-shadow: 0 1px 0 #fff inset;
+}
+.query-content {
+    background: #f7f7f7;
+    border: solid 1px #d5d5d5;
+    border-top: none;
+    padding: 5px 20px;
+    overflow: hidden;
+}
+.query-content2 {
+    background: #f7f7f7;
+    border: solid 1px #d5d5d5;
+    padding: 10px 20px;
+    overflow: hidden;
+    margin: 0 20px;
+}
+.query-form {
+    overflow: hidden;
+}
+.query-form2 {
+    margin: 0 20px 0 20px;
+}
+.query-form > li {
+    list-style-type:none;
+    width: 33%;
+    height: 30px;
+    margin: 5px 0 5px 0;
+    float: left;
+}
+.query-form > li > label {
+    /*width: 105px;*/
+    margin: 5px 5px 0 0;
+    float: left;
+    font-size: 12px;
+    color: #666;
+    text-align: right;
+}
+.query-form > li > input[type="text"] {
+    width: 57%;
+}
+.query-form > li > select {
+    padding: 5px;
+    width: 60%;
+}
+.query-form > li > div {
+    float: left;
+    width: 27%;
+}
+.query-form > li > span {
+    display: inline-block;
+    float: left;
+    margin: 5px 5px 0 5px;
+}
+.query-form > li > div > input.text-date {
+    background: url(../images/icon-date.png) no-repeat 95% 5px #fff;
+    width: 90%;
+    margin: 0;
+    cursor: pointer;
+}
+.content-form > li > select {
+    height: 30px;
+    line-height: 30px;
+    padding: 5px;
+    width: 232px;
+}
+.query-form > li.select-group > div {
+    width: 20%;
+}
+.query-form > li.select-group > div > select {
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    padding: 5px;
+    margin: 0 5px 0 2px;
+    float: left;
+}
+.btn-query {
+    clear: both;
+    margin: 10px 0 0 20px;
+}
+
+
+

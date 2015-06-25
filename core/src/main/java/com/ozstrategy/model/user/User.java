@@ -16,7 +16,8 @@ import java.util.*;
  */
 @Table(name="t_user")
 @NamedQueries({
-        @NamedQuery(name = "getRoles",query = "select r.* from t_role r join t_userrole ur on r.id=ur.roleId where ur.userId=:userId")
+        @NamedQuery(name = "getRoles",query = "select r.* from t_role r join t_userrole ur on r.id=ur.roleId where ur.userId=:userId"),
+        @NamedQuery(name = "getFeatures",query = "select r.* from t_feature f join t_rolefeature rf on f.id=rf.featureId where rf.roleId in (select ur.roleId from t_userrole ur where ur.userId=:userId)")
 })
 public class User extends BaseEntity implements UserDetails {
     @Id

@@ -17,6 +17,112 @@
 
     <build>
         <plugins>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>sql-maven-plugin</artifactId>
+                <version>1.5</version>
+
+                <dependencies>
+                    <!-- specify the dependent jdbc driver here -->
+                    <dependency>
+                        <groupId>${jdbc.groupId}</groupId>
+                        <artifactId>${jdbc.artifactId}</artifactId>
+                        <version>${jdbc.version}</version>
+                    </dependency>
+                </dependencies>
+
+                <!-- common configuration shared by all executions -->
+                <configuration>
+                    <driver>com.mysql.jdbc.Driver</driver>
+                    <url>jdbc:mysql://localhost/${db.name}</url>
+                    <username>${jdbc.username}</username>
+                    <password>${jdbc.password}</password>
+                    <!-- You can comment out username/password configurations and
+                         have maven to look them up in your settings.xml using ${settingsKey}
+                    -->
+                    <settingsKey>sensibleKey</settingsKey>
+                    <!--all executions are ignored if -Dmaven.test.skip=true-->
+                    <skip>${maven.test.skip}</skip>
+                </configuration>
+
+                <executions>
+                    <execution>
+                        <id>drop-db-before-build-if-any</id>
+                        <phase>process-test-resources</phase>
+                        <goals>
+                            <goal>execute</goal>
+                        </goals>
+                        <configuration>
+                            <!-- need another database to drop the targeted one -->
+                            <url>jdbc:mysql://localhost</url>
+                            <autocommit>true</autocommit>
+                            <sqlCommand>drop database ${db.name}</sqlCommand>
+                            <!-- ignore error when database is not avaiable -->
+                            <onError>continue</onError>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>create-db</id>
+                        <phase>process-test-resources</phase>
+                        <goals>
+                            <goal>execute</goal>
+                        </goals>
+                        <configuration>
+                            <url>jdbc:mysql://localhost</url>
+                            <!-- no transaction -->
+                            <autocommit>true</autocommit>
+                            <sqlCommand>create database ${db.name}</sqlCommand>
+                        </configuration>
+                    </execution>
+
+
+                </executions>
+            </plugin>
+
+
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>sql-maven-plugin</artifactId>
+                <version>1.5</version>
+                <dependencies>
+
+                    <dependency>
+                        <groupId>${jdbc.groupId}</groupId>
+                        <artifactId>${jdbc.artifactId}</artifactId>
+                        <version>${jdbc.version}</version>
+                    </dependency>
+                </dependencies>
+
+                <configuration>
+                    <driver>${jdbc.driverClassName}</driver>
+                    <username>${jdbc.username}</username>
+                    <password>${jdbc.password}</password>
+                    <delimiter>;</delimiter>
+                    <!--<delimiterType>row</delimiterType>-->
+                    <enableBlockMode>false</enableBlockMode>
+                    <url>${jdbc.url}&amp;sessionVariables=FOREIGN_KEY_CHECKS=0</url>
+                    <skip>${maven.test.skip}</skip>
+                </configuration>
+
+                <executions>
+                    <execution>
+                        <id>e2sql</id>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>execute</goal>
+                        </goals>
+                        <!-- specific configuration for this execution -->
+                        <configuration>
+                            <srcFiles>
+                                <srcFile>src/test/resources/alizee.sql</srcFile>
+                            </srcFiles>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>dbunit-maven-plugin</artifactId>
@@ -29,14 +135,14 @@
                     <url>${jdbc.url}</url>
                     <src>src/test/resources/sample-data.xml</src>
                     <type>${dbunit.operation.type}</type>
-                    <schema>${dbunit.schema}</schema>
+                    <!--<schema>${dbunit.schema}</schema>-->
                     <skip>${maven.test.skip}</skip>
                     <transaction>true</transaction>
                 </configuration>
                 <executions>
                     <execution>
-                        <!--<id>test-compile</id>-->
-                        <!--<phase>test-compile</phase>-->
+                        <id>test-compile</id>
+                        <phase>test-compile</phase>
                         <goals>
                             <goal>operation</goal>
                         </goals>
@@ -70,12 +176,6 @@
             <groupId>net.sf.ehcache</groupId>
             <artifactId>ehcache-core</artifactId>
             <version>${ehcache.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>javax.transaction</groupId>
-            <artifactId>jta</artifactId>
-            <version>${jta.version}</version>
         </dependency>
     </dependencies>
 

@@ -42,6 +42,10 @@ public abstract class BaseManagerImpl<T> implements BaseManager<T> {
         return baseDao().save(obj);
     }
 
+    public T saveOrUpdate(T obj) {
+        return baseDao().saveOrUpdate(obj);
+    }
+
     public void update(T obj) {
         baseDao().update(obj);
 

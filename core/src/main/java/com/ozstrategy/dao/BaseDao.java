@@ -19,9 +19,11 @@ public interface BaseDao<T> {
     <D> D findByNamedQueryBean(String queryName,Class<D> dClass,Map<String,Object> map);
     Integer listPageCount(Map<String,Object> params);
     T save(T entity);
+    T saveOrUpdate(T entity);
     void update(T entity);
     void delete(T entity);
     T get(Serializable id);
     T getByParam(Map<String,Object> map);
     void deleteById(Serializable id);
+    void deleteByParam(Map<String,Object> map);
 }

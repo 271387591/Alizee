@@ -6,11 +6,12 @@
               http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
     <http pattern="/resources/**" security="none"/>
-    <!--<http pattern="/html/**" security="none"/>-->
+    <http pattern="/app/**" security="none"/>
 
     <http use-expressions="true"  >
         <expression-handler ref="expressionHandler"/>
-        <intercept-url pattern="/html/security/**" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/html/**/security/**" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/html/**/web/**" access="isAuthenticated()"/>
         <!--<intercept-url pattern="/service/user/mobileSave" access="n"/>-->
         <!--<intercept-url pattern="/app/signup*" access="ROLE_ANONYMOUS,ROLE_ADMIN,ROLE_USER"/>-->
         <!--<intercept-url pattern="/html/**" access="hasAnyRole('ROLE_ADMIN,ROLE_USER')"/>-->

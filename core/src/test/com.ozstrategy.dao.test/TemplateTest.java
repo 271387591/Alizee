@@ -1,6 +1,8 @@
 package com.ozstrategy.dao.test;
 
-import com.ozstrategy.model.system.ApplicationConfig;
+import com.ozstrategy.model.commend.Commend;
+import com.ozstrategy.model.commend.Comment;
+import com.ozstrategy.model.system.*;
 import com.ozstrategy.model.user.Role;
 import com.ozstrategy.model.user.User;
 import com.ozstrategy.model.user.ValidateCode;
@@ -24,8 +26,10 @@ public class TemplateTest {
     public static String webRootPath=System.getProperty("user.dir")+"/web/src/main/java/";
     public static List<Class> list=new ArrayList<Class>();
     static {
-        list.add(ApplicationConfig.class);
-//        list.add(Role.class);
+        list.add(Activity.class);
+        list.add(ActivityUser.class);
+//        list.add(Comment.class);
+//        list.add(Advert.class);
     }
     public static void main(String[] args){
         daoTemp();

@@ -149,7 +149,7 @@ public class EntityBuilder {
         String sql= SqlBuilder.SQL();
         return sql;
     }
-    private  static String getTableName(Class cl) {
+    public  static String getTableName(Class cl) {
         Table table = (Table) cl.getAnnotation(Table.class);
         if (table == null) {
             return cl.getSimpleName().toLowerCase();
