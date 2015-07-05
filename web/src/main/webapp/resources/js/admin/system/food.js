@@ -36,47 +36,53 @@ function saveAdvert(type){
 }
 var columns=[
     {
+        cls:'center',
+        width:60,
         renderer:function(v){
-            return '<td class="center"><label>'+
+            return '<label>'+
                 '<input type="checkbox" class="ace" />'+
                 '<span class="lbl"></span>'+
-                '</label></td>';
+                '</label>';
         }
 
     },
     {
         name:'title',
+        width:200,
         renderer:function(v,rec){
-            return '<td><a href="javascript:void(0);" onclick="edit('+rec.id+');">'+v+'</a></td>';
+            return '<a href="javascript:void(0);" onclick="edit('+rec.id+');">'+v+'</a>';
         }
     },
     {
-        name:'url',
+        name:'picName',
+        width:200,
         renderer:function(v,rec){
-            return '<td><a target="_blank" href="'+v+'">'+rec.picName+'</a></td>';
+            return '<a target="_blank" href="'+rec.url+'">'+v+'</a>';
         }
     },
     {
         name:'description',
-        substr:true
+        width:300
     },
 
     {
         name:'createDate',
+        width:140,
         renderer:function(v){
-            return '<td>'+new Date(v).format("yyyy-MM-dd hh:mm:ss")+'</td>';
+            return new Date(v).format("yyyy-MM-dd hh:mm:ss");
         }
     },
     {
+        width:60,
         renderer:function(v,rec){
-            return '<td><div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">'+
+            return '<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">'+
                 '<a class="green" href="javascript:void(0);" data-rel="tooltip" title="编辑" onclick="edit('+rec.id+')">'+
                 '<i class="icon-pencil bigger-130"></i>'+
                 '</a>'+
                 '<a class="red" href="javascript:void(0);" data-rel="tooltip" title="删除" onclick="createDeleteModal('+rec.id+',null,deleteUser)">'+
                 '<i class="icon-trash bigger-130"></i>'+
                 '</a>'+
-                '</div></td>';
+                '</div>';
         }
 
     }

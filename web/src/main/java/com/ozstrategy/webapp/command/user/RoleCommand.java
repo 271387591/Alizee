@@ -1,12 +1,13 @@
 package com.ozstrategy.webapp.command.user;
 import com.ozstrategy.model.user.Role;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
 * Created by lihao1 on 2015-06-10.
 */
-public class RoleCommand {
+public class RoleCommand implements Serializable {
     private Long id;
     private Boolean enabled;
     private String description;

@@ -41,9 +41,14 @@
         <to>/html/commend/web/delete</to>
     </rule>
     <rule>
+        <from>/app/getComments</from>
+        <to>/html/comment/list</to>
+    </rule>
+    <rule>
         <from>/app/comment</from>
         <to>/html/comment/web/save</to>
     </rule>
+
     <rule>
         <from>/app/checkComment</from>
         <to>/html/comment/web/check</to>
@@ -60,6 +65,60 @@
         <from>/app/getFoods</from>
         <to>/html/food/list</to>
     </rule>
+    <rule>
+        <from>/app/getActivities</from>
+        <to>/html/activity/list?Q_published_EQ=1</to>
+    </rule>
+    <rule>
+        <from>/app/joinActivity</from>
+        <to>/html/activity/web/joinActivity</to>
+    </rule>
+    <rule>
+        <from>/app/checkJoinActivity</from>
+        <to>/html/activity/web/checkJoinActivity</to>
+    </rule>
+    <rule>
+        <from>/app/logoutActivity</from>
+        <to>/html/activity/web/logoutActivity</to>
+    </rule>
+    <rule>
+        <from>/app/getActivityUsers</from>
+        <to>/html/activity/web/getActivityUsers</to>
+    </rule>
+    <rule>
+        <from>/app/getGames</from>
+        <to>/html/game/list</to>
+    </rule>
+    <rule>
+        <from>/app/getGoods</from>
+        <to>/html/goods/list</to>
+    </rule>
+    <rule>
+        <from>/app/purchase</from>
+        <to>/html/goods/web/purchase</to>
+    </rule>
+    <rule>
+        <from>/app/portrait</from>
+        <to>/html/user/web/portrait</to>
+    </rule>
+    <rule>
+        <from>/app/recharge</from>
+        <to>/html/recharge/web/createOrder</to>
+    </rule>
+    <rule>
+        <from>/app/mobilenotice</from>
+        <to>/html/security/mobilenotice</to>
+    </rule>
+
+
+
+
+
+
+
+
+
+
 
 
 

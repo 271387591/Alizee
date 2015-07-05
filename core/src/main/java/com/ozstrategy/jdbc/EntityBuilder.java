@@ -45,7 +45,10 @@ public class EntityBuilder {
         return count.get(cl.getName());
     }
     public static String nameQueries(Class cl,String queryName){
-        return new Builder().nameQueries(cl, queryName);
+        Map<String,String> map=nameQueries.get(cl.getName());
+        String sql=map.get(queryName);
+        return sql;
+//        return new Builder().nameQueries(cl, queryName);
     }
     public static Object[] nameQueriesArgs(Class cl,String queryName,Map<String,Object> params){
         return new Builder().nameQueriesArgs(cl, queryName, params);
@@ -206,14 +209,14 @@ public class EntityBuilder {
             }
             return list.toArray();
         }
-        public String nameQueries(Class cl,String queryName){
-            Map<String,String> map=nameQueries.get(cl.getName());
-            String sql=map.get(queryName);
-            List<String> params=ParserHelper.parseQueryName(sql);
-            for(String param:params){
-                sql=sql.replaceAll(":"+param,"?");
-            }
-            return sql;
-        }
+//        public String nameQueries(Class cl,String queryName){
+//            Map<String,String> map=nameQueries.get(cl.getName());
+//            String sql=map.get(queryName);
+//            List<String> params=ParserHelper.parseQueryName(sql);
+//            for(String param:params){
+//                sql=sql.replaceAll(":"+param,"?");
+//            }
+//            return sql;
+//        }
     }
 }

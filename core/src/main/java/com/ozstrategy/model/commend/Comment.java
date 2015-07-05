@@ -1,6 +1,8 @@
 package com.ozstrategy.model.commend;
 
 import com.ozstrategy.annotations.Id;
+import com.ozstrategy.annotations.NamedQueries;
+import com.ozstrategy.annotations.NamedQuery;
 import com.ozstrategy.annotations.Table;
 import com.ozstrategy.model.BaseEntity;
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -12,6 +14,10 @@ import java.util.Date;
  * Created by lihao1 on 6/18/15.
  */
 @Table(name = "t_comment")
+@NamedQueries({
+        @NamedQuery(name = "getComments",query = "select r.*,u.mobile,u.portraitUrl from t_comment r join t_user u on r.userId=u.id where r.typeId=:typeId and r.itemId=:itemId"),
+        @NamedQuery(name = "getCommentsCount",query = "select count(*) from t_comment r join t_user u on r.userId=u.id where r.typeId=:typeId and r.itemId=:itemId")
+})
 public class Comment extends BaseEntity {
     @Id
     private Long id;

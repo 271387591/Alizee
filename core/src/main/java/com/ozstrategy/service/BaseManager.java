@@ -16,9 +16,9 @@ public interface BaseManager<T> {
     T getByParam(Map<String,Object> map);
     T save(T obj);
     T saveOrUpdate(T obj);
-    void update(T obj);
-    void delete(T obj);
-    void deleteById(Serializable id);
+    int update(T obj);
+    int delete(T obj);
+    int deleteById(Serializable id);
 
     void batchSave(List<T> list);
     void batchUpdate(List<T> list);
@@ -30,4 +30,8 @@ public interface BaseManager<T> {
     <D> List<D> findByNamedQuery(String queryName,Class<D> dClass,Map<String,Object> map);
     <D> List<D> findByNamedQueryPage(String queryName,Class<D> dClass,Map<String,Object> map,Integer start,Integer limit);
     <D> D findByNamedQueryBean(String queryName,Class<D> dClass,Map<String,Object> map);
+
+
+    List<Map<String,Object>> findByNamedQuery(String queryName,Map<String,Object> map);
+    List<Map<String,Object>> findByNamedQuery(String queryName,Map<String,Object> map,Integer start,Integer limit);
 }

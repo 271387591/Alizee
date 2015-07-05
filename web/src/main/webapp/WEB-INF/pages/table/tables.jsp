@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="<c:url value="/resources/css/font-awesome.min.css"/>" />
 
     <!--[if IE 7]>
-    <link rel="stylesheet" href="<c:url value="/resources/css/font-awesome-ie7.min.css"/>" />
+    <link rel="stylesheet" href="<c:url value="/resources/css/ie/font-awesome-ie7.min.css"/>" />
     <![endif]-->
 
     <link rel="stylesheet" href="<c:url value="/resources/css/ui.jqgrid.css"/>" />
@@ -32,14 +32,15 @@
 
 
     <!--[if lte IE 8]>
-        <link rel="stylesheet" href="<c:url value="/resources/css/ace-ie.min.css"/>" />
+        <link rel="stylesheet" href="<c:url value="/resources/css/ie/ace-ie.min.css"/>" />
     <![endif]-->
 
     <script src="<c:url value="/resources/lib/ace/ace-extra.min.js"/>"></script>
 
     <!--[if lt IE 9]>
-        <script src="<c:url value="/resources/lib/html5shiv.js"/>"></script>
-        <script src="<c:url value="/resources/lib/respond.min.js"/>"></script>
+        <script src="<c:url value="/resources/lib/ie/html5shiv.js"/>"></script>
+        <script src="<c:url value=" / resources / lib / ie / respond.min.js
+        "/>"></script>
     <![endif]-->
     <!--[if !IE]> -->
 
@@ -189,7 +190,7 @@
 
 
 <script type="text/javascript">
-    if("ontouchend" in document) document.write("<script src='<c:url value="/resources/lib/jquery/jquery.mobile.custom.min.js"/> '>"+"<"+"script>");
+    if("ontouchend" in document) document.write("<script src='<c:url value="/resources/lib/jplugin/jquery.mobile.custom.min.js"/> '>"+"<"+"script>");
 </script>
 
 <script src="<c:url value="/resources/lib/bootstrap/bootstrap.min.js"/>"></script>

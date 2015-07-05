@@ -46,18 +46,18 @@ public abstract class BaseManagerImpl<T> implements BaseManager<T> {
         return baseDao().saveOrUpdate(obj);
     }
 
-    public void update(T obj) {
-        baseDao().update(obj);
+    public int update(T obj) {
+        return baseDao().update(obj);
 
     }
 
-    public void delete(T obj) {
-        baseDao().delete(obj);
+    public int delete(T obj) {
+        return baseDao().delete(obj);
 
     }
 
-    public void deleteById(Serializable id) {
-        baseDao().deleteById(id);
+    public int deleteById(Serializable id) {
+        return baseDao().deleteById(id);
 
     }
 
@@ -93,6 +93,14 @@ public abstract class BaseManagerImpl<T> implements BaseManager<T> {
 
     public <D> D findByNamedQueryBean(String queryName, Class<D> dClass, Map<String, Object> map) {
         return baseDao().findByNamedQueryBean(queryName, dClass, map);
+    }
+
+    public List<Map<String, Object>> findByNamedQuery(String queryName, Map<String, Object> map) {
+        return baseDao().findByNamedQuery(queryName, map);
+    }
+
+    public List<Map<String, Object>> findByNamedQuery(String queryName, Map<String, Object> map, Integer start, Integer limit) {
+        return baseDao().findByNamedQuery(queryName, map, start, limit);
     }
 
 

@@ -11,7 +11,7 @@
  Target Server Version : 50624
  File Encoding         : utf-8
 
- Date: 06/25/2015 17:20:30 PM
+ Date: 06/29/2015 21:39:17 PM
 */
 
 SET NAMES utf8;
@@ -50,8 +50,11 @@ CREATE TABLE `t_activity` (
   `picPath` varchar(255) DEFAULT NULL,
   `picName` varchar(255) DEFAULT NULL,
   `url` varchar(255) DEFAULT NULL,
+  `published` char(1) DEFAULT NULL,
+  `startDate` datetime DEFAULT NULL,
+  `lastUpdateDate` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `t_activityuser`
@@ -67,7 +70,7 @@ CREATE TABLE `t_activityuser` (
   KEY `activityId` (`activityId`) USING BTREE,
   CONSTRAINT `t_activityuser_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `t_user` (`id`),
   CONSTRAINT `t_activityuser_ibfk_2` FOREIGN KEY (`activityId`) REFERENCES `t_activity` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `t_advert`
@@ -161,6 +164,28 @@ CREATE TABLE `t_food` (
   `url` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+--  Table structure for `t_game`
+-- ----------------------------
+DROP TABLE IF EXISTS `t_game`;
+CREATE TABLE `t_game` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `description` mediumtext,
+  `createDate` datetime DEFAULT NULL,
+  `popularity` int(10) DEFAULT NULL,
+  `version` varchar(255) DEFAULT NULL,
+  `platform` int(10) DEFAULT NULL,
+  `type` varchar(255) DEFAULT NULL,
+  `picPath` varchar(255) DEFAULT NULL,
+  `picName` varchar(255) DEFAULT NULL,
+  `picUrl` varchar(255) DEFAULT NULL,
+  `gamePath` varchar(255) DEFAULT NULL,
+  `gameName` varchar(255) DEFAULT NULL,
+  `gameUrl` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `t_role`

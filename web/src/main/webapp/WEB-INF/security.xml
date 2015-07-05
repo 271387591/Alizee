@@ -7,11 +7,13 @@
 
     <http pattern="/resources/**" security="none"/>
     <http pattern="/app/**" security="none"/>
+    <http pattern="/html/security/mobilenotice" security="none"/>
 
     <http use-expressions="true"  >
         <expression-handler ref="expressionHandler"/>
         <intercept-url pattern="/html/**/security/**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/html/**/web/**" access="isAuthenticated()"/>
+        <intercept-url pattern="/html/**/tenant/**" access="hasRole('ROLE_TENANT')"/>
         <!--<intercept-url pattern="/service/user/mobileSave" access="n"/>-->
         <!--<intercept-url pattern="/app/signup*" access="ROLE_ANONYMOUS,ROLE_ADMIN,ROLE_USER"/>-->
         <!--<intercept-url pattern="/html/**" access="hasAnyRole('ROLE_ADMIN,ROLE_USER')"/>-->

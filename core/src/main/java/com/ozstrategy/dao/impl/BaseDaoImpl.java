@@ -1,10 +1,7 @@
 package com.ozstrategy.dao.impl;
 
 import com.ozstrategy.dao.BaseDao;
-import com.ozstrategy.jdbc.EntityBuilder;
-import com.ozstrategy.jdbc.QueryField;
-import com.ozstrategy.jdbc.QuerySearch;
-import com.ozstrategy.jdbc.SqlBuilder;
+import com.ozstrategy.jdbc.*;
 import com.ozstrategy.model.BaseEntity;
 import com.ozstrategy.model.user.User;
 import org.apache.commons.logging.Log;
@@ -77,20 +74,41 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 
     public <D> List<D> findByNamedQueryPage(String queryName,Class<D> dClass, Map<String, Object> params, Integer start, Integer limit) {
         String sql=EntityBuilder.nameQueries(this.clazz,queryName);
+        QuerySearch querySearch=new QuerySearch(sql,params);
+//        querySearch.addSort(EntityBuilder.getIdColumn(this.clazz),"DESC");
+        sql=querySearch.pageSql(start, limit);
         if(log.isDebugEnabled()){
             log.debug("sql:====>"+sql.replaceAll("\\n"," "));
         }
-        Object[] args = EntityBuilder.nameQueriesArgs(this.clazz,queryName, params);
+        Object[] args = querySearch.getArgs();
         return (List<D>) jdbcTemplate.query(sql, args, BeanPropertyRowMapper.newInstance(dClass));
     }
 
     public <D> D findByNamedQueryBean(String queryName,Class<D> dClass, Map<String, Object> params) {
         String sql=EntityBuilder.nameQueries(this.clazz,queryName);
+        QuerySearch querySearch=new QuerySearch(sql,params);
+        sql=querySearch.sql();
         if(log.isDebugEnabled()){
             log.debug("sql:====>"+sql.replaceAll("\\n"," "));
         }
-        Object[] args = EntityBuilder.nameQueriesArgs(this.clazz,queryName,params);
-        return (D) jdbcTemplate.queryForObject(sql, args, BeanPropertyRowMapper.newInstance(dClass));
+        Object[] args = querySearch.getArgs();
+        return (D) jdbcTemplate.queryForObject(sql, dClass,args);
+    }
+
+    public List<Map<String, Object>> findByNamedQuery(String queryName, Map<String, Object> params) {
+        return findByNamedQuery(queryName,params,0,Integer.MAX_VALUE);
+    }
+
+    public List<Map<String, Object>> findByNamedQuery(String queryName, Map<String, Object> params, Integer start, Integer limit) {
+        String sql=EntityBuilder.nameQueries(this.clazz,queryName);
+        QuerySearch querySearch=new QuerySearch(sql,params);
+//        querySearch.addSort(EntityBuilder.getIdColumn(this.clazz),"DESC");
+        sql=querySearch.pageSql(start, limit);
+        if(log.isDebugEnabled()){
+            log.debug("sql:====>"+sql.replaceAll("\\n"," "));
+        }
+        Object[] args = querySearch.getArgs();
+        return jdbcTemplate.queryForList(sql,args);
     }
 
     public Integer listPageCount(Map<String, Object> params) {
@@ -134,7 +152,7 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
         }
     }
 
-    public void update(T entity) {
+    public int update(T entity) {
         final String sql=EntityBuilder.update(this.clazz);
         if(log.isDebugEnabled()){
             log.debug("sql:====>"+sql.replaceAll("\\n"," "));
@@ -142,27 +160,29 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
         List<Object> list=EntityBuilder.buildArgs(entity);
         list.add(EntityBuilder.readIdField(entity));
         final Object[] args=list.toArray();
-        jdbcTemplate.update(sql, args);
+        return jdbcTemplate.update(sql, args);
     }
 
-    public void delete(T entity) {
+    public int delete(T entity) {
         final String sql=EntityBuilder.delete(this.clazz);
         if(log.isDebugEnabled()){
             log.debug("sql:====>"+sql.replaceAll("\\n"," "));
         }
         final Object[] args = new Object[]{EntityBuilder.readIdField(entity)};
-        jdbcTemplate.update(sql, args);
+        return jdbcTemplate.update(sql, args);
     }
 
     public T get(Serializable id) {
+        if(id==null)return null;
         String sql=EntityBuilder.select(this.clazz);
-        if(log.isDebugEnabled()){
-            log.debug("sql:====>"+sql.replaceAll("\\n"," "));
-        }
+
         Map<String,Object> map=new HashMap<String, Object>();
         map.put("Q_"+EntityBuilder.getIdColumn(this.clazz)+"_EQ",id);
         QuerySearch querySearch=new QuerySearch(sql,map);
         sql=querySearch.sql();
+        if(log.isDebugEnabled()){
+            log.debug("sql:====>"+sql.replaceAll("\\n"," "));
+        }
         Object[] args=querySearch.getArgs();
         return (T) jdbcTemplate.queryForObject(sql, args, BeanPropertyRowMapper.newInstance(this.clazz));
     }
@@ -175,15 +195,15 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
         return null;
     }
 
-    public void deleteById(Serializable id) {
+    public int deleteById(Serializable id) {
         final String sql=EntityBuilder.delete(this.clazz);
         if(log.isDebugEnabled()){
             log.debug("sql:====>"+sql.replaceAll("\\n"," "));
         }
-        jdbcTemplate.update(sql, new Object[]{id});
+        return jdbcTemplate.update(sql, new Object[]{id});
     }
 
-    public void deleteByParam(Map<String, Object> map) {
+    public int deleteByParam(Map<String, Object> map) {
         SqlBuilder.BEGIN();
         SqlBuilder.DELETE_FROM(EntityBuilder.getTableName(this.clazz));
         SqlBuilder.WHERE("1=1");
@@ -191,7 +211,7 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
         QuerySearch querySearch=new QuerySearch(sql,map);
         sql=querySearch.sql();
         Object[] args=querySearch.getArgs();
-        jdbcTemplate.update(sql,args);
+        return jdbcTemplate.update(sql,args);
     }
 
 

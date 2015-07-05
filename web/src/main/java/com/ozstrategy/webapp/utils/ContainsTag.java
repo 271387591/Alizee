@@ -1,5 +1,7 @@
 package com.ozstrategy.webapp.utils;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.List;
 
 
@@ -13,15 +15,7 @@ import java.util.List;
 public class ContainsTag {
   //~ Methods ----------------------------------------------------------------------------------------------------------
 
-  /**
-   * DOCUMENT ME!
-   *
-   * @param   list  DOCUMENT ME!
-   * @param   o     DOCUMENT ME!
-   *
-   * @return  DOCUMENT ME!
-   */
-  public static boolean contains(Long tableId,Long fieldId) {
-    return true;
+  public static boolean equal(String r,String s) {
+      return StringUtils.equals(r,s);
   }
 }

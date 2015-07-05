@@ -2,6 +2,7 @@ package com.ozstrategy.model.user;
 
 import com.ozstrategy.annotations.Id;
 import com.ozstrategy.annotations.Table;
+import com.ozstrategy.annotations.Transient;
 import com.ozstrategy.model.BaseEntity;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -11,6 +12,8 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
  */
 @Table(name = "t_feature")
 public class Feature extends BaseEntity{
+    @Transient
+    private static final long serialVersionUID = -6327217309225839725L;
     @Id
     private Long id;
     private String name;

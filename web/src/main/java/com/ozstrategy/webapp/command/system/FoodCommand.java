@@ -14,6 +14,8 @@ public class FoodCommand {
     private String picName;
     private Date createDate;
     private String url;
+    private Integer comment;
+    private Integer commend;
     public FoodCommand() {
     }
     public FoodCommand(Food model) {
@@ -66,5 +68,21 @@ public class FoodCommand {
     }
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public Integer getComment() {
+        return comment;
+    }
+
+    public void setComment(Integer comment) {
+        this.comment = comment;
+    }
+
+    public Integer getCommend() {
+        return commend;
+    }
+
+    public void setCommend(Integer commend) {
+        this.commend = commend;
     }
 }

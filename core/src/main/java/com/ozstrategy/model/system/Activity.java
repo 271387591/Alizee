@@ -1,6 +1,8 @@
 package com.ozstrategy.model.system;
 
 import com.ozstrategy.annotations.Id;
+import com.ozstrategy.annotations.NamedQueries;
+import com.ozstrategy.annotations.NamedQuery;
 import com.ozstrategy.annotations.Table;
 import com.ozstrategy.model.BaseEntity;
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -18,14 +20,17 @@ public class Activity extends BaseEntity {
     private String title;
     private String description;
     private Date createDate;
+    private Date startDate;
     private Date endDate;
+    private Date lastUpdateDate;
     private String merchant;
     private String merchantAddress;
     private String merchantPhone;
     private String picPath;
     private String picName;
     private String url;
-    private Boolean published;
+    private Boolean published=false;
+
 
     public Activity() {
     }
@@ -124,6 +129,22 @@ public class Activity extends BaseEntity {
 
     public void setPublished(Boolean published) {
         this.published = published;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getLastUpdateDate() {
+        return lastUpdateDate;
+    }
+
+    public void setLastUpdateDate(Date lastUpdateDate) {
+        this.lastUpdateDate = lastUpdateDate;
     }
 
     @Override

@@ -9,19 +9,17 @@ import java.util.Date;
 public class ActivityUserCommand {
     private Long activityId;
     private Long id;
-    private String username;
-    private String nickName;
     private Long userId;
     private Date createDate;
+    private Integer status;
     public ActivityUserCommand() {
     }
     public ActivityUserCommand(ActivityUser model) {
         this.activityId=model.getActivityId();
         this.id=model.getId();
-        this.username=model.getUsername();
-        this.nickName=model.getNickName();
         this.userId=model.getUserId();
         this.createDate=model.getCreateDate();
+        this.status=model.getStatus();
     }
     public Long getActivityId() {
         return activityId;
@@ -35,18 +33,6 @@ public class ActivityUserCommand {
     public void setId(Long id) {
         this.id = id;
     }
-    public String getUsername() {
-        return username;
-    }
-    public void setUsername(String username) {
-        this.username = username;
-    }
-    public String getNickName() {
-        return nickName;
-    }
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
-    }
     public Long getUserId() {
         return userId;
     }
@@ -58,5 +44,13 @@ public class ActivityUserCommand {
     }
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

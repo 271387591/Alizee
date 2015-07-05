@@ -33,17 +33,24 @@ public class SecurityController extends BaseController{
     public ModelAndView food(HttpServletRequest request, HttpServletResponse response) {
         return new ModelAndView("admin/system/food");
     }
-
-
+    @RequestMapping("activity")
+    public ModelAndView activity(HttpServletRequest request, HttpServletResponse response) {
+        return new ModelAndView("admin/system/activity");
+    }
     @RequestMapping("games")
     public ModelAndView games(HttpServletRequest request, HttpServletResponse response) {
-        return new ModelAndView("admin/games");
+        return new ModelAndView("admin/games/game");
     }
     @RequestMapping("user")
     public ModelAndView tables(HttpServletRequest request, HttpServletResponse response) {
 
         return new ModelAndView("admin/user/user");
     }
+    @RequestMapping("mobilenotice")
+    public ModelAndView mobilenotice(HttpServletRequest request, HttpServletResponse response) {
+        return new ModelAndView("admin/mobilenotice");
+    }
+
 
 
 }

@@ -1,8 +1,11 @@
 package com.ozstrategy.webapp.controller.system;
 
 import com.ozstrategy.Constants;
+import com.ozstrategy.model.commend.CommendType;
 import com.ozstrategy.model.system.Advert;
 import com.ozstrategy.model.system.Food;
+import com.ozstrategy.service.commend.CommendManager;
+import com.ozstrategy.service.commend.CommentManager;
 import com.ozstrategy.service.system.FoodManager;
 import com.ozstrategy.webapp.command.JsonReaderResponse;
 import com.ozstrategy.webapp.command.JsonReaderSingleResponse;
@@ -37,6 +40,10 @@ import java.util.*;
 public class FoodController extends BaseController {
     @Autowired
     private FoodManager foodManager;
+    @Autowired
+    private CommentManager commentManager;
+    @Autowired
+    private CommendManager commendManager;
     @RequestMapping("list")
     public JsonReaderResponse<FoodCommand> list(HttpServletRequest request){
         List<FoodCommand> commands=new ArrayList<FoodCommand>();
@@ -46,6 +53,13 @@ public class FoodController extends BaseController {
                 if(models!=null && models.size()>0){
                     for(Food model:models){
                         FoodCommand command=new FoodCommand(model);
+                        Map<String,Object> objectMap=new HashMap<String, Object>();
+                        objectMap.put("Q_itemId_EQ",model.getId());
+                        objectMap.put("Q_typeId_EQ", CommendType.Food.ordinal());
+                        Integer comment=commentManager.count(objectMap);
+                        Integer commend=commendManager.count(objectMap);
+                        command.setComment(comment);
+                        command.setCommend(commend);
                         commands.add(command);
                     }
                 }
@@ -92,7 +106,7 @@ public class FoodController extends BaseController {
 
 
 
-        String attachFilesDirStr = request.getSession().getServletContext().getRealPath("/") + "/" + Constants.updloadAdvert + "/";
+        String attachFilesDirStr = request.getSession().getServletContext().getRealPath("/") + "/" + Constants.updloadFood + "/";
         attachFilesDirStr = FilenameUtils.normalize(attachFilesDirStr);
 
 
@@ -144,7 +158,7 @@ public class FoodController extends BaseController {
                     }
                     advert.setPicName(fileName);
                     advert.setPicPath(fileOnServer.getAbsolutePath());
-                    String httpPath=toHttpUrl(request,true)+Constants.updloadAdvert+"/"+str+"."+ext;
+                    String httpPath=toHttpUrl(request,true)+Constants.updloadFood+"/"+str+"."+ext;
                     advert.setUrl(httpPath);
                 }
                 foodManager.saveOrUpdate(advert);

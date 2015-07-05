@@ -9,69 +9,82 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <div class="sidebar sidebar-fixed" id="sidebar">
     <ul class="nav nav-list">
+        <c:if test="${userinfo.roleName eq 'ROLE_ADMIN'}">
+            <li class="active" id="menu-home">
+                <a href="<c:url value="/html/security/about"/>">
+                    <i class="icon-dashboard"></i>
+                    <span class="menu-text"> 关于我们 </span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="dropdown-toggle">
+                    <i class="icon-user"></i>
+                    <span class="menu-text">用户模块</span>
 
-        <li class="active" id="menu-home">
-            <a href="<c:url value="/html/security/about"/>">
-                <i class="icon-dashboard"></i>
-                <span class="menu-text"> 关于我们 </span>
-            </a>
-        </li>
+                    <b class="arrow icon-angle-down"></b>
+                </a>
+
+                <ul class="submenu">
+                    <li id="menu-user">
+                        <a href="<c:url value="/html/security/user"/> ">
+                            <i class="icon-double-angle-right"></i>
+                            用户管理
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li id="menu-ui">
+                <a href="#" class="dropdown-toggle">
+                    <i class="icon-desktop"></i>
+                    <span class="menu-text">系统设置</span>
+
+                    <b class="arrow icon-angle-down"></b>
+                </a>
+
+                <ul class="submenu">
+                    <li id="menu-advert">
+                        <a href="<c:url value="/html/security/advert"/>">
+                            <i class="icon-double-angle-right"></i>
+                            广告管理
+                        </a>
+                    </li>
+                    <li id="menu-food">
+                        <a href="<c:url value="/html/security/food"/>">
+                            <i class="icon-double-angle-right"></i>
+                            美食故事
+                        </a>
+                    </li>
+                    <li id="menu-activity">
+                        <a href="<c:url value="/html/security/activity"/>">
+                            <i class="icon-double-angle-right"></i>
+                            活动管理
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li id="menu-game">
+                <a href="<c:url value="/html/security/games"/>">
+                    <i class="icon-glass"></i>
+                    <span class="menu-text"> 游戏管理 </span>
+                </a>
+            </li>
+        </c:if>
+        <c:if test="${userinfo.roleName eq 'ROLE_TENANT'}">
+            <li class="active" id="menu-merchant">
+                <a href="<c:url value="/html/tenant/merchantinfo"/>">
+                    <i class="icon-dashboard"></i>
+                    <span class="menu-text"> 信息完善 </span>
+                </a>
+            </li>
+            <li class="active" id="menu-goods">
+                <a href="<c:url value="/html/tenant/goods"/>">
+                    <i class="icon-dashboard"></i>
+                    <span class="menu-text"> 商品管理 </span>
+                </a>
+            </li>
 
 
-
-        <li>
-            <a href="#" class="dropdown-toggle">
-                <i class="icon-user"></i>
-                <span class="menu-text">用户模块</span>
-
-                <b class="arrow icon-angle-down"></b>
-            </a>
-
-            <ul class="submenu">
-                <li id="menu-user">
-                    <a href="<c:url value="/html/security/user"/> ">
-                        <i class="icon-double-angle-right"></i>
-                        用户管理
-                    </a>
-                </li>
-
-                <li>
-                    <a href="buttons.html">
-                        <i class="icon-double-angle-right"></i>
-                        角色管理
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li id="menu-ui">
-            <a href="#" class="dropdown-toggle">
-                <i class="icon-desktop"></i>
-                <span class="menu-text">系统设置</span>
-
-                <b class="arrow icon-angle-down"></b>
-            </a>
-
-            <ul class="submenu">
-                <li id="menu-advert">
-                    <a href="<c:url value="/html/security/advert"/>">
-                        <i class="icon-double-angle-right"></i>
-                        广告管理
-                    </a>
-                </li>
-                <li id="menu-food">
-                    <a href="<c:url value="/html/security/food"/>">
-                        <i class="icon-double-angle-right"></i>
-                        美食故事
-                    </a>
-                </li>
-
-
-            </ul>
-        </li>
-
-
-
-
+        </c:if>
 
 
 

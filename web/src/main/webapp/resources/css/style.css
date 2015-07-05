@@ -172,6 +172,21 @@ body.modal-open,.modal-open .navbar-fixed-top,.modal-open .navbar-fixed-bottom{
     clear: both;
     margin: 10px 0 0 20px;
 }
+.input-group input[type="text"] {
+    /*width: 80px;*/
+    border: 1px solid #ddd;
+    float: left;
+    margin-right: 5px;
+    display: inline;
+    padding: 4px;
+}
+
+.input-group span.ig-txt {
+    float: left;
+    display: inline-block;
+    margin: 5px 5px 0 0;
+}
+
 
 
 

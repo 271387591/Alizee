@@ -2,6 +2,7 @@ package com.ozstrategy.webapp.security;
 
 
 import com.ozstrategy.webapp.command.JsonReaderSingleResponse;
+import com.ozstrategy.webapp.command.user.UserCommand;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -31,10 +32,7 @@ public class WebAuthenticationFailLoggerHandler extends WebAuthenticationLoggerH
             response.getWriter().print(objectMapper.writeValueAsString(command));
             return;
         }
-        Map<String,Object> map=new HashMap<String, Object>();
-        map.put("result",0);
-        map.put("result_text","");
-        String result=objectMapper.writeValueAsString(map);
+        String result=objectMapper.writeValueAsString(new JsonReaderSingleResponse<UserCommand>(null,false,"用户名或密码错误"));
         response.getWriter().print(result);
         return;
         

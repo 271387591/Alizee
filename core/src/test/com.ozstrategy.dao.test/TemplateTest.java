@@ -2,6 +2,11 @@ package com.ozstrategy.dao.test;
 
 import com.ozstrategy.model.commend.Commend;
 import com.ozstrategy.model.commend.Comment;
+import com.ozstrategy.model.games.Game;
+import com.ozstrategy.model.goods.Goods;
+import com.ozstrategy.model.goods.Merchant;
+import com.ozstrategy.model.recharge.ConsumeDetail;
+import com.ozstrategy.model.recharge.Recharge;
 import com.ozstrategy.model.system.*;
 import com.ozstrategy.model.user.Role;
 import com.ozstrategy.model.user.User;
@@ -26,8 +31,9 @@ public class TemplateTest {
     public static String webRootPath=System.getProperty("user.dir")+"/web/src/main/java/";
     public static List<Class> list=new ArrayList<Class>();
     static {
-        list.add(Activity.class);
-        list.add(ActivityUser.class);
+        list.add(Recharge.class);
+        list.add(ConsumeDetail.class);
+//        list.add(ActivityUser.class);
 //        list.add(Comment.class);
 //        list.add(Advert.class);
     }

@@ -26,6 +26,26 @@
     </div>
     <div class="row">
         <div class="col-xs-12">
+            <div class="query-box">
+                <div class="query-title">用户查询</div>
+                <div class="query-content">
+                    <ul class="query-form" id="userSearch">
+                        <li>
+                            <label class="control-label">手机号码</label>
+                            <input type="text" name="advert.Q_mobile_EQ"/>
+                        </li>
+                        <li>
+                            <label class="control-label">用户昵称</label>
+                            <input type="text" name="advert.Q_nickName_LK"/>
+                        </li>
+
+                    </ul>
+                    <div class="btn-query">
+                        <button class="btn btn-success btn-sm" onclick="searchForm($('#userSearch'),'advert',listTable);">查询</button>
+                        <button class="btn btn-sm" onclick="clearSearchForm($('#userSearch'),listTable);">清空</button>
+                    </div>
+                </div>
+            </div>
 
             <div class="table-title">
                 <span style="margin-left: 10px" class="green">用户列表</span>
@@ -33,6 +53,7 @@
                     <button class="btn btn-sm btn-primary" onclick="edit();"><i class="icon-angle-down"></i>添加</button>
                 </div>
             </div>
+
 
             <div class="table-responsive">
                 <table class="table table-bordered table-hover" style="margin-bottom: 2px;" id="gameTable">

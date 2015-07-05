@@ -4,6 +4,7 @@ import com.ozstrategy.dao.user.RoleDao;
 import com.ozstrategy.dao.user.UserDao;
 import com.ozstrategy.model.user.Role;
 import com.ozstrategy.model.user.User;
+import com.ozstrategy.service.system.ActivityUserManager;
 import com.ozstrategy.service.user.RoleManager;
 import com.ozstrategy.service.user.UserManager;
 import org.junit.Test;
@@ -29,18 +30,20 @@ public class UserDaoTest extends BaseManagerTestCase {
     @Autowired
     private UserManager userManager;
     @Autowired
-    private Md5PasswordEncoder passwordEncoder;
+    private ActivityUserManager activityUserManager;
+
 
 
 
 
     @Test
     public void testPasswordEncoder(){
-        String pwd="tomcat";
-        String encode = passwordEncoder.encodePassword(pwd, null);
+        Map map=new HashMap();
+        map.put("activityId",1);
 
+        Long count = activityUserManager.findByNamedQueryBean("getUsersCount", Long.class, map);
+        System.out.println(count);
 
-        System.out.println("ddd===="+encode);
     }
 
     @Test

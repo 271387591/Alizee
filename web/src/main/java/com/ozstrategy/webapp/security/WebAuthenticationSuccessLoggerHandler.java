@@ -1,6 +1,8 @@
 package com.ozstrategy.webapp.security;
 
+import com.ozstrategy.model.user.Role;
 import com.ozstrategy.model.user.User;
+import com.ozstrategy.webapp.command.JsonReaderSingleResponse;
 import com.ozstrategy.webapp.command.user.UserCommand;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
@@ -30,17 +32,28 @@ public class WebAuthenticationSuccessLoggerHandler extends WebAuthenticationLogg
       response.setCharacterEncoding("UTF-8");
       response.setContentType("text/html;charset=UTF-8");
       String platform=request.getParameter("platform");
-      if(StringUtils.equals(PLATFORM, platform)){
-          response.sendRedirect("html/security/about");
-          return;
-      }
       User user = (User)authentication.getPrincipal();
       user  = userManager.getUserByUsername(user.getUsername());
       if (user == null) {
-        return;
+          return;
       }
       UserCommand userCommand=new UserCommand(user);
-      String result=objectMapper.writeValueAsString(userCommand);
+      if(StringUtils.equals(PLATFORM, platform)){
+          Role role=roleManager.get(user.getRoleId());
+          if(role!=null){
+              userCommand.setRoleName(role.getName());
+          }
+          request.getSession().setAttribute("userinfo",userCommand);
+          if(org.apache.commons.lang3.StringUtils.equals("ROLE_ADMIN",role.getName())){
+              response.sendRedirect("html/security/about");
+          }else{
+              response.sendRedirect("html/tenant/merchantinfo");
+          }
+
+          return;
+      }
+
+      String result=objectMapper.writeValueAsString(new JsonReaderSingleResponse<UserCommand>(userCommand));
       response.getWriter().print(result);
   }
 }

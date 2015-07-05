@@ -19,6 +19,13 @@ public class ActivityCommand {
     private Date createDate;
     private String url;
     private String merchantAddress;
+    private Date startDate;
+    private Date lastUpdateDate;
+    private Integer peoples=0;
+    private Integer comment;
+    private Integer commend;
+    private Integer pendding=0;
+    private Integer noPendding=0;
     public ActivityCommand() {
     }
     public ActivityCommand(Activity model) {
@@ -34,6 +41,8 @@ public class ActivityCommand {
         this.createDate=model.getCreateDate();
         this.url=model.getUrl();
         this.merchantAddress=model.getMerchantAddress();
+        this.startDate=model.getStartDate();
+        this.lastUpdateDate=model.getLastUpdateDate();
     }
     public String getPicPath() {
         return picPath;
@@ -106,5 +115,61 @@ public class ActivityCommand {
     }
     public void setMerchantAddress(String merchantAddress) {
         this.merchantAddress = merchantAddress;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getLastUpdateDate() {
+        return lastUpdateDate;
+    }
+
+    public void setLastUpdateDate(Date lastUpdateDate) {
+        this.lastUpdateDate = lastUpdateDate;
+    }
+
+    public Integer getPeoples() {
+        return peoples;
+    }
+
+    public void setPeoples(Integer peoples) {
+        this.peoples = peoples;
+    }
+
+    public Integer getComment() {
+        return comment;
+    }
+
+    public void setComment(Integer comment) {
+        this.comment = comment;
+    }
+
+    public Integer getCommend() {
+        return commend;
+    }
+
+    public void setCommend(Integer commend) {
+        this.commend = commend;
+    }
+
+    public Integer getPendding() {
+        return pendding;
+    }
+
+    public void setPendding(Integer pendding) {
+        this.pendding = pendding;
+    }
+
+    public Integer getNoPendding() {
+        return noPendding;
+    }
+
+    public void setNoPendding(Integer noPendding) {
+        this.noPendding = noPendding;
     }
 }

@@ -32,27 +32,20 @@ public class CommentController extends BaseController {
     @Autowired
     private UserManager userManager;
     @RequestMapping("list")
-    public JsonReaderResponse<CommentCommand> list(HttpServletRequest request){
-        List<CommentCommand> commands=new ArrayList<CommentCommand>();
+    public JsonReaderResponse list(HttpServletRequest request){
         String itemId=request.getParameter("itemId");
         String type=request.getParameter("type");
         Map<String,Object> map=new HashMap<String, Object>();
         try{
-            map.put("Q_typeId_EQ",CommendType.valueOf(type).ordinal());
-            map.put("Q_itemId_EQ",parseLong(itemId));
-            List<Comment> models= commentManager.list(map,obtainStart(request),obtainLimit(request));
-            if(models!=null && models.size()>0){
-                for(Comment model:models){
-                    CommentCommand command=new CommentCommand(model);
-                    commands.add(command);
-                }
-            }
-            Integer count=commentManager.count(map);
-            return new JsonReaderResponse(commands,true,count,"");
+            map.put("typeId",CommendType.valueOf(type).ordinal());
+            map.put("itemId",parseLong(itemId));
+            List<Map<String,Object>> models= commentManager.findByNamedQuery("getComments", map, obtainStart(request), obtainLimit(request));
+            Integer count=commentManager.findByNamedQueryBean("getCommentsCount",Integer.class,map);
+            return new JsonReaderResponse(models,true,count,"");
         }catch (Exception e){
             logger.error("list fail",e);
         }
-        return new JsonReaderResponse(commands,false,"请求错误");
+        return new JsonReaderResponse(null,false,"请求错误");
     }
     @RequestMapping("web/save")
     public JsonReaderSingleResponse<CommentCommand> save(HttpServletRequest request){

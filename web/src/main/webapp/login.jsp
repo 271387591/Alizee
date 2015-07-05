@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="<c:url value="/resources/css/font-awesome.min.css"/>" />
 
     <!--[if IE 7]>
-    <link rel="stylesheet" href="<c:url value="/resources/css/font-awesome-ie7.min.css"/>" />
+    <link rel="stylesheet" href="<c:url value="/resources/css/ie/font-awesome-ie7.min.css"/>" />
     <![endif]-->
 
     <!-- page specific plugin styles -->
@@ -26,7 +26,7 @@
     <link rel="stylesheet" href="<c:url value="/resources/css/ace-rtl.min.css"/>" />
 
     <!--[if lte IE 8]-->
-    <link rel="stylesheet" href="<c:url value="/resources/css/ace-ie.min.css"/>" />
+    <link rel="stylesheet" href="<c:url value="/resources/css/ie/ace-ie.min.css"/>" />
     <!--[endif]-->
 
     <!-- inline styles related to this page -->
@@ -34,8 +34,8 @@
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 
     <!--[if lt IE 9]-->
-    <script src="<c:url value="/resources/lib/html5shiv.js"/>"></script>
-    <script src="<c:url value="/resources/lib/respond.min.js"/>"></script>
+    <script src="<c:url value="/resources/lib/ie/html5shiv.js"/>"></script>
+    <script src="<c:url value="/resources/lib/ie/respond.min.js"/>"></script>
     <!--[endif]-->
     <!--[if !IE]> -->
     <script src="<c:url value="/resources/lib/jquery/jquery-2.0.3.min.js"/>"></script>

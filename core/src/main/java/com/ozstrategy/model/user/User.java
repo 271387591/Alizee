@@ -20,6 +20,8 @@ import java.util.*;
         @NamedQuery(name = "getFeatures",query = "select r.* from t_feature f join t_rolefeature rf on f.id=rf.featureId where rf.roleId in (select ur.roleId from t_userrole ur where ur.userId=:userId)")
 })
 public class User extends BaseEntity implements UserDetails {
+    @Transient
+    private static final long serialVersionUID = -6327217309225839725L;
     @Id
     private Long     id;
     private Boolean  accountExpired=Boolean.FALSE;
@@ -34,6 +36,10 @@ public class User extends BaseEntity implements UserDetails {
     private String nickName;
     private Date createDate;
     private Date lastUpdateDate;
+    private Double credits=new Double(0);
+    private String portraitName;
+    private String portraitUrl;
+    private String portraitPath;
 
     @Transient
     private Set<Role> roles              = new HashSet<Role>();
@@ -176,6 +182,38 @@ public class User extends BaseEntity implements UserDetails {
 
     public void setLastUpdateDate(Date lastUpdateDate) {
         this.lastUpdateDate = lastUpdateDate;
+    }
+
+    public Double getCredits() {
+        return credits;
+    }
+
+    public void setCredits(Double credits) {
+        this.credits = credits;
+    }
+
+    public String getPortraitName() {
+        return portraitName;
+    }
+
+    public void setPortraitName(String portraitName) {
+        this.portraitName = portraitName;
+    }
+
+    public String getPortraitUrl() {
+        return portraitUrl;
+    }
+
+    public void setPortraitUrl(String portraitUrl) {
+        this.portraitUrl = portraitUrl;
+    }
+
+    public String getPortraitPath() {
+        return portraitPath;
+    }
+
+    public void setPortraitPath(String portraitPath) {
+        this.portraitPath = portraitPath;
     }
 
     @Override

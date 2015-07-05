@@ -98,4 +98,5 @@ public class UserManagerImpl extends BaseManagerImpl<User> implements UserManage
             userDao.update(user);
         }
     }
+
 }

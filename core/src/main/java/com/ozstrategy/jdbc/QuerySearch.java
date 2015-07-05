@@ -25,6 +25,13 @@ public class QuerySearch {
 
     public QuerySearch(String baseHql,Map<String,Object> map){
         this.sql=baseHql;
+        List<String> alias=ParserHelper.parseQueryName(this.sql);
+        if(alias!=null && alias.size()>0){
+            for(String alia:alias){
+                this.sql=this.sql.replaceAll(":"+alia,"?");
+                this.values.add(map.get(alia));
+            }
+        }
         this.initField(map);
     }
     public QuerySearch addSort(String sort,String dir){
@@ -67,11 +74,16 @@ public class QuerySearch {
     }
     public String pageSql(Integer start,Integer limit){
         sql();
-        sql+=" limit "+start+","+limit;
+        if(start!=null && limit!=null){
+            sql=new PageContext(this.sql).page(start,limit);
+        }
         return sql;
     }
     public Object[] getArgs(){
         return values.toArray();
+    }
+    public boolean emptySort(){
+        return sortMap.isEmpty();
     }
     public static void main(String[] args){
         Map<String,Object> map1=new HashMap<String, Object>();
@@ -94,7 +106,9 @@ public class QuerySearch {
                 Object value=entry.getValue();
                 if(key.startsWith("Q_")){
                     addFilter(key,value);
+                    sortFilter(key,value);
                 }
+
             }
             for(Iterator<Map.Entry<String,Object>> it=map.entrySet().iterator();it.hasNext();){
                 Map.Entry<String,Object> entry=it.next();
@@ -102,8 +116,18 @@ public class QuerySearch {
                 Object value=entry.getValue();
                 if(key.startsWith("Q_")){
                     orFilter(key, value);
+                    sortFilter(key,value);
                 }
             }
+        }
+    }
+    private void sortFilter(String property, Object value){
+        if(value==null || StringUtils.isEmpty(value.toString())){
+            return;
+        }
+        String as[] = property.split("[_]");
+        if(as!=null && as.length==2){
+            sortMap.put(as[1],value.toString());
         }
     }
 

@@ -29,16 +29,17 @@
     <!--[if lt IE 9]><script src="<c:url value="/resources/assets/ie8-responsive-file-warning.js"/>"></script><![endif]-->
     <script src="<c:url value="/resources/assets/ie-emulation-modes-warning.js"/> "></script>
     <!--[if lt IE 9]>
-         <script src="<c:url value="/resources/lib/html5shiv.js"/>"></script>
-         <script src="<c:url value="/resources/lib/respond.min.js"/>"></script>
+         <script src="<c:url value="/resources/lib/ie/html5shiv.js"/>"></script>
+         <script src="<c:url value=" / resources / lib / ie / respond.min.js
+         "/>"></script>
     <![endif]-->
     <script src="<c:url value="/resources/lib/jquery/jquery-2.0.3.min.js"/>"></script>
     <script src="<c:url value="/resources/lib/bootstrap/bootstrap.min.js"/>"></script>
-    <script src="<c:url value="/resources/lib/jquery/jquery.simplePagination.js"/>"></script>
+    <script src="<c:url value="/resources/lib/jplugin/jquery.simplePagination.js"/>"></script>
 
 
 
-    <script src="<c:url value="/resources/lib/common.js"/>"></script>
+    <script src="<c:url value="/resources/lib/jplugin/common.js"/>"></script>
 
 </head>
 <body>

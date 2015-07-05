@@ -22,6 +22,11 @@ public final class Constants {
     public static final String messageUsername="messageUsername";
     public static final String messagePwd="messagePwd";
     public static final String updloadAdvert="updload/advert";
+    public static final String updloadFood="updload/food";
+    public static final String updloadActivity="updload/activity";
+    public static final String updloadGame="updload/game";
+    public static final String updloadGoods="updload/goods";
+    public static final String updloadPortrait="updload/portrait";
 
 
 

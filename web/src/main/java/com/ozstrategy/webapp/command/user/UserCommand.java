@@ -1,6 +1,7 @@
 package com.ozstrategy.webapp.command.user;
 import com.ozstrategy.model.user.User;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.List;
 /**
 * Created by lihao1 on 2015-06-10.
 */
-public class UserCommand {
+public class UserCommand implements Serializable {
     private Boolean enabled;
     private Boolean accountExpired;
     private String password;
@@ -22,13 +23,17 @@ public class UserCommand {
     private Date createDate;
     private String mobile;
     private Long roleId;
+    private String roleName;
+    private Double credits;
+    private String portraitName;
+    private String portraitUrl;
+    private String portraitPath;
     private List<RoleCommand> roles=new ArrayList<RoleCommand>();
     public UserCommand() {
     }
     public UserCommand(User model) {
         this.enabled=model.getEnabled();
         this.accountExpired=model.getAccountExpired();
-        this.password=model.getPassword();
         this.accountLocked=model.getAccountLocked();
         this.lastUpdateDate=model.getLastUpdateDate();
         this.id=model.getId();
@@ -39,6 +44,10 @@ public class UserCommand {
         this.createDate=model.getCreateDate();
         this.mobile=model.getMobile();
         this.roleId=model.getRoleId();
+        this.credits=model.getCredits();
+        this.portraitName=model.getPortraitName();
+        this.portraitPath=model.getPortraitPath();
+        this.portraitUrl=model.getPortraitUrl();
     }
     public Boolean getEnabled() {
         return enabled;
@@ -125,5 +134,45 @@ public class UserCommand {
 
     public void setRoles(List<RoleCommand> roles) {
         this.roles = roles;
+    }
+
+    public Double getCredits() {
+        return credits;
+    }
+
+    public void setCredits(Double credits) {
+        this.credits = credits;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
+
+    public String getPortraitName() {
+        return portraitName;
+    }
+
+    public void setPortraitName(String portraitName) {
+        this.portraitName = portraitName;
+    }
+
+    public String getPortraitUrl() {
+        return portraitUrl;
+    }
+
+    public void setPortraitUrl(String portraitUrl) {
+        this.portraitUrl = portraitUrl;
+    }
+
+    public String getPortraitPath() {
+        return portraitPath;
+    }
+
+    public void setPortraitPath(String portraitPath) {
+        this.portraitPath = portraitPath;
     }
 }

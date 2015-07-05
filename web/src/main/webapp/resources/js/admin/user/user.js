@@ -61,48 +61,54 @@ function changeUserMobile(modal){
 
 var columns=[
     {
+        width:200,
         name:'mobile',
         renderer:function(v,rec){
-            return '<td><a href="javascript:void(0);" onclick="edit('+rec.id+');">'+v+'</a></td>';
+            return '<a href="#edit" onclick="edit('+rec.id+');">'+v+'</a>';
         }
     },
     {
+        width:200,
         name:'nickName'
     },
     {
+        width:200,
         name:'roles',
         renderer:function(v){
             if(!v){
-                return '<td></td>';
+                return '';
             }
             var roles=[];
             for(var i=0;i< v.length;i++){
                 roles.push(v[i].displayName);
             }
-            return '<td>'+roles.join(',')+'</td>';
+            return roles.join(',');
         }
     },
     {
         name:'createDate',
+        width:140,
         renderer:function(v){
-            return '<td>'+new Date(v).format("yyyy-MM-dd hh:mm:ss")+'</td>';
+            return new Date(v).format("yyyy-MM-dd hh:mm:ss");
         }
     },
     {
         name:'credentialsExpired',
+        width:140,
         renderer:function(v){
             if(!v){
-                return '<td><span class="label label-lg label-success">是</span></td>';
+                return '<span class="label label-lg label-success">是</span>';
             }else{
-                return '<td><span class="label label-lg label-grey"">否</span></td>';
+                return '<span class="label label-lg label-grey"">否</span>';
             }
 
         }
     },
 
     {
+        width:120,
         renderer:function(v,rec){
-            return '<td><div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">'+
+            return '<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">'+
                 '<a class="green" href="javascript:void(0);" data-rel="tooltip" title="编辑" onclick="edit('+rec.id+')">'+
                 '<i class="icon-pencil bigger-130"></i>'+
                 '</a>'+
@@ -115,16 +121,14 @@ var columns=[
                 '<a class="blue" href="#changeUserMobileModel" userId="'+rec.id+'" mobile="'+rec.mobile+'" data-rel="tooltip" title="修改手机号码" data-toggle="modal" data-target="#changeUserMobileModel">'+
                 '<i class="icon-user-md bigger-130"></i>'+
                 '</a>'+
-
-
-                '</div></td>';
+                '</div>';
         }
     }
 ];
 function listTable(params){
     $('#gameTable').htable({
         url:appPath+'html/user/security/list',
-        params:{},
+        params:$.extend({},params),
         columns:columns,
         pager:$('#paging')
     });

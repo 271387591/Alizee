@@ -1,5 +1,8 @@
 package com.ozstrategy.webapp.controller.user;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ozstrategy.Constants;
+import com.ozstrategy.model.system.Activity;
 import com.ozstrategy.model.system.Food;
 import com.ozstrategy.model.user.Role;
 import com.ozstrategy.model.user.User;
@@ -14,17 +17,26 @@ import com.ozstrategy.webapp.command.system.AdvertCommand;
 import com.ozstrategy.webapp.command.user.RoleCommand;
 import com.ozstrategy.webapp.command.user.UserCommand;
 import com.ozstrategy.webapp.controller.BaseController;
+import org.apache.commons.fileupload.disk.DiskFileItem;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.*;
 
 /**
@@ -228,11 +240,17 @@ public class UserController extends BaseController {
             if(validate==null || !StringUtils.equals(validateCode,validate.getCode())){
                 return new JsonReaderSingleResponse<UserCommand>(null,false,"验证码已过期");
             }
+            map=new HashMap<String, Object>();
+            map.put("Q_name_EQ","ROLE_USER");
+            Role role=roleManager.getByParam(map);
             user=new User();
             user.setMobile(mobile);
             user.setNickName(nickName);
             user.setUsername(mobile);
             user.setPassword(password);
+            user.setRoleId(role.getId());
+            user.getRoles().clear();
+            user.getRoles().add(role);
             userManager.saveUser(user);
             return new JsonReaderSingleResponse(true);
         }catch (Exception e){
@@ -261,6 +279,78 @@ public class UserController extends BaseController {
             logger.error("getBackPwd fail",e);
         }
         return new JsonReaderSingleResponse(null,false,"参数错误");
+    }
+    @RequestMapping(value = "web/portrait")
+    public ModelAndView portrait(HttpServletRequest request, HttpServletResponse response) {
+        String username    = request.getRemoteUser();
+        User user=userManager.getUserByUsername(username);
+        String attachFilesDirStr = request.getSession().getServletContext().getRealPath("/") + "/" + Constants.updloadPortrait + "/";
+        attachFilesDirStr = FilenameUtils.normalize(attachFilesDirStr);
+
+        File fileDir = new File(attachFilesDirStr);
+
+        if (fileDir.exists() == false) {
+            fileDir.mkdirs();
+        }
+        PrintWriter writer = null;
+
+        try {
+            writer = response.getWriter();
+        } catch (IOException e) { }
+
+        if (writer == null) {
+            return null;
+        }
+        File fileOnServer = null;
+        String fileName=null,str=null,ext=null;
+        try {
+            MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+            Iterator list             = multipartRequest.getFileNames();
+            while (list.hasNext()) {
+                String               controlName = list.next().toString();
+                MultipartFile file        = multipartRequest.getFile(controlName);
+                CommonsMultipartFile cmf         = (CommonsMultipartFile) file;
+                DiskFileItem fileItem    = (DiskFileItem) cmf.getFileItem();
+                str         = UUID.randomUUID().toString();
+                fileName    = fileItem.getName();
+                ext         = FilenameUtils.getExtension(fileName);
+                attachFilesDirStr = attachFilesDirStr + "/" + str + "." + ext;
+                attachFilesDirStr = FilenameUtils.normalize(attachFilesDirStr);
+                fileOnServer      = new File(attachFilesDirStr);
+
+                if (fileOnServer.exists()) {
+                    str               = UUID.randomUUID().toString();
+                    attachFilesDirStr = attachFilesDirStr + "/" + str + "." + ext;
+                    attachFilesDirStr = FilenameUtils.normalize(attachFilesDirStr);
+                    fileOnServer      = new File(attachFilesDirStr);
+                }
+                fileItem.write(fileOnServer);
+                if(StringUtils.isNotEmpty(fileName)){
+                    try{
+                        FileUtils.forceDelete(new File(user.getPortraitPath()));
+                    }catch (Exception e){
+                    }
+                    user.setPortraitName(fileName);
+                    user.setPortraitPath(fileOnServer.getAbsolutePath());
+                    String httpPath=toHttpUrl(request,true)+Constants.updloadPortrait+"/"+str+"."+ext;
+                    user.setPortraitUrl(httpPath);
+                }
+                userManager.saveOrUpdate(user);
+                writer.print(new ObjectMapper().writeValueAsString(new JsonReaderSingleResponse(null,true,"")));
+            }
+
+        } catch (Exception e) {
+            logger.error("upload activity fail", e);
+            e.printStackTrace();
+            try {
+                writer.print(new ObjectMapper().writeValueAsString(new JsonReaderSingleResponse(null, false, "上传失败")));
+                FileUtils.forceDelete(fileOnServer);
+            } catch (IOException e1) { }
+        }
+
+        writer.close();
+
+        return null;
     }
 
 }

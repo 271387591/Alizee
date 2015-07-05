@@ -250,6 +250,11 @@
             <artifactId>httpmime</artifactId>
             <version>${httpclient.version}</version>
         </dependency>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>${commons.version}</version>
+        </dependency>
         <!--json-->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -599,6 +604,7 @@
         <xmlParserAPIs.version>2.6.2</xmlParserAPIs.version>
         <javassist.version>3.4.GA</javassist.version>
         <druid.version>1.0.14</druid.version>
+        <commons.version>1.10</commons.version>
     </properties>
 
 </project>

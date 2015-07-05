@@ -39,14 +39,21 @@ public class ValidateCodeController extends BaseController {
                 return new JsonReaderSingleResponse(null,false,"请填写手机号");
             }
             ValidateCodeType validateCodeType=ValidateCodeType.valueOf(type);
+            User user=userManager.getUserByUsername(mobile);
             if(validateCodeType==ValidateCodeType.GetBackPwd){
-                User user=userManager.getUserByUsername(mobile);
                 if(user==null){
                     return new JsonReaderSingleResponse(null,false,"该用户不存在");
                 }
+            }else if(validateCodeType==ValidateCodeType.Register){
+                if(user!=null){
+                    return new JsonReaderSingleResponse(null,false,"该用户已注册");
+                }
             }
             boolean ret = validateCodeManager.sendCode(mobile, validateCodeType);
-            return new JsonReaderSingleResponse(ret);
+            if(ret){
+                return new JsonReaderSingleResponse(ret);
+            }
+            return new JsonReaderSingleResponse(ret,false,"获取短信失败");
         }catch (Exception e){
             logger.error("save fail",e);
         }

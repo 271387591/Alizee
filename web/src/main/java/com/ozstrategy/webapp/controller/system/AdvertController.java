@@ -1,7 +1,10 @@
 package com.ozstrategy.webapp.controller.system;
 
 import com.ozstrategy.Constants;
+import com.ozstrategy.model.commend.CommendType;
 import com.ozstrategy.model.system.Advert;
+import com.ozstrategy.service.commend.CommendManager;
+import com.ozstrategy.service.commend.CommentManager;
 import com.ozstrategy.service.system.AdvertManager;
 import com.ozstrategy.webapp.command.JsonReaderResponse;
 import com.ozstrategy.webapp.command.JsonReaderSingleResponse;
@@ -37,6 +40,12 @@ import static com.ozstrategy.Constants.picFileDir;
 public class AdvertController extends BaseController {
     @Autowired
     private AdvertManager advertManager;
+    @Autowired
+    private CommentManager commentManager;
+    @Autowired
+    private CommendManager commendManager;
+
+
     @RequestMapping("list")
     public JsonReaderResponse<AdvertCommand> list(HttpServletRequest request){
         List<AdvertCommand> commands=new ArrayList<AdvertCommand>();
@@ -46,6 +55,13 @@ public class AdvertController extends BaseController {
                 if(models!=null && models.size()>0){
                     for(Advert model:models){
                         AdvertCommand command=new AdvertCommand(model);
+                        Map<String,Object> objectMap=new HashMap<String, Object>();
+                        objectMap.put("Q_itemId_EQ",model.getId());
+                        objectMap.put("Q_typeId_EQ", CommendType.Advert.ordinal());
+                        Integer comment=commentManager.count(objectMap);
+                        Integer commend=commendManager.count(objectMap);
+                        command.setComment(comment);
+                        command.setCommend(commend);
                         commands.add(command);
                     }
                 }

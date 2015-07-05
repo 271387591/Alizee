@@ -17,13 +17,15 @@ public interface BaseDao<T> {
     <D> List<D> findByNamedQuery(String queryName,Class<D> dClass,Map<String,Object> map);
     <D> List<D> findByNamedQueryPage(String queryName,Class<D> dClass,Map<String,Object> map,Integer start,Integer limit);
     <D> D findByNamedQueryBean(String queryName,Class<D> dClass,Map<String,Object> map);
+    List<Map<String,Object>> findByNamedQuery(String queryName,Map<String,Object> map);
+    List<Map<String,Object>> findByNamedQuery(String queryName,Map<String,Object> map,Integer start,Integer limit);
     Integer listPageCount(Map<String,Object> params);
     T save(T entity);
     T saveOrUpdate(T entity);
-    void update(T entity);
-    void delete(T entity);
+    int update(T entity);
+    int delete(T entity);
     T get(Serializable id);
     T getByParam(Map<String,Object> map);
-    void deleteById(Serializable id);
-    void deleteByParam(Map<String,Object> map);
+    int deleteById(Serializable id);
+    int deleteByParam(Map<String,Object> map);
 }

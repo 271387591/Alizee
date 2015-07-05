@@ -15,6 +15,8 @@ public class AdvertCommand {
     private Date createDate;
     private String picName;
     private String url;
+    private Integer comment;
+    private Integer commend;
     public AdvertCommand() {
     }
     public AdvertCommand(Advert model) {
@@ -76,5 +78,21 @@ public class AdvertCommand {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public Integer getComment() {
+        return comment;
+    }
+
+    public void setComment(Integer comment) {
+        this.comment = comment;
+    }
+
+    public Integer getCommend() {
+        return commend;
+    }
+
+    public void setCommend(Integer commend) {
+        this.commend = commend;
     }
 }

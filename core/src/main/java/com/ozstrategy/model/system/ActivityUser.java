@@ -1,8 +1,6 @@
 package com.ozstrategy.model.system;
 
-import com.ozstrategy.annotations.Id;
-import com.ozstrategy.annotations.Table;
-import com.ozstrategy.annotations.Transient;
+import com.ozstrategy.annotations.*;
 import com.ozstrategy.model.BaseEntity;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -13,16 +11,18 @@ import java.util.Date;
  * Created by lihao1 on 6/25/15.
  */
 @Table(name = "t_activityuser")
+@NamedQueries({
+        @NamedQuery(name = "getUsers",query = "select u.username,u.mobile,u.nickName,u.portraitUrl,a.* from t_activityuser a join t_user u on a.userId=u.id where a.activityId=:activityId"),
+        @NamedQuery(name = "getUsersCount",query = "select count(*) from t_activityuser a join t_user u on a.userId=u.id where a.activityId=:activityId")
+})
 public class ActivityUser extends BaseEntity{
     @Id
     private Long id;
     private Long userId;
     private Long activityId;
     private Date createDate;
-    @Transient
-    private String username;
-    @Transient
-    private String nickName;
+    private Date lastUpdateDate;
+    private Integer status=ActivityUserStatus.CheckPending.ordinal();
 
     public ActivityUser() {
     }
@@ -59,21 +59,22 @@ public class ActivityUser extends BaseEntity{
         this.createDate = createDate;
     }
 
-    public String getUsername() {
-        return username;
+    public Integer getStatus() {
+        return status;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
-    public String getNickName() {
-        return nickName;
+    public Date getLastUpdateDate() {
+        return lastUpdateDate;
     }
 
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
+    public void setLastUpdateDate(Date lastUpdateDate) {
+        this.lastUpdateDate = lastUpdateDate;
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

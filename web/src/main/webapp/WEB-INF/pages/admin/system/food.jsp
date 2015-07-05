@@ -68,7 +68,7 @@
                             <table class="table table-bordered table-hover" style="margin-bottom: 2px;" id="foodTable">
                                 <thead>
                                 <tr>
-                                    <th class="center">
+                                    <th class="center" style="width: 60px;">
                                         <label>
                                             <input type="checkbox" class="ace" />
                                             <span class="lbl"></span>
@@ -76,7 +76,7 @@
                                     </th>
                                     <th>标题</th>
                                     <th>美食图片</th>
-                                    <th class="hidden-480">描述</th>
+                                    <th>描述</th>
                                     <th>创建时间</th>
                                     <th></th>
                                 </tr>
