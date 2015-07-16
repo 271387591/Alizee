@@ -424,7 +424,7 @@ public class ActivityController extends BaseController {
             map.put("Q_a.createDate","DESC");
             List<Map<String,Object>> users=activityUserManager.findByNamedQuery("getUsers", map, obtainStart(request), obtainLimit(request));
 
-            Integer count=activityUserManager.findByNamedQueryBean("getUsersCount",Integer.class,map);
+            Integer count=activityUserManager.findByNamedQueryClass("getUsersCount",Integer.class,map);
             return new JsonReaderResponse(users,true,count,"");
         }catch (Exception e){
             logger.error("logoutActivity fail",e);

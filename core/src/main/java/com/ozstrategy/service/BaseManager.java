@@ -31,6 +31,10 @@ public interface BaseManager<T> {
     <D> List<D> findByNamedQueryPage(String queryName,Class<D> dClass,Map<String,Object> map,Integer start,Integer limit);
     <D> D findByNamedQueryBean(String queryName,Class<D> dClass,Map<String,Object> map);
 
+    <D> D findByNamedQueryClass(String queryName,Class<D> dClass,Map<String,Object> map);
+
+    Map<String,Object> findByNamedQueryMap(String queryName,Map<String,Object> map);
+
 
     List<Map<String,Object>> findByNamedQuery(String queryName,Map<String,Object> map);
     List<Map<String,Object>> findByNamedQuery(String queryName,Map<String,Object> map,Integer start,Integer limit);

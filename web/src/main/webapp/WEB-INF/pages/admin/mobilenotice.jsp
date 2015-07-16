@@ -21,6 +21,7 @@
 <%@ page import="org.springframework.context.ApplicationContext" %>
 <%@ page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
 <%@ page import="com.ozstrategy.service.recharge.RechargeManager" %>
+<%@ page import="com.ozstrategy.service.system.ApplicationConfigManager" %>
 <%
 	//获取支付宝POST过来反馈信息
 	Map<String,String> params = new HashMap<String,String>();
@@ -52,8 +53,11 @@
     ServletContext servletContext = request.getSession().getServletContext();
     ApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(servletContext);
     RechargeManager creditsOrderManager=(RechargeManager)ctx.getBean("rechargeManager");
+    ApplicationConfigManager applicationConfigManager=(ApplicationConfigManager)ctx.getBean("applicationConfigManager");
+    String pid=applicationConfigManager.getValue("pid");
+    String secret=applicationConfigManager.getValue("secret");
 //
-	if(AlipayNotify.verify(params)){//验证成功
+	if(AlipayNotify.verify(params,pid,secret)){//验证成功
 
 		//////////////////////////////////////////////////////////////////////////////////////////
 		//请在这里加上商户的业务逻辑程序代码

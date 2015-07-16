@@ -71,6 +71,7 @@ public class RechargeManagerImpl extends BaseManagerImpl<Recharge> implements Re
             String notify_url=applicationConfigDao.getValue("notify_url");
             String pid=applicationConfigDao.getValue("pid");
             String seller_email=applicationConfigDao.getValue("seller_email");
+            String mobile_rsa=applicationConfigDao.getValue("mobile_rsa");
             map.put("publicKey",publicKey);
             Map<String,Object> data=new HashMap<String, Object>();
             data.put("id",recharge.getId());
@@ -78,6 +79,7 @@ public class RechargeManagerImpl extends BaseManagerImpl<Recharge> implements Re
             data.put("money",recharge.getMoney());
             data.put("notify_url",notify_url);
             data.put("seller_email",seller_email);
+            data.put("mobile_rsa",mobile_rsa);
             data.put("pid",pid);
             String dataStr=new ObjectMapper().writeValueAsString(data);
             byte[] dataStrData = dataStr.getBytes();
@@ -130,6 +132,7 @@ public class RechargeManagerImpl extends BaseManagerImpl<Recharge> implements Re
         String out_trade_no= map.get("out_trade_no");
         String trade_no= map.get("trade_no");
         String trade_status= map.get("trade_status");
+        String fail_details=map.get("fail_details");
         if(StringUtils.isNotEmpty(out_trade_no)){
             Map<String,Object> orderMap=new HashMap<String, Object>();
             orderMap.put("Q_rechargeNo_EQ",out_trade_no);
@@ -137,6 +140,7 @@ public class RechargeManagerImpl extends BaseManagerImpl<Recharge> implements Re
             if(recharge!=null){
                 recharge.setStatus(RechargeStatus.Fail.ordinal());
                 recharge.setLastUpdateDate(new Date());
+                recharge.setDetails(fail_details);
                 rechargeDao.update(recharge);
             }
         }

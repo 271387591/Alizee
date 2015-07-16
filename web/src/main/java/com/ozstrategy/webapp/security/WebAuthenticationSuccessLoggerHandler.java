@@ -4,8 +4,7 @@ import com.ozstrategy.model.user.Role;
 import com.ozstrategy.model.user.User;
 import com.ozstrategy.webapp.command.JsonReaderSingleResponse;
 import com.ozstrategy.webapp.command.user.UserCommand;
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang3.time.DateFormatUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
@@ -44,12 +43,11 @@ public class WebAuthenticationSuccessLoggerHandler extends WebAuthenticationLogg
               userCommand.setRoleName(role.getName());
           }
           request.getSession().setAttribute("userinfo",userCommand);
-          if(org.apache.commons.lang3.StringUtils.equals("ROLE_ADMIN",role.getName())){
+          if(StringUtils.equals("ROLE_ADMIN",userCommand.getRoleName())){
               response.sendRedirect("html/security/about");
-          }else{
+          }else if(StringUtils.equals("ROLE_TENANT",userCommand.getRoleName())){
               response.sendRedirect("html/tenant/merchantinfo");
           }
-
           return;
       }
 

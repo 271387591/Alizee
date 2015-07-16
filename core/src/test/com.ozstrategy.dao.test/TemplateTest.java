@@ -31,8 +31,8 @@ public class TemplateTest {
     public static String webRootPath=System.getProperty("user.dir")+"/web/src/main/java/";
     public static List<Class> list=new ArrayList<Class>();
     static {
-        list.add(Recharge.class);
-        list.add(ConsumeDetail.class);
+        list.add(Notice.class);
+//        list.add(ConsumeDetail.class);
 //        list.add(ActivityUser.class);
 //        list.add(Comment.class);
 //        list.add(Advert.class);

@@ -95,6 +95,14 @@ public abstract class BaseManagerImpl<T> implements BaseManager<T> {
         return baseDao().findByNamedQueryBean(queryName, dClass, map);
     }
 
+    public <D> D findByNamedQueryClass(String queryName, Class<D> dClass, Map<String, Object> map) {
+        return baseDao().findByNamedQueryClass(queryName, dClass, map);
+    }
+
+    public Map<String, Object> findByNamedQueryMap(String queryName, Map<String, Object> map) {
+        return baseDao().findByNamedQueryMap(queryName, map);
+    }
+
     public List<Map<String, Object>> findByNamedQuery(String queryName, Map<String, Object> map) {
         return baseDao().findByNamedQuery(queryName, map);
     }

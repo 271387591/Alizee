@@ -56,7 +56,7 @@
         <row>
             <value>9</value>
             <value>pid</value>
-            <value>2088511992380004</value>
+            <value>2088021064120536</value>
         </row>
         <row>
             <value>10</value>
@@ -66,17 +66,18 @@
         <row>
             <value>11</value>
             <value>secret</value>
-            <value>f0nupyvkgayupzexqrzos4vgxp6vphh6</value>
+            <value>j3o6kdx6kstyjjibkcymxg12l3fydq1b</value>
         </row>
         <row>
             <value>12</value>
             <value>seller_email</value>
             <value>23555109@qq.com</value>
         </row>
-
-
-
-
+        <row>
+            <value>13</value>
+            <value>mobile_rsa</value>
+            <value>MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAOr8FF/qyR9w7KKw7D8dGKrVILMVV/enX8dUf1ePTT0368KUhtRvblWzjVJArPFHIwojAv0DGUmTUpsmG8qTWA0d7YkdStAKMuMgO6E6i1ecDPa2478HY/+hI5eZfv7gRLNuqaESi10eP6eopfCwbsLKaw4QrD8XWiUQZnS3vAgMBAAECgYEApAmxV3wZRr+YEaf5EDZMMQ0g/GMr85B+BjJwavl4nAHLrRvuO6JGTcF4KDFKCWz1gwAJ+AIPxxL3GzpR91h6Mc86sJ7+35F+BAhYkIRE6C7mG4vjn4TJGnTlHyumAtHxfOPAACxPVc+lcnW4UZOMOC7YAFlFevCutXhe19aECQQD9PXrwGup8aoRUv0yvaeuVFBkOHY+soHjk7zvKAGEbdvp1H1xNH8iZlPNhJhQwfEwcpw/oMfij2erqovMezopAkEA7YurBeCZgFc82HvPEOIYLeupS95Zebg3Orl31MBXQNNDIk//YZtqDmeLw8cFMxITIjnlmT/RBMzH6LvDpaVwJBAPZshh3xQy5QhHbnNFsZigomZX8r2uxTt3CnL5oQpnPeMHoosOyg9fnczPxDDrBjs7jKBJuhTN88pfEvIb9fokCQAj7VPYd7e/qXISa+Vcp/ogZqeLZDrAsMrpntN44f5QV6N3tRGy+YZ410BUQ+2NY9Zw/sCzBOvgBfjWQpBhbHUCQ+J8ktUQZoLDWV/gQebE8sjP/1C79a3R26G3POvKSwJqniUGDgpUF/2WLplOaBN1WxyaZslLRUdrC4YyeGms=</value>
+        </row>
     </table>
 
     <table name="t_role">
@@ -151,6 +152,22 @@
             <value>admin</value>
             <value>1</value>
         </row>
+        <row>
+            <value>2</value>
+            <value><![CDATA[2013-01-27 11:27:03.0]]></value>
+            <value><![CDATA[2013-01-27 11:27:25.0]]></value>
+            <value>0</value>
+            <value>0</value>
+            <value>0</value>
+            <value>1</value>
+            <value>M</value>
+            <value>18583910581</value>
+            <value>536c0b339345616c1b33caf454454d8b8a190d6c</value>
+            <value>user</value>
+            <value>user</value>
+            <value>2</value>
+        </row>
+
     </table>
     <table name="t_userrole">
         <column>userId</column>
@@ -159,5 +176,10 @@
             <value>1</value>
             <value>1</value>
         </row>
+        <row>
+            <value>2</value>
+            <value>2</value>
+        </row>
+
     </table>
 </dataset>

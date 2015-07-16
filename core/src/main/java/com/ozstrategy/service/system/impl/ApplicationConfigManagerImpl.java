@@ -30,4 +30,8 @@ public class ApplicationConfigManagerImpl extends BaseManagerImpl<ApplicationCon
         ApplicationConfig config=applicationConfigDao.getByParam(map);
         return config;
     }
+
+    public String getValue(String key) {
+        return applicationConfigDao.getValue(key);
+    }
 }

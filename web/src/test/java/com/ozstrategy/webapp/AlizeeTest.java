@@ -61,7 +61,8 @@ public class AlizeeTest {
      */
     @Test
     public void testGetValidateCode() throws Exception{
-        String url="http://127.0.0.1:8082/Alizee/app/getValidateCode";
+//        String url="http://127.0.0.1:8082/Alizee/app/getValidateCode";
+        String url="http://121.42.153.185:8080/Alizee/app/getValidateCode";
         HttpPost httpost = new HttpPost(url);
         List<NameValuePair> nvps = new ArrayList<NameValuePair>();
         nvps.add(new BasicNameValuePair("mobile", "18583910581"));
@@ -160,7 +161,7 @@ public class AlizeeTest {
         HttpPost httpost = new HttpPost(url);
         List<NameValuePair> nvps = new ArrayList<NameValuePair>();
 
-        nvps.add(new BasicNameValuePair("username", "13333333333"));
+        nvps.add(new BasicNameValuePair("username", "18583910581"));
         nvps.add(new BasicNameValuePair("password", "tomcat"));
         httpost.setEntity(new UrlEncodedFormEntity(nvps, HTTP.UTF_8));
         DefaultHttpClient httpclient = new DefaultHttpClient();
@@ -857,7 +858,7 @@ public class AlizeeTest {
         nvps.add(new BasicNameValuePair("money", "4"));
         nvps.add(new BasicNameValuePair("credits", "4"));
         httpost.setEntity(new UrlEncodedFormEntity(nvps, HTTP.UTF_8));
-        httpost.addHeader("Cookie", "JSESSIONID=dnp0hap83nrc;Path=/Alizee");
+        httpost.addHeader("Cookie", "JSESSIONID=194t9sm4gph1g;Path=/Alizee");
         DefaultHttpClient httpclient = new DefaultHttpClient();
         HttpResponse response = null;
         response = httpclient.execute(httpost);
@@ -871,6 +872,156 @@ public class AlizeeTest {
         httpclient.getConnectionManager().shutdown();
 
     }
+    /**
+     * 修改个人资料，所有参数可选
+     * 登录cookie
+     *nickName,昵称，不做重复判断，昵称是可以重名的如果昵称为空，你前端直接显示“游客”
+     * gender，性别，取值：M,表示男，F，表示女，
+     * birth，生日，格式：2015-04-23，
+     * province，省
+     * city，市
+     * country，县
+     * address，县以下的地区
+     * postalCode，邮编，
+     *
+     * 请求方式：POST/get
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testUpdateUser() throws Exception{
+        String url="http://127.0.0.1:8082/Alizee/app/updateUser";
+        HttpPost httpost = new HttpPost(url);
+        List<NameValuePair> nvps = new ArrayList<NameValuePair>();
+        nvps.add(new BasicNameValuePair("gender", "F"));
+        httpost.setEntity(new UrlEncodedFormEntity(nvps, HTTP.UTF_8));
+        httpost.addHeader("Cookie", "JSESSIONID=1er2klujrrjqi;Path=/Alizee");
+        DefaultHttpClient httpclient = new DefaultHttpClient();
+        HttpResponse response = null;
+        response = httpclient.execute(httpost);
+        HttpEntity entity = response.getEntity();
+
+        String charset = EntityUtils.getContentCharSet(entity);
+
+        String body = null;
+        body = EntityUtils.toString(entity);
+        System.out.println(body);
+        httpclient.getConnectionManager().shutdown();
+
+    }
+    /**
+     *用户反馈
+     * 登录cookie
+     * content，反馈内容
+     * contract，联系方式
+     *
+     * 请求方式：POST/get
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testUserComments() throws Exception{
+        String url="http://127.0.0.1:8082/Alizee/app/userComments";
+        HttpPost httpost = new HttpPost(url);
+        List<NameValuePair> nvps = new ArrayList<NameValuePair>();
+        nvps.add(new BasicNameValuePair("content", "sdfsdfsdf"));
+        httpost.setEntity(new UrlEncodedFormEntity(nvps, HTTP.UTF_8));
+        httpost.addHeader("Cookie", "JSESSIONID=1er2klujrrjqi;Path=/Alizee");
+        DefaultHttpClient httpclient = new DefaultHttpClient();
+        HttpResponse response = null;
+        response = httpclient.execute(httpost);
+        HttpEntity entity = response.getEntity();
+
+        String charset = EntityUtils.getContentCharSet(entity);
+
+        String body = null;
+        body = EntityUtils.toString(entity);
+        System.out.println(body);
+        httpclient.getConnectionManager().shutdown();
+
+    }
+    /**
+     * 获取评论列表
+     * 登录cookie
+     * * start:数据起始量，比如：从第0条数据开始，start=0,从第34条数据开始：start=34 （必须，并且为数字）
+     * limit:每次获取的数据量,默认每次25条，（可以不传，默认25条）
+     *
+     * 参数示例：比如每页显示30条数据，参数传递为：
+     * 第一页：start=0&limit=30
+     * 第二页：start=31&limit=30
+     * 第三页：start=61&limit=30
+     * .......
+     *
+     * 根据客户端需要获取几条，
+     *
+     *
+     * 请求方式：POST
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testGetUserComments() throws Exception{
+        String url="http://127.0.0.1:8082/Alizee/app/getUserComments";
+        HttpPost httpost = new HttpPost(url);
+        List<NameValuePair> nvps = new ArrayList<NameValuePair>();
+        nvps.add(new BasicNameValuePair("start", "0"));
+        nvps.add(new BasicNameValuePair("limit", "10"));
+        httpost.addHeader("Cookie", "JSESSIONID=1er2klujrrjqi;Path=/Alizee");
+        httpost.setEntity(new UrlEncodedFormEntity(nvps, HTTP.UTF_8));
+        DefaultHttpClient httpclient = new DefaultHttpClient();
+        HttpResponse response = null;
+        response = httpclient.execute(httpost);
+        HttpEntity entity = response.getEntity();
+
+        String charset = EntityUtils.getContentCharSet(entity);
+
+        String body = null;
+        body = EntityUtils.toString(entity);
+        System.out.println(body);
+        httpclient.getConnectionManager().shutdown();
+    }
+     /**
+     * 获取管理员通知
+     * * start:数据起始量，比如：从第0条数据开始，start=0,从第34条数据开始：start=34 （必须，并且为数字）
+     * limit:每次获取的数据量,默认每次25条，（可以不传，默认25条）
+     *
+     * 参数示例：比如每页显示30条数据，参数传递为：
+     * 第一页：start=0&limit=30
+     * 第二页：start=31&limit=30
+     * 第三页：start=61&limit=30
+     * .......
+     *
+     * 根据客户端需要获取几条，
+     *
+     *
+     * 请求方式：POST
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testGetNotice() throws Exception{
+        String url="http://127.0.0.1:8082/Alizee/app/getNotice";
+        HttpPost httpost = new HttpPost(url);
+        List<NameValuePair> nvps = new ArrayList<NameValuePair>();
+        nvps.add(new BasicNameValuePair("start", "0"));
+        nvps.add(new BasicNameValuePair("limit", "10"));
+        httpost.setEntity(new UrlEncodedFormEntity(nvps, HTTP.UTF_8));
+        DefaultHttpClient httpclient = new DefaultHttpClient();
+        HttpResponse response = null;
+        response = httpclient.execute(httpost);
+        HttpEntity entity = response.getEntity();
+
+        String charset = EntityUtils.getContentCharSet(entity);
+
+        String body = null;
+        body = EntityUtils.toString(entity);
+        System.out.println(body);
+        httpclient.getConnectionManager().shutdown();
+    }
+
+
+
+
 
 
 

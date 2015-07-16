@@ -60,6 +60,20 @@
                             活动管理
                         </a>
                     </li>
+                    <li id="menu-userComments">
+                        <a href="<c:url value="/html/security/userComments"/>">
+                            <i class="icon-double-angle-right"></i>
+                            用户反馈
+                        </a>
+                    </li>
+                    <li id="menu-notice">
+                        <a href="<c:url value="/html/security/notice"/>">
+                            <i class="icon-double-angle-right"></i>
+                            系统广播
+                        </a>
+                    </li>
+
+
                 </ul>
             </li>
             <li id="menu-game">
@@ -68,6 +82,13 @@
                     <span class="menu-text"> 游戏管理 </span>
                 </a>
             </li>
+            <li id="menu-recharge">
+                <a href="<c:url value="/html/security/recharge"/>">
+                    <i class="icon-headphones"></i>
+                    <span class="menu-text"> 充值查询 </span>
+                </a>
+            </li>
+
         </c:if>
         <c:if test="${userinfo.roleName eq 'ROLE_TENANT'}">
             <li class="active" id="menu-merchant">

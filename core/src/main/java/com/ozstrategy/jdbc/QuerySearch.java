@@ -14,15 +14,11 @@ import java.util.*;
  * 简单的单表搜索查询工具
  */
 public class QuerySearch {
-    public static final Log logger = LogFactory.getLog(QuerySearch.class);
     private List<QueryField> commands=new ArrayList<QueryField>();
     private List<QueryField> orCommands=new ArrayList<QueryField>();
     private Map<String,String> sortMap = new HashMap<String, String>();
     private String sql;
     private List<Object> values = new ArrayList<Object>();
-
-
-
     public QuerySearch(String baseHql,Map<String,Object> map){
         this.sql=baseHql;
         List<String> alias=ParserHelper.parseQueryName(this.sql);
@@ -78,6 +74,9 @@ public class QuerySearch {
             sql=new PageContext(this.sql).page(start,limit);
         }
         return sql;
+    }
+    public Map<String,String> getSortMap(){
+        return this.sortMap;
     }
     public Object[] getArgs(){
         return values.toArray();

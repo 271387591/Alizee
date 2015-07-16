@@ -28,6 +28,12 @@ public class UserCommand implements Serializable {
     private String portraitName;
     private String portraitUrl;
     private String portraitPath;
+    private Date birth;
+    private String address;
+    private String city;
+    private String country;
+    private String postalCode;
+    private String province;
     private List<RoleCommand> roles=new ArrayList<RoleCommand>();
     public UserCommand() {
     }
@@ -48,6 +54,12 @@ public class UserCommand implements Serializable {
         this.portraitName=model.getPortraitName();
         this.portraitPath=model.getPortraitPath();
         this.portraitUrl=model.getPortraitUrl();
+        this.birth=model.getBirth();
+        this.address=model.getAddress();
+        this.city=model.getCity();
+        this.country=model.getCountry();
+        this.postalCode=model.getPostalCode();
+        this.province= model.getProvince();
     }
     public Boolean getEnabled() {
         return enabled;
@@ -174,5 +186,53 @@ public class UserCommand implements Serializable {
 
     public void setPortraitPath(String portraitPath) {
         this.portraitPath = portraitPath;
+    }
+
+    public Date getBirth() {
+        return birth;
+    }
+
+    public void setBirth(Date birth) {
+        this.birth = birth;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getPostalCode() {
+        return postalCode;
+    }
+
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
     }
 }

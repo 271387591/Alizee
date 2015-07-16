@@ -12,10 +12,13 @@ import com.ozstrategy.webapp.controller.BaseController;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
 /**
@@ -29,45 +32,31 @@ public class RechargeController extends BaseController {
     @Autowired
     private UserManager userManager;
 
-    @RequestMapping("list")
-    public JsonReaderResponse<RechargeCommand> list(HttpServletRequest request){
-        List<RechargeCommand> commands=new ArrayList<RechargeCommand>();
-            Map<String,Object> map=requestMap(request);
-            try{
-            List<Recharge> models= rechargeManager.list(map,obtainStart(request),obtainLimit(request));
-                if(models!=null && models.size()>0){
-                    for(Recharge model:models){
-                        RechargeCommand command=new RechargeCommand(model);
-                        commands.add(command);
-                    }
-                }
-                Integer count=rechargeManager.count(map);
-                return new JsonReaderResponse(commands,true,count,"");
-            }catch (Exception e){
-                logger.error("list fail",e);
-            }
-            return new JsonReaderResponse(commands,false,"请求错误");
-    }
-    @RequestMapping("save")
-    public JsonReaderSingleResponse<RechargeCommand> save(HttpServletRequest request){
+    @RequestMapping("security/list")
+    public JsonReaderResponse list(HttpServletRequest request){
+        Map<String,Object> map=requestMap(request);
         try{
-
-            return new JsonReaderSingleResponse(true);
+            List<Map<String,Object>> models= rechargeManager.findByNamedQuery("getRecharges", map, obtainStart(request), obtainLimit(request));
+            Integer count=rechargeManager.findByNamedQueryClass("getRechargesCount",Integer.class,map);
+            return new JsonReaderResponse(models,true,count,"");
         }catch (Exception e){
-            logger.error("save fail",e);
+            logger.error("list fail",e);
         }
-        return new JsonReaderSingleResponse(null,false,"保存失败");
+        return new JsonReaderResponse(null,false,"请求错误");
     }
-    @RequestMapping("delete")
-    public JsonReaderSingleResponse<RechargeCommand> delete(HttpServletRequest request){
-        try{
+    @RequestMapping("security/rechargeList")
+    public ModelAndView activityList(HttpServletRequest request, HttpServletResponse response) {
+        Map<String,Object> map=new HashMap<String, Object>();
+        return new ModelAndView("admin/recharge/rechargeList","command",map);
+    }
+    @RequestMapping("security/detail/{id}")
+    public ModelAndView detail(@PathVariable Long id) {
+        Map<String,Object> map=new HashMap<String, Object>();
+        map.put("id",id);
+        Map<String,Object> command=rechargeManager.findByNamedQueryMap("getRecharge",map);
+        return new ModelAndView("admin/recharge/rechargeDetail","command",command);
+    }
 
-            return new JsonReaderSingleResponse(true);
-        }catch (Exception e){
-            logger.error("delete fail",e);
-        }
-        return new JsonReaderSingleResponse(null,false,"删除失败");
-    }
     @RequestMapping("web/createOrder")
     public Map<String,Object> createOrder(HttpServletRequest request) {
         Map<String,Object> map=new HashMap<String, Object>();

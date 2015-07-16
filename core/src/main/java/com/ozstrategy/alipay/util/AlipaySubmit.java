@@ -42,11 +42,12 @@ public class AlipaySubmit {
      * @param sPara 要签名的数组
      * @return 签名结果字符串
      */
-	public static String buildRequestMysign(Map<String, String> sPara) {
+	public static String buildRequestMysign(Map<String, String> sPara,String key) {
     	String prestr = AlipayCore.createLinkString(sPara); //把数组所有元素，按照“参数=参数值”的模式用“&”字符拼接成字符串
         String mysign = "";
         if(AlipayConfig.sign_type.equals("MD5") ) {
-        	mysign = MD5.sign(prestr, AlipayConfig.key, AlipayConfig.input_charset);
+//        	mysign = MD5.sign(prestr, AlipayConfig.key, AlipayConfig.input_charset);
+        	mysign = MD5.sign(prestr, key, AlipayConfig.input_charset);
         }
         return mysign;
     }
@@ -56,11 +57,11 @@ public class AlipaySubmit {
      * @param sParaTemp 请求前的参数数组
      * @return 要请求的参数数组
      */
-    private static Map<String, String> buildRequestPara(Map<String, String> sParaTemp) {
+    private static Map<String, String> buildRequestPara(Map<String, String> sParaTemp,String key) {
         //除去数组中的空值和签名参数
         Map<String, String> sPara = AlipayCore.paraFilter(sParaTemp);
         //生成签名结果
-        String mysign = buildRequestMysign(sPara);
+        String mysign = buildRequestMysign(sPara,key);
 
         //签名结果与签名方式加入请求提交参数组中
         sPara.put("sign", mysign);
@@ -76,9 +77,9 @@ public class AlipaySubmit {
      * @param strButtonName 确认按钮显示文字
      * @return 提交表单HTML文本
      */
-    public static String buildRequest(Map<String, String> sParaTemp, String strMethod, String strButtonName) {
+    public static String buildRequest(Map<String, String> sParaTemp, String strMethod, String strButtonName,String key) {
         //待请求参数数组
-        Map<String, String> sPara = buildRequestPara(sParaTemp);
+        Map<String, String> sPara = buildRequestPara(sParaTemp,key);
         List<String> keys = new ArrayList<String>(sPara.keySet());
 
         StringBuffer sbHtml = new StringBuffer();
@@ -109,9 +110,9 @@ public class AlipaySubmit {
      * @param strParaFileName 文件上传的参数名
      * @return 提交表单HTML文本
      */
-    public static String buildRequest(Map<String, String> sParaTemp, String strMethod, String strButtonName, String strParaFileName) {
+    public static String buildRequest(Map<String, String> sParaTemp, String strMethod, String strButtonName, String strParaFileName,String key) {
         //待请求参数数组
-        Map<String, String> sPara = buildRequestPara(sParaTemp);
+        Map<String, String> sPara = buildRequestPara(sParaTemp,key);
         List<String> keys = new ArrayList<String>(sPara.keySet());
 
         StringBuffer sbHtml = new StringBuffer();
@@ -145,9 +146,9 @@ public class AlipaySubmit {
      * @return 支付宝处理结果
      * @throws Exception
      */
-    public static String buildRequest(String strParaFileName, String strFilePath,Map<String, String> sParaTemp) throws Exception {
+    public static String buildRequest(String strParaFileName, String strFilePath,Map<String, String> sParaTemp,String key) throws Exception {
         //待请求参数数组
-        Map<String, String> sPara = buildRequestPara(sParaTemp);
+        Map<String, String> sPara = buildRequestPara(sParaTemp,key);
 
         HttpProtocolHandler httpProtocolHandler = HttpProtocolHandler.getInstance();
 
@@ -191,11 +192,12 @@ public class AlipaySubmit {
      * @throws org.dom4j.DocumentException
      * @throws java.net.MalformedURLException
      */
-	public static String query_timestamp() throws MalformedURLException,
+	public static String query_timestamp(String partner) throws MalformedURLException,
                                                         DocumentException, IOException {
 
         //构造访问query_timestamp接口的URL串
-        String strUrl = ALIPAY_GATEWAY_NEW + "service=query_timestamp&partner=" + AlipayConfig.partner + "&_input_charset" +AlipayConfig.input_charset;
+//        String strUrl = ALIPAY_GATEWAY_NEW + "service=query_timestamp&partner=" + AlipayConfig.partner + "&_input_charset" +AlipayConfig.input_charset;
+        String strUrl = ALIPAY_GATEWAY_NEW + "service=query_timestamp&partner=" + partner + "&_input_charset" +AlipayConfig.input_charset;
         StringBuffer result = new StringBuffer();
 
         SAXReader reader = new SAXReader();

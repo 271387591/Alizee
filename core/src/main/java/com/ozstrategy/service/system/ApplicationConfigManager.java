@@ -8,4 +8,5 @@ import com.ozstrategy.service.BaseManager;
 */
 public interface ApplicationConfigManager extends BaseManager<ApplicationConfig> {
     ApplicationConfig getConfig(String key);
+    String getValue(String key);
 }

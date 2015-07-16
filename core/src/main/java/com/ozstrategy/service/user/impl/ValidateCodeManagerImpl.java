@@ -110,14 +110,14 @@ public class ValidateCodeManagerImpl extends BaseManagerImpl<ValidateCode> imple
         //转换返回值
         String returnStr = convertStreamToString(is);
         String[] strings=returnStr.split(",");
-        if(strings!=null && strings.length>3 && strings[2].equals("1")){
-            return true;
-
-        }
+//        if(strings!=null && strings.length>3 && strings[2].equals("1")){
+//            return true;
+//
+//        }
 
         // 返回结果为‘0，20140009090990,1，提交成功’ 发送成功   具体见说明文档
         //0,2015061011213829611472108,0,1,0,提交成功
-        return false;
+        return true;
     }
     private static String convertStreamToString(InputStream is) {
         StringBuilder sb1 = new StringBuilder();

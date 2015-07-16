@@ -40,7 +40,7 @@ public class CommentController extends BaseController {
             map.put("typeId",CommendType.valueOf(type).ordinal());
             map.put("itemId",parseLong(itemId));
             List<Map<String,Object>> models= commentManager.findByNamedQuery("getComments", map, obtainStart(request), obtainLimit(request));
-            Integer count=commentManager.findByNamedQueryBean("getCommentsCount",Integer.class,map);
+            Integer count=commentManager.findByNamedQueryClass("getCommentsCount",Integer.class,map);
             return new JsonReaderResponse(models,true,count,"");
         }catch (Exception e){
             logger.error("list fail",e);

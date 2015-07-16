@@ -22,6 +22,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,6 +38,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
 import java.util.*;
 
 /**
@@ -130,7 +132,6 @@ public class UserController extends BaseController {
             user.setMobile(userCommand.getMobile());
             user.setNickName(userCommand.getNickName());
             user.setUsername(userCommand.getMobile());
-
             user.setRoleId(userCommand.getRoleId());
             List<RoleCommand> roleCommands=userCommand.getRoles();
             Set<Role> roles=new HashSet<Role>();
@@ -280,6 +281,37 @@ public class UserController extends BaseController {
         }
         return new JsonReaderSingleResponse(null,false,"参数错误");
     }
+    @RequestMapping("web/update")
+    public JsonReaderSingleResponse<UserCommand> update(HttpServletRequest request){
+        try{
+            String username=request.getRemoteUser();
+            User user=userManager.getUserByUsername(username);
+            String nickName=request.getParameter("nickName");
+            String gender=request.getParameter("gender");
+            String birth=request.getParameter("birth");
+            String address=request.getParameter("address");
+            String city=request.getParameter("city");
+            String country=request.getParameter("country");
+            String postalCode=request.getParameter("postalCode");
+            String province=request.getParameter("province");
+            user.setNickName(nickName);
+            user.setGender(gender);
+            if(StringUtils.isNotEmpty(birth)){
+                user.setBirth(DateUtils.parseDate(birth,"yyyy-MM-dd"));
+            }
+            user.setAddress(address);
+            user.setCity(city);
+            user.setCountry(country);
+            user.setPostalCode(postalCode);
+            user.setProvince(province);
+            userManager.update(user);
+            return new JsonReaderSingleResponse(true);
+        }catch (Exception e){
+            logger.error("update fail",e);
+        }
+        return new JsonReaderSingleResponse(null,false,"参数错误");
+    }
+
     @RequestMapping(value = "web/portrait")
     public ModelAndView portrait(HttpServletRequest request, HttpServletResponse response) {
         String username    = request.getRemoteUser();

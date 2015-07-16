@@ -109,6 +109,26 @@
         <from>/app/mobilenotice</from>
         <to>/html/security/mobilenotice</to>
     </rule>
+    <rule>
+        <from>/app/updateUser</from>
+        <to>/html/user/web/update</to>
+    </rule>
+    <rule>
+        <from>/app/userComments</from>
+        <to>/html/userComments/web/save</to>
+    </rule>
+    <rule>
+        <from>/app/getUserComments</from>
+        <to>/html/userComments/web/list</to>
+    </rule>
+    <rule>
+        <from>/app/getNotice</from>
+        <to>/html/notice/list</to>
+    </rule>
+
+
+
+
 
 
 

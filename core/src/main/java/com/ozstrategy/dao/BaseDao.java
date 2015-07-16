@@ -17,8 +17,11 @@ public interface BaseDao<T> {
     <D> List<D> findByNamedQuery(String queryName,Class<D> dClass,Map<String,Object> map);
     <D> List<D> findByNamedQueryPage(String queryName,Class<D> dClass,Map<String,Object> map,Integer start,Integer limit);
     <D> D findByNamedQueryBean(String queryName,Class<D> dClass,Map<String,Object> map);
+    <D> D findByNamedQueryClass(String queryName,Class<D> dClass,Map<String,Object> map);
+    Map<String,Object> findByNamedQueryMap(String queryName,Map<String,Object> map);
     List<Map<String,Object>> findByNamedQuery(String queryName,Map<String,Object> map);
     List<Map<String,Object>> findByNamedQuery(String queryName,Map<String,Object> map,Integer start,Integer limit);
+
     Integer listPageCount(Map<String,Object> params);
     T save(T entity);
     T saveOrUpdate(T entity);

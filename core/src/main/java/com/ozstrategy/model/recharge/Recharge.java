@@ -1,6 +1,8 @@
 package com.ozstrategy.model.recharge;
 
 import com.ozstrategy.annotations.Id;
+import com.ozstrategy.annotations.NamedQueries;
+import com.ozstrategy.annotations.NamedQuery;
 import com.ozstrategy.annotations.Table;
 import com.ozstrategy.model.BaseEntity;
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -12,6 +14,11 @@ import java.util.Date;
  * Created by lihao1 on 7/1/15.
  */
 @Table(name = "t_recharge")
+@NamedQueries({
+        @NamedQuery(name = "getRecharges",query = "select u.username,u.mobile,u.nickName,a.* from t_recharge a join t_user u on a.userId=u.id where 1=1"),
+        @NamedQuery(name = "getRechargesCount",query = "select count(*) from t_recharge a join t_user u on a.userId=u.id where 1=1"),
+        @NamedQuery(name = "getRecharge",query = "select u.username,u.mobile,u.nickName,a.* from t_recharge a join t_user u on a.userId=u.id where a.id=:id")
+})
 public class Recharge extends BaseEntity {
     @Id
     private Long id;
@@ -23,6 +30,7 @@ public class Recharge extends BaseEntity {
     private Date lastUpdateDate;
     private Date loseDate;
     private String rechargeNo;
+    private String details;
 
     public Recharge() {
     }
@@ -97,6 +105,14 @@ public class Recharge extends BaseEntity {
 
     public void setRechargeNo(String rechargeNo) {
         this.rechargeNo = rechargeNo;
+    }
+
+    public String getDetails() {
+        return details;
+    }
+
+    public void setDetails(String details) {
+        this.details = details;
     }
 
     @Override

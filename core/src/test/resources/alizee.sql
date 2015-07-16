@@ -11,7 +11,7 @@
  Target Server Version : 50624
  File Encoding         : utf-8
 
- Date: 06/29/2015 21:39:17 PM
+ Date: 07/14/2015 21:45:58 PM
 */
 
 SET NAMES utf8;
@@ -54,7 +54,7 @@ CREATE TABLE `t_activity` (
   `startDate` datetime DEFAULT NULL,
   `lastUpdateDate` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `t_activityuser`
@@ -65,12 +65,14 @@ CREATE TABLE `t_activityuser` (
   `userId` bigint(20) DEFAULT NULL,
   `activityId` bigint(20) DEFAULT NULL,
   `createDate` datetime DEFAULT NULL,
+  `status` int(10) DEFAULT NULL,
+  `lastUpdateDate` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `userId` (`userId`) USING BTREE,
   KEY `activityId` (`activityId`) USING BTREE,
   CONSTRAINT `t_activityuser_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `t_user` (`id`),
   CONSTRAINT `t_activityuser_ibfk_2` FOREIGN KEY (`activityId`) REFERENCES `t_activity` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `t_advert`
@@ -95,10 +97,22 @@ DROP TABLE IF EXISTS `t_applicationconfig`;
 CREATE TABLE `t_applicationconfig` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `systemKey` varchar(25) DEFAULT NULL,
-  `systemValue` tinytext,
+  `systemValue` mediumtext,
   PRIMARY KEY (`id`),
   KEY `systemKey` (`systemKey`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+--  Table structure for `t_applicationconfig_copy`
+-- ----------------------------
+DROP TABLE IF EXISTS `t_applicationconfig_copy`;
+CREATE TABLE `t_applicationconfig_copy` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `systemKey` varchar(25) DEFAULT NULL,
+  `systemValue` mediumtext,
+  PRIMARY KEY (`id`),
+  KEY `systemKey` (`systemKey`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `t_commend`
@@ -134,6 +148,21 @@ CREATE TABLE `t_comment` (
   KEY `typeId` (`typeId`) USING BTREE,
   KEY `itemId` (`itemId`) USING BTREE,
   CONSTRAINT `t_comment_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `t_user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+--  Table structure for `t_consumedetail`
+-- ----------------------------
+DROP TABLE IF EXISTS `t_consumedetail`;
+CREATE TABLE `t_consumedetail` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `type` int(10) DEFAULT NULL,
+  `credits` double DEFAULT NULL,
+  `createDate` datetime DEFAULT NULL,
+  `userId` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `userId` (`userId`) USING BTREE,
+  CONSTRAINT `t_consumedetail_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `t_user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -185,7 +214,79 @@ CREATE TABLE `t_game` (
   `gameName` varchar(255) DEFAULT NULL,
   `gameUrl` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+--  Table structure for `t_goods`
+-- ----------------------------
+DROP TABLE IF EXISTS `t_goods`;
+CREATE TABLE `t_goods` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `price` double DEFAULT NULL,
+  `createDate` datetime DEFAULT NULL,
+  `description` mediumtext,
+  `merchantId` bigint(20) DEFAULT NULL,
+  `num` int(10) DEFAULT NULL,
+  `enabled` char(1) DEFAULT NULL,
+  `userId` bigint(20) DEFAULT NULL,
+  `lastUpdateDate` datetime DEFAULT NULL,
+  `picPath` varchar(255) DEFAULT NULL,
+  `picName` varchar(255) DEFAULT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `merchantId` (`merchantId`) USING BTREE,
+  KEY `userId` (`userId`) USING BTREE,
+  CONSTRAINT `t_goods_ibfk_1` FOREIGN KEY (`merchantId`) REFERENCES `t_merchant` (`id`),
+  CONSTRAINT `t_goods_ibfk_2` FOREIGN KEY (`userId`) REFERENCES `t_user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+--  Table structure for `t_merchant`
+-- ----------------------------
+DROP TABLE IF EXISTS `t_merchant`;
+CREATE TABLE `t_merchant` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `phone` varchar(255) DEFAULT NULL,
+  `address` varchar(500) DEFAULT NULL,
+  `userId` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `userId` (`userId`) USING BTREE,
+  CONSTRAINT `t_merchant_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `t_user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+--  Table structure for `t_notice`
+-- ----------------------------
+DROP TABLE IF EXISTS `t_notice`;
+CREATE TABLE `t_notice` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `content` mediumtext,
+  `createDate` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+--  Table structure for `t_recharge`
+-- ----------------------------
+DROP TABLE IF EXISTS `t_recharge`;
+CREATE TABLE `t_recharge` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `userId` bigint(20) DEFAULT NULL,
+  `money` double DEFAULT NULL,
+  `credits` double DEFAULT NULL,
+  `status` int(10) DEFAULT NULL,
+  `createDate` datetime DEFAULT NULL,
+  `lastUpdateDate` datetime DEFAULT NULL,
+  `rechargeNo` varchar(255) DEFAULT NULL,
+  `loseDate` datetime DEFAULT NULL,
+  `details` varchar(2000) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `userId` (`userId`) USING BTREE,
+  KEY `rechargeNo` (`rechargeNo`) USING BTREE,
+  CONSTRAINT `t_recharge_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `t_user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `t_role`
@@ -233,12 +334,39 @@ CREATE TABLE `t_user` (
   `nickName` varchar(255) DEFAULT NULL,
   `createDate` datetime DEFAULT NULL,
   `lastUpdateDate` datetime DEFAULT NULL,
+  `credits` double DEFAULT NULL,
+  `portraitName` varchar(255) DEFAULT NULL,
+  `portraitUrl` varchar(255) DEFAULT NULL,
+  `portraitPath` varchar(255) DEFAULT NULL,
+  `birth` date DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `city` varchar(255) DEFAULT NULL,
+  `country` varchar(255) DEFAULT NULL,
+  `postalCode` varchar(255) DEFAULT NULL,
+  `province` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `username` (`username`) USING BTREE,
   KEY `roleId` (`roleId`) USING BTREE,
   KEY `mobile` (`mobile`) USING BTREE,
   CONSTRAINT `t_user_ibfk_1` FOREIGN KEY (`roleId`) REFERENCES `t_role` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+--  Table structure for `t_usercomments`
+-- ----------------------------
+DROP TABLE IF EXISTS `t_usercomments`;
+CREATE TABLE `t_usercomments` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `userId` bigint(20) DEFAULT NULL,
+  `content` mediumtext,
+  `contract` varchar(255) DEFAULT NULL,
+  `createDate` datetime DEFAULT NULL,
+  `reply` mediumtext,
+  `lastUpdateDate` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `userId` (`userId`) USING BTREE,
+  CONSTRAINT `t_usercomments_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `t_user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `t_userrole`
@@ -266,6 +394,6 @@ CREATE TABLE `t_validatecode` (
   PRIMARY KEY (`id`),
   KEY `mobile` (`mobile`) USING BTREE,
   KEY `type` (`type`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -41,7 +41,7 @@ public class UserDaoTest extends BaseManagerTestCase {
         Map map=new HashMap();
         map.put("activityId",1);
 
-        Long count = activityUserManager.findByNamedQueryBean("getUsersCount", Long.class, map);
+        Long count = activityUserManager.findByNamedQueryClass("getUsersCount", Long.class, map);
         System.out.println(count);
 
     }

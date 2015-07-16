@@ -182,7 +182,6 @@ function clearForm(obj,notClears) {
 }
 
 function validateData(obj) {
-
     var validate=obj.data('validate');
     if(validate=='required'){
         return validateRequired(obj);
@@ -195,8 +194,9 @@ function validateData(obj) {
         return validatePasswordHit(pwd,obj);
     }else if(validate=='integer'){
         return validateInteger(obj);
+    }else if(validate=='email'){
+        return validateEmail(obj);
     }
-
     return true;
 }
 function validateRequired(obj){
@@ -244,7 +244,7 @@ function validateMobile(obj) {    //移动电话
     validSuccess(obj)
     return true;
 }
-function validateInteger(obj) {    //移动电话
+function validateInteger(obj) {    //整数
     if(!(/^[0-9]*[1-9][0-9]*$/.test(obj.val()))){
         validFailure(obj,'请输入整数');
         return false;
@@ -254,7 +254,8 @@ function validateInteger(obj) {    //移动电话
 }
 
 function validateEmail(obj) {   //邮件
-    if(!(/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/.test(obj.val()))){
+    var regEmail=/^((([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6}\;))*(([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})))$/;
+    if(!(regEmail.test(obj.val()))){
         validFailure(obj,'请输入正确的电子邮件地址');
         return false;
     }
@@ -263,7 +264,7 @@ function validateEmail(obj) {   //邮件
 
 }
 
-function validateNumber(obj) {  //固定电话
+function validateNumber(obj) {  //电话号码
     if(!(/^[0-9]*$/.test(obj.val()))){
         validFailure(obj,'请输入数字');
         return false;
@@ -312,7 +313,6 @@ Date.prototype.format = function(format){
         init:function(options){
             var o = $.extend({
                 mode:'MULTI',//SINGLE
-                //mode:'SINGLE',//SINGLE
                 idProperty:'id',
                 params:{
                     start:0,
@@ -321,7 +321,7 @@ Date.prototype.format = function(format){
             }, options || {});
             var self = this;
             this.each(function() {
-                methods._loadTableUrl(o.url, o.params,self, o.columns, o.pager);
+                methods._loadTableUrl(o.url, o.params,self, o.columns, o.pager, o.idProperty);
                 methods._initCheck.call(self,o);
             });
         },
@@ -390,15 +390,12 @@ Date.prototype.format = function(format){
             });
             return list;
         },
-        _loadTableUrl:function(url,parmas,table,columns,pager){
-
+        _loadTableUrl:function(url,parmas,table,columns,pager,idProperty){
             table.append('<div class="message-loading-overlay"><i class="icon-spin icon-spinner orange2 bigger-160"></i></div>');
-
-
             parmas= $.extend({start:0,limit:9}, parmas);
             var list = methods._loadTableData(url, parmas,pager,function(pageNumber,event){
                 var pageP=$.extend(parmas,{start:(pageNumber-1)*(parmas.limit)});
-                methods._loadTableUrl(url,pageP,table,columns,pager)
+                methods._loadTableUrl(url,pageP,table,columns,pager,idProperty)
             });
             var tbody=table.find('tbody');
             var html="";
@@ -436,7 +433,7 @@ Date.prototype.format = function(format){
                         tdwidth=undefined;
                         tr+= td;
                     }
-                    tr+='<td class="hidden" data-id="'+obj.id+'"></td></tr>'
+                    tr+='<td class="hidden" data-id="'+obj[idProperty]+'"></td></tr>'
                     html+=tr;
                 }
             }
