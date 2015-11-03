@@ -9,6 +9,21 @@
         <column>parentId</column>
 
     </table>
+    <table name="t_channel">
+        <column>id</column>
+        <column>name</column>
+        <column>channelNo</column>
+        <column>type</column>
+        <column>createDate</column>
+        <row>
+            <value>1</value>
+            <value>游游</value>
+            <value>10000000</value>
+            <value>1</value>
+            <value><![CDATA[2013-01-27 11:27:03.0]]></value>
+        </row>
+    </table>
+
     <table name="t_applicationconfig">
         <column>id</column>
         <column>systemKey</column>
@@ -26,17 +41,17 @@
         <row>
             <value>3</value>
             <value>messageUsername</value>
-            <value>18941121875</value>
+            <value>jiangxutao</value>
         </row>
         <row>
             <value>4</value>
             <value>messagePwd</value>
-            <value>BDD87A19BAB16F4F5CE90FC3D546</value>
+            <value>138A5E3BAB36EE02837688F1969F</value>
         </row>
         <row>
             <value>5</value>
             <value>messageSign</value>
-            <value>签名</value>
+            <value>游游</value>
         </row>
         <row>
             <value>6</value>
@@ -61,7 +76,7 @@
         <row>
             <value>10</value>
             <value>notify_url</value>
-            <value>http://121.40.83.214:8080/luzhishen/alipay/mobilenotice</value>
+            <value>http://121.42.153.185:8080/Alizee/app/mobilenotice</value>
         </row>
         <row>
             <value>11</value>
@@ -76,7 +91,7 @@
         <row>
             <value>13</value>
             <value>mobile_rsa</value>
-            <value>MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAOr8FF/qyR9w7KKw7D8dGKrVILMVV/enX8dUf1ePTT0368KUhtRvblWzjVJArPFHIwojAv0DGUmTUpsmG8qTWA0d7YkdStAKMuMgO6E6i1ecDPa2478HY/+hI5eZfv7gRLNuqaESi10eP6eopfCwbsLKaw4QrD8XWiUQZnS3vAgMBAAECgYEApAmxV3wZRr+YEaf5EDZMMQ0g/GMr85B+BjJwavl4nAHLrRvuO6JGTcF4KDFKCWz1gwAJ+AIPxxL3GzpR91h6Mc86sJ7+35F+BAhYkIRE6C7mG4vjn4TJGnTlHyumAtHxfOPAACxPVc+lcnW4UZOMOC7YAFlFevCutXhe19aECQQD9PXrwGup8aoRUv0yvaeuVFBkOHY+soHjk7zvKAGEbdvp1H1xNH8iZlPNhJhQwfEwcpw/oMfij2erqovMezopAkEA7YurBeCZgFc82HvPEOIYLeupS95Zebg3Orl31MBXQNNDIk//YZtqDmeLw8cFMxITIjnlmT/RBMzH6LvDpaVwJBAPZshh3xQy5QhHbnNFsZigomZX8r2uxTt3CnL5oQpnPeMHoosOyg9fnczPxDDrBjs7jKBJuhTN88pfEvIb9fokCQAj7VPYd7e/qXISa+Vcp/ogZqeLZDrAsMrpntN44f5QV6N3tRGy+YZ410BUQ+2NY9Zw/sCzBOvgBfjWQpBhbHUCQ+J8ktUQZoLDWV/gQebE8sjP/1C79a3R26G3POvKSwJqniUGDgpUF/2WLplOaBN1WxyaZslLRUdrC4YyeGms=</value>
+            <value>MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCnxj/9qwVfgoUh/y2W89L6BkRAFljhNhgPdyPuBV64bfQNN1PjbCzkIM6qRdKBoLPXmKKMiFYnkd6rAoprih3/PrQEB/VsW8OoM8fxn67UDYuyBTqA23MML9q1+ilIZwBC2AQ2UBVOrFXfFl75p6/B5KsiNG9zpgmLCUYuLkxpLQIDAQAB</value>
         </row>
     </table>
 
@@ -115,8 +130,15 @@
             <value>ROLE_USER</value>
             <value>1</value>
         </row>
-
-
+        <row>
+            <value>4</value>
+            <value><![CDATA[2013-01-22 16:03:26.0]]></value>
+            <value><![CDATA[2013-01-22 16:03:28.0]]></value>
+            <value>营业员</value>
+            <value>营业员</value>
+            <value>ROLE_SHOP</value>
+            <value>1</value>
+        </row>
     </table>
     <table name="t_rolefeature">
         <column>featureId</column>

@@ -30,7 +30,7 @@
     </div>
     <div class="row">
         <div class="col-xs-12">
-            <form class="form-horizontal" id="advertForm">
+            <form class="form-horizontal" id="advertForm" enctype="multipart/form-data" method="post">
                 <div class="form-group">
                     <input type="hidden" name="id" value="${command.id}" />
                 </div>

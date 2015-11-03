@@ -38,6 +38,11 @@
                             <label class="control-label">用户昵称</label>
                             <input type="text" name="advert.Q_nickName_LK"/>
                         </li>
+                        <li>
+                            <label class="control-label">渠道</label>
+                            <input type="text" name="advert.Q_channel_LK"/>
+                        </li>
+
 
                     </ul>
                     <div class="btn-query">
@@ -61,9 +66,11 @@
                     <tr>
                         <th>用户手机</th>
                         <th>用户昵称</th>
+                        <th>游游币</th>
                         <th>用户角色</th>
                         <th>创建时间</th>
                         <th>是否可用</th>
+                        <th>渠道</th>
                         <th></th>
                     </tr>
                     </thead>

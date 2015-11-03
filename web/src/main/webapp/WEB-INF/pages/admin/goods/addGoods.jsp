@@ -40,7 +40,7 @@
                 <div class="form-group">
                     <label class="col-sm-1 control-label no-padding-right">商品价格</label>
                     <div class="col-sm-4">
-                        <input type="text" name="price" value="${command.price}" placeholder="商品价格" data-validate="integer" class="width-100" />
+                        <input type="text" name="price" value="${command.price}" placeholder="商品价格" data-validate="number" class="width-100" />
                     </div>
                     <div class="col-sm-reset inline" style="color: #d16e6c">
                         <i class="icon-warning-sign">游游币</i>
@@ -52,6 +52,15 @@
                         <input type="text" name="num" value="${command.num}" placeholder="商品数量" data-validate="integer" class="width-100" />
                     </div>
                 </div>
+                <div class="form-group">
+                    <label class="col-sm-1 control-label no-padding-right">兑换券失效</label>
+                    <div class="col-sm-4">
+                        <span>从购买起</span>
+                        <input type="text" name="trends" value="${command.trends}" placeholder="兑换券失效"  class="width-70" />
+                        <span>天失效</span>
+                    </div>
+                </div>
+
 
                 <div class="form-group">
                     <label class="col-sm-1 control-label no-padding-right">商品简介</label>
@@ -61,13 +70,13 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="col-sm-1 control-label no-padding-right" for="activityPicture">商品图片</label>
+                    <label class="col-sm-1 control-label no-padding-right" for="activityPicture">详情图片</label>
                     <div class="col-sm-4">
                         <input multiple="" type="file" name="picName" id="activityPicture" />
                         <span class="lbl"></span>
                     </div>
                     <div class="col-sm-reset inline" style="color: #d16e6c">
-                        <i class="icon-warning-sign">仅支持jpeg、jpg、gif、png格式的图片，且大小不能超过1M,请选择合适的图片上传</i>
+                        <i class="icon-warning-sign">仅支持jpeg、jpg、gif、png格式的图片，且大小不能超过1M,2:1的长方形比例</i>
                     </div>
                 </div>
                 <c:if test="${command.id!=null}">
@@ -80,6 +89,27 @@
 
                     </div>
                 </c:if>
+                <div class="form-group">
+                    <label class="col-sm-1 control-label no-padding-right" for="activityPicture">图标图片</label>
+                    <div class="col-sm-4">
+                        <input multiple="" type="file" name="logoName" id="activityLogoPicture" />
+                        <span class="lbl"></span>
+                    </div>
+                    <div class="col-sm-reset inline" style="color: #d16e6c">
+                        <i class="icon-warning-sign">仅支持jpeg、jpg、gif、png格式的图片，且大小不能超过1M,请选择合适的图片上传</i>
+                    </div>
+                </div>
+                <c:if test="${command.id!=null}">
+                    <div class="form-group" id="exsitPicLogoShow">
+                        <label class="col-sm-1 control-label no-padding-right">预览图片</label>
+                        <div class="col-sm-4">
+                            <span><a target="_blank" href="${command.logoUrl}">${command.logoName}</a></span>
+                            <span class="lbl"></span>
+                        </div>
+
+                    </div>
+                </c:if>
+
                 <div class="clearfix form-actions">
                     <div class="col-md-offset-3 col-md-9">
                         <button class="btn btn-info" type="button" id="saveBtn" onclick="saveAdvert(${command.id!=null?"'edit'":"'save'"},'N');" >
@@ -88,7 +118,7 @@
                         </button>
                         &nbsp; &nbsp; &nbsp;
 
-                        <button class="btn" type="button" onclick="reloadPage('html/security/activity');">
+                        <button class="btn" type="button" onclick="reloadPage('html/tenant/goods');">
                             <i class="icon-undo bigger-110"></i>
                             返回
                         </button>
@@ -99,10 +129,8 @@
     </div>
 </div>
 <script type="text/javascript">
-
     jQuery(function(){
-        initPage('${command.id!=null?command.picName:"拖拽或点击此区域上传文件"}');
+        initPage('${command.id!=null?command.picName:"拖拽或点击此区域上传文件"}','${command.id!=null?command.logoName:"拖拽或点击此区域上传文件"}');
     });
-
 </script>
 

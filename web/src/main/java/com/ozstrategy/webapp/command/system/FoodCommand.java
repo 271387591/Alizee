@@ -16,6 +16,9 @@ public class FoodCommand {
     private String url;
     private Integer comment;
     private Integer commend;
+    private String logoPath;
+    private String logoUrl;
+    private String logoName;
     public FoodCommand() {
     }
     public FoodCommand(Food model) {
@@ -26,6 +29,9 @@ public class FoodCommand {
         this.picName=model.getPicName();
         this.createDate=model.getCreateDate();
         this.url=model.getUrl();
+        this.logoName=model.getLogoName();
+        this.logoPath=model.getLogoPath();
+        this.logoUrl=model.getLogoUrl();
     }
     public String getPicPath() {
         return picPath;
@@ -84,5 +90,29 @@ public class FoodCommand {
 
     public void setCommend(Integer commend) {
         this.commend = commend;
+    }
+
+    public String getLogoPath() {
+        return logoPath;
+    }
+
+    public void setLogoPath(String logoPath) {
+        this.logoPath = logoPath;
+    }
+
+    public String getLogoUrl() {
+        return logoUrl;
+    }
+
+    public void setLogoUrl(String logoUrl) {
+        this.logoUrl = logoUrl;
+    }
+
+    public String getLogoName() {
+        return logoName;
+    }
+
+    public void setLogoName(String logoName) {
+        this.logoName = logoName;
     }
 }

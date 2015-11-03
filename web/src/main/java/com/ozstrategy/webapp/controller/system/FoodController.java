@@ -103,14 +103,19 @@ public class FoodController extends BaseController {
         if (writer == null) {
             return null;
         }
+        Food advert=null;
+        if(StringUtils.isEmpty(id)){
+            advert=new Food();
+            advert.setCreateDate(new Date());
+        }else{
+            advert=foodManager.get(parseLong(id));
 
-
+        }
+        advert.setTitle(title);
+        advert.setDescription(description);
 
         String attachFilesDirStr = request.getSession().getServletContext().getRealPath("/") + "/" + Constants.updloadFood + "/";
         attachFilesDirStr = FilenameUtils.normalize(attachFilesDirStr);
-
-
-
         File fileDir = new File(attachFilesDirStr);
 
         if (fileDir.exists() == false) {
@@ -130,28 +135,13 @@ public class FoodController extends BaseController {
                 str         = UUID.randomUUID().toString();
                 fileName    = fileItem.getName();
                 ext         = FilenameUtils.getExtension(fileName);
-                attachFilesDirStr = attachFilesDirStr + "/" + str + "." + ext;
-                attachFilesDirStr = FilenameUtils.normalize(attachFilesDirStr);
-                fileOnServer      = new File(attachFilesDirStr);
+                String attachFilesDir = attachFilesDirStr + "/" + str + "." + ext;
+                attachFilesDir = FilenameUtils.normalize(attachFilesDir);
+                fileOnServer      = new File(attachFilesDir);
 
-                if (fileOnServer.exists()) {
-                    str               = UUID.randomUUID().toString();
-                    attachFilesDirStr = attachFilesDirStr + "/" + str + "." + ext;
-                    attachFilesDirStr = FilenameUtils.normalize(attachFilesDirStr);
-                    fileOnServer      = new File(attachFilesDirStr);
-                }
                 fileItem.write(fileOnServer);
-                Food advert=null;
-                if(StringUtils.isEmpty(id)){
-                    advert=new Food();
-                    advert.setCreateDate(new Date());
-                }else{
-                    advert=foodManager.get(parseLong(id));
 
-                }
-                advert.setTitle(title);
-                advert.setDescription(description);
-                if(StringUtils.isNotEmpty(fileName)){
+                if(StringUtils.equals(controlName, "picName")){
                     try{
                         FileUtils.forceDelete(new File(advert.getPicPath()));
                     }catch (Exception e){
@@ -160,10 +150,19 @@ public class FoodController extends BaseController {
                     advert.setPicPath(fileOnServer.getAbsolutePath());
                     String httpPath=toHttpUrl(request,true)+Constants.updloadFood+"/"+str+"."+ext;
                     advert.setUrl(httpPath);
+                }else if(StringUtils.equals(controlName,"logoName")){
+                    try{
+                        FileUtils.forceDelete(new File(advert.getLogoPath()));
+                    }catch (Exception e){
+                    }
+                    advert.setLogoName(fileName);
+                    advert.setLogoPath(fileOnServer.getAbsolutePath());
+                    String httpPath=toHttpUrl(request,true)+Constants.updloadFood+"/"+str+"."+ext;
+                    advert.setLogoUrl(httpPath);
                 }
-                foodManager.saveOrUpdate(advert);
-                writer.print("{\"success\":true,\"msg\":\"" + "" + "!\"}");
             }
+            foodManager.saveOrUpdate(advert);
+            writer.print("{\"success\":true,\"msg\":\"" + "" + "!\"}");
 
         } catch (Exception e) {
             logger.error("upload sensor fail", e);

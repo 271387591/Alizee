@@ -15,6 +15,7 @@ public class JsonReaderSingleResponse<T> {
 
 
     public JsonReaderSingleResponse(T data) {
+        this.data=data;
         success = true;
     }
 

@@ -196,9 +196,33 @@ function validateData(obj) {
         return validateInteger(obj);
     }else if(validate=='email'){
         return validateEmail(obj);
+    }else if(validate=='channel'){
+        return validateChannel(obj);
+    }else if(validate=='number'){
+        return validateNumber(obj);
     }
     return true;
 }
+
+function validateNumber(obj) {   //邮件
+    var regEmail=/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/;
+    if(!(regEmail.test(obj.val()))){
+        validFailure(obj,'请输入数字');
+        return false;
+    }
+    validSuccess(obj);
+    return true;
+}
+function validateChannel(obj) {   //邮件
+    var regEmail=/^[a-zA-Z0-9_]{3,16}$/;
+    if(!(regEmail.test(obj.val()))){
+        validFailure(obj,'请输入由3-8位由字母或数字组成的渠道号');
+        return false;
+    }
+    validSuccess(obj);
+    return true;
+}
+
 function validateRequired(obj){
     var v = obj.val();
     if(!v){
@@ -264,14 +288,7 @@ function validateEmail(obj) {   //邮件
 
 }
 
-function validateNumber(obj) {  //电话号码
-    if(!(/^[0-9]*$/.test(obj.val()))){
-        validFailure(obj,'请输入数字');
-        return false;
-    }
-    validSuccess(obj)
-    return true;
-}
+
 function isPostCode(number) {//邮编
     var postCode = /^[1-9]\d{5}$/;
     return postCode.exec(number);
@@ -408,11 +425,15 @@ Date.prototype.format = function(format){
                         var name=column.name ||'';
                         var width=column.width;
                         var cls=column.cls;
-                        var val=obj[name]||'';
+                        var val=obj[name];
+                        if(val==undefined || val==null ){
+                            val='';
+                        }
                         var sub=Math.floor(width/12);
                         if(!isNaN(sub) && val.length>sub){
                             val= val.substr(0,(sub-3))+'...';
                         }
+
                         var renderer=function(v){
                             if(column.renderer){
                                 return column.renderer(v,obj);
@@ -420,13 +441,14 @@ Date.prototype.format = function(format){
                                 return null;
                             }
                         }(val);
+
                         var td,tdcls,tdwidth;
 
                         if(cls){
                             tdcls='class="'+cls+'"';
                         }
                         if(width>0){
-                            tdwidth='style="width:'+width+'px;"';
+                            tdwidth='style="min-width:'+width+'px;"';
                         }
                         td='<td '+(tdcls?tdcls:'')+' '+(tdwidth?tdwidth:'')+'>'+(renderer!=null?renderer:val)+'</td>';
                         tdcls=undefined;

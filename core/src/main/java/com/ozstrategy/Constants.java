@@ -27,6 +27,7 @@ public final class Constants {
     public static final String updloadGame="updload/game";
     public static final String updloadGoods="updload/goods";
     public static final String updloadPortrait="updload/portrait";
+    public static final String updloadAppstore="updload/appstore";
 
 
 

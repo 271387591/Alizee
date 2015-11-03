@@ -132,6 +132,7 @@ public class AdvertController extends BaseController {
                 DiskFileItem fileItem    = (DiskFileItem) cmf.getFileItem();
                 str         = UUID.randomUUID().toString();
                 fileName    = fileItem.getName();
+                if(StringUtils.isEmpty(fileName))continue;
                 ext         = FilenameUtils.getExtension(fileName);
                 attachFilesDirStr = attachFilesDirStr + "/" + str + "." + ext;
                 attachFilesDirStr = FilenameUtils.normalize(attachFilesDirStr);

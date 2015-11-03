@@ -15,9 +15,9 @@ import java.util.Date;
  */
 @Table(name = "t_recharge")
 @NamedQueries({
-        @NamedQuery(name = "getRecharges",query = "select u.username,u.mobile,u.nickName,a.* from t_recharge a join t_user u on a.userId=u.id where 1=1"),
+        @NamedQuery(name = "getRecharges",query = "select u.username,u.mobile,u.nickName,u.portraitUrl,a.* from t_recharge a join t_user u on a.userId=u.id where 1=1"),
         @NamedQuery(name = "getRechargesCount",query = "select count(*) from t_recharge a join t_user u on a.userId=u.id where 1=1"),
-        @NamedQuery(name = "getRecharge",query = "select u.username,u.mobile,u.nickName,a.* from t_recharge a join t_user u on a.userId=u.id where a.id=:id")
+        @NamedQuery(name = "getRecharge",query = "select u.username,u.mobile,u.nickName,u.portraitUrl,a.* from t_recharge a join t_user u on a.userId=u.id where a.id=:id")
 })
 public class Recharge extends BaseEntity {
     @Id
@@ -31,6 +31,8 @@ public class Recharge extends BaseEntity {
     private Date loseDate;
     private String rechargeNo;
     private String details;
+    private String channel;
+    private String channelDetail;
 
     public Recharge() {
     }
@@ -113,6 +115,22 @@ public class Recharge extends BaseEntity {
 
     public void setDetails(String details) {
         this.details = details;
+    }
+
+    public String getChannel() {
+        return channel;
+    }
+
+    public void setChannel(String channel) {
+        this.channel = channel;
+    }
+
+    public String getChannelDetail() {
+        return channelDetail;
+    }
+
+    public void setChannelDetail(String channelDetail) {
+        this.channelDetail = channelDetail;
     }
 
     @Override

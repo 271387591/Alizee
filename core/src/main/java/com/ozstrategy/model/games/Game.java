@@ -28,6 +28,11 @@ public class Game extends BaseEntity{
     private String gamePath;
     private String gameName;
     private String gameUrl;
+    private String logoPath;
+    private String logoName;
+    private String logoUrl;
+    private String iosUrl;
+
 
     public Game() {
     }
@@ -143,6 +148,39 @@ public class Game extends BaseEntity{
     public void setGameUrl(String gameUrl) {
         this.gameUrl = gameUrl;
     }
+
+    public String getLogoPath() {
+        return logoPath;
+    }
+
+    public void setLogoPath(String logoPath) {
+        this.logoPath = logoPath;
+    }
+
+    public String getLogoName() {
+        return logoName;
+    }
+
+    public void setLogoName(String logoName) {
+        this.logoName = logoName;
+    }
+
+    public String getLogoUrl() {
+        return logoUrl;
+    }
+
+    public void setLogoUrl(String logoUrl) {
+        this.logoUrl = logoUrl;
+    }
+
+    public String getIosUrl() {
+        return iosUrl;
+    }
+
+    public void setIosUrl(String iosUrl) {
+        this.iosUrl = iosUrl;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

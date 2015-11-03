@@ -59,11 +59,43 @@ public class SecurityController extends BaseController{
     public ModelAndView recharge(HttpServletRequest request, HttpServletResponse response) {
         return new ModelAndView("admin/recharge/recharge");
     }
+    @RequestMapping("purchasegoods")
+    public ModelAndView purchasegoods(HttpServletRequest request, HttpServletResponse response) {
+        return new ModelAndView("admin/goods/purchasegoods");
+    }
+
+
+
 
     @RequestMapping("mobilenotice")
     public ModelAndView mobilenotice(HttpServletRequest request, HttpServletResponse response) {
         return new ModelAndView("admin/mobilenotice");
     }
+    @RequestMapping("goodssale")
+    public ModelAndView goodssaleList(HttpServletRequest request, HttpServletResponse response) {
+        return new ModelAndView("admin/goods/admingoodssale");
+    }
+    @RequestMapping("creditsDetail")
+    public ModelAndView creditDetail(HttpServletRequest request, HttpServletResponse response) {
+        return new ModelAndView("admin/user/creditsDetail");
+    }
+
+    @RequestMapping("channel")
+    public ModelAndView channel(HttpServletRequest request, HttpServletResponse response) {
+        return new ModelAndView("admin/system/channel");
+    }
+    @RequestMapping("appstore")
+    public ModelAndView appstore(HttpServletRequest request, HttpServletResponse response) {
+        return new ModelAndView("admin/appstore/appstore");
+    }
+    @RequestMapping("threegoodssale")
+    public ModelAndView threegoodssale(HttpServletRequest request, HttpServletResponse response) {
+        return new ModelAndView("admin/goods/threegoodssale");
+    }
+
+
+
+
 
 
 

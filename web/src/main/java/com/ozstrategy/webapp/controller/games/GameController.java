@@ -56,7 +56,7 @@ public class GameController extends BaseController {
                 for(Game model:models){
                     GameCommand command=new GameCommand(model);Map<String,Object> objectMap=new HashMap<String, Object>();
                     objectMap.put("Q_itemId_EQ",model.getId());
-                    objectMap.put("Q_typeId_EQ", CommendType.Activity.ordinal());
+                    objectMap.put("Q_typeId_EQ", CommendType.Game.ordinal());
                     Integer comment=commentManager.count(objectMap);
                     Integer commend=commendManager.count(objectMap);
                     command.setComment(comment);
@@ -103,6 +103,7 @@ public class GameController extends BaseController {
         String version = request.getParameter("version");
         String platform = request.getParameter("platform");
         String type = request.getParameter("type");
+        String iosUrl = request.getParameter("iosUrl");
         response.setContentType("text/html;charset=utf-8");
 
         PrintWriter writer = null;
@@ -142,6 +143,7 @@ public class GameController extends BaseController {
             advert.setVersion(version);
             advert.setType(type);
             advert.setPlatform(GamePlatform.valueOf(platform).ordinal());
+            advert.setIosUrl(iosUrl);
             MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
             Iterator list             = multipartRequest.getFileNames();
             while (list.hasNext()) {
@@ -152,6 +154,7 @@ public class GameController extends BaseController {
                 DiskFileItem fileItem    = (DiskFileItem) cmf.getFileItem();
                 str         = UUID.randomUUID().toString();
                 fileName    = fileItem.getName();
+                if(StringUtils.isEmpty(fileName))continue;
                 ext         = FilenameUtils.getExtension(fileName);
                 String attachFilesDir = attachFilesDirStr + "/" + str + "." + ext;
                 attachFilesDir = FilenameUtils.normalize(attachFilesDir);
@@ -185,6 +188,17 @@ public class GameController extends BaseController {
                         advert.setGamePath(fileOnServer.getAbsolutePath());
                         String httpPath=toHttpUrl(request,true)+Constants.updloadGame+"/"+str+"."+ext;
                         advert.setGameUrl(httpPath);
+                    }
+                }else if(StringUtils.equals(controlName,"logoName")){
+                    if(StringUtils.isNotEmpty(fileName)){
+                        try{
+                            FileUtils.forceDelete(new File(advert.getLogoPath()));
+                        }catch (Exception e){
+                        }
+                        advert.setLogoName(fileName);
+                        advert.setLogoPath(fileOnServer.getAbsolutePath());
+                        String httpPath=toHttpUrl(request,true)+Constants.updloadGame+"/"+str+"."+ext;
+                        advert.setLogoUrl(httpPath);
                     }
                 }
 

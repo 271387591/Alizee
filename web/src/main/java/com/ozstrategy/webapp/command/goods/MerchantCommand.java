@@ -9,6 +9,8 @@ public class MerchantCommand {
     private String address;
     private Long userId;
     private String name;
+    private Double credits;
+    private String description;
     public MerchantCommand() {
     }
     public MerchantCommand(Merchant model) {
@@ -17,6 +19,8 @@ public class MerchantCommand {
         this.address=model.getAddress();
         this.userId=model.getUserId();
         this.name=model.getName();
+        this.credits=model.getCredits();
+        this.description=model.getDescription();
     }
     public Long getId() {
         return id;
@@ -47,5 +51,21 @@ public class MerchantCommand {
     }
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Double getCredits() {
+        return credits;
+    }
+
+    public void setCredits(Double credits) {
+        this.credits = credits;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

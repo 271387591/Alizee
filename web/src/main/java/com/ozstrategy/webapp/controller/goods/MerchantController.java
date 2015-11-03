@@ -67,6 +67,7 @@ public class MerchantController extends BaseController {
             merchant.setName(command.getName());
             merchant.setPhone(command.getPhone());
             merchant.setUserId(user.getId());
+            merchant.setDescription(command.getDescription());
             merchantManager.saveOrUpdate(merchant);
             return new JsonReaderSingleResponse(true);
         }catch (Exception e){

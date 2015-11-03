@@ -24,6 +24,7 @@
                             <label class="control-label">名称</label>
                             <input type="text" name="advert.Q_name_LK"/>
                         </li>
+
                     </ul>
                     <div class="btn-query">
                         <button class="btn btn-success btn-sm" onclick="searchForm($('#tableSearch'),'advert',listTable);">查询</button>
@@ -61,6 +62,6 @@
 </div>
 <script type="text/javascript">
     jQuery(function(){
-        listTable();
+        listGTable();
     });
 </script>

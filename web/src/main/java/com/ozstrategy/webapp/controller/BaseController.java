@@ -1,6 +1,7 @@
 package com.ozstrategy.webapp.controller;
 
 import com.ozstrategy.Constants;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Collections;
@@ -23,6 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Random;
 
 /**
  * Created by lihao on 7/4/14.
@@ -109,9 +112,13 @@ public class BaseController {
     }
     public Date parseDate(String str){
         try {
+            int index=str.indexOf(".");
+            if(index>0){
+                str=str.substring(0,index);
+            }
             Date date = DateUtils.parseDate(str, new String[]{Constants.YMD, Constants.YMDHMS});
             return date;
-        } catch (ParseException e) {
+        } catch (Exception e) {
         }
         return null;
     }
@@ -177,5 +184,22 @@ public class BaseController {
             return  "http://"+host+contextPath+"/";
         }
 
+    }
+    public String randomAbsolutePath(HttpServletRequest request,String dir){
+        String attachDir = request.getSession().getServletContext().getRealPath("/") + File.separator + dir + File.separator;
+//        String attachDir = uploadPath + File.separator + dir + File.separator;
+        attachDir = FilenameUtils.normalize(attachDir);
+        File fileDir = new File(attachDir);
+        if (fileDir.exists() == false) {
+            fileDir.mkdirs();
+        }
+        return attachDir;
+    }
+    public String randomName(String fileName) {
+        Random random = new Random();
+        return "" + random.nextInt(10000)+ System.currentTimeMillis() + getExtension(fileName);
+    }
+    public String getExtension(String fileName) {
+        return fileName.substring(fileName.lastIndexOf("."));
     }
 }

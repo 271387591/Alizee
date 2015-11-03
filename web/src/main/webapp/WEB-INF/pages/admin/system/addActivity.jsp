@@ -85,13 +85,13 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="col-sm-1 control-label no-padding-right" for="activityPicture">活动图片</label>
+                    <label class="col-sm-1 control-label no-padding-right" for="activityPicture">详情图片</label>
                     <div class="col-sm-4">
                         <input multiple="" type="file" name="picName" id="activityPicture" />
                         <span class="lbl"></span>
                     </div>
                     <div class="col-sm-reset inline" style="color: #d16e6c">
-                        <i class="icon-warning-sign">仅支持jpeg、jpg、gif、png格式的图片，且大小不能超过1M,请选择合适的图片上传</i>
+                        <i class="icon-warning-sign">仅支持jpeg、jpg、gif、png格式的图片，且大小不能超过1M,2:1的长方形比例</i>
                     </div>
                 </div>
                 <c:if test="${command.id!=null}">
@@ -104,6 +104,27 @@
 
                     </div>
                 </c:if>
+                <div class="form-group">
+                    <label class="col-sm-1 control-label no-padding-right" for="activityPicture">图标图片</label>
+                    <div class="col-sm-4">
+                        <input multiple="" type="file" name="logoName" id="activityLogoPicture" />
+                        <span class="lbl"></span>
+                    </div>
+                    <div class="col-sm-reset inline" style="color: #d16e6c">
+                        <i class="icon-warning-sign">仅支持jpeg、jpg、gif、png格式的图片，且大小不能超过1M,请选择合适的图片上传</i>
+                    </div>
+                </div>
+                <c:if test="${command.id!=null}">
+                    <div class="form-group" id="exsitPicLogoShow">
+                        <label class="col-sm-1 control-label no-padding-right">预览图片</label>
+                        <div class="col-sm-4">
+                            <span><a target="_blank" href="${command.url}">${command.picName}</a></span>
+                            <span class="lbl"></span>
+                        </div>
+
+                    </div>
+                </c:if>
+
                 <div class="clearfix form-actions">
                     <div class="col-md-offset-3 col-md-9">
                         <button class="btn btn-info" type="button" id="saveBtn" onclick="saveAdvert(${command.id!=null?"'edit'":"'save'"},'N');" >
@@ -130,7 +151,7 @@
 <script type="text/javascript">
 
     jQuery(function(){
-        initPage('${command.id!=null?command.picName:"拖拽或点击此区域上传文件"}');
+        initPage('${command.id!=null?command.picName:"拖拽或点击此区域上传文件"}','${command.id!=null?command.logoName:"拖拽或点击此区域上传文件"}');
     });
 
 </script>

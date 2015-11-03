@@ -26,6 +26,10 @@ public class ActivityCommand {
     private Integer commend;
     private Integer pendding=0;
     private Integer noPendding=0;
+    private String logoName;
+    private String logoPath;
+    private String logoUrl;
+    private Boolean actEnd=Boolean.FALSE;
     public ActivityCommand() {
     }
     public ActivityCommand(Activity model) {
@@ -43,6 +47,12 @@ public class ActivityCommand {
         this.merchantAddress=model.getMerchantAddress();
         this.startDate=model.getStartDate();
         this.lastUpdateDate=model.getLastUpdateDate();
+        this.logoName=model.getLogoName();
+        this.logoPath=model.getLogoPath();
+        this.logoUrl=model.getLogoUrl();
+        if(this.endDate!=null && this.endDate.before(new Date())){
+            actEnd=Boolean.TRUE;
+        }
     }
     public String getPicPath() {
         return picPath;
@@ -171,5 +181,37 @@ public class ActivityCommand {
 
     public void setNoPendding(Integer noPendding) {
         this.noPendding = noPendding;
+    }
+
+    public String getLogoName() {
+        return logoName;
+    }
+
+    public void setLogoName(String logoName) {
+        this.logoName = logoName;
+    }
+
+    public String getLogoPath() {
+        return logoPath;
+    }
+
+    public void setLogoPath(String logoPath) {
+        this.logoPath = logoPath;
+    }
+
+    public String getLogoUrl() {
+        return logoUrl;
+    }
+
+    public void setLogoUrl(String logoUrl) {
+        this.logoUrl = logoUrl;
+    }
+
+    public Boolean getActEnd() {
+        return actEnd;
+    }
+
+    public void setActEnd(Boolean actEnd) {
+        this.actEnd = actEnd;
     }
 }

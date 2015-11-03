@@ -10,12 +10,25 @@
 <div class="sidebar sidebar-fixed" id="sidebar">
     <ul class="nav nav-list">
         <c:if test="${userinfo.roleName eq 'ROLE_ADMIN'}">
-            <li class="active" id="menu-home">
+            <li class="hidden" id="menu-home">
                 <a href="<c:url value="/html/security/about"/>">
                     <i class="icon-dashboard"></i>
                     <span class="menu-text"> 关于我们 </span>
                 </a>
             </li>
+            <li class="active" id="menu-goodsset">
+                <a href="<c:url value="/html/goodsSetting/security/goodsset"/>">
+                    <i class="icon-headphones"></i>
+                    <span class="menu-text"> 商品抢购设置 </span>
+                </a>
+            </li>
+            <li class="active" id="menu-channel">
+                <a href="<c:url value="/html/security/channel"/>">
+                    <i class="icon-headphones"></i>
+                    <span class="menu-text"> 渠道管理 </span>
+                </a>
+            </li>
+
             <li>
                 <a href="#" class="dropdown-toggle">
                     <i class="icon-user"></i>
@@ -89,6 +102,43 @@
                 </a>
             </li>
 
+            <li id="menu-purchasegoods">
+                <a href="<c:url value="/html/security/purchasegoods"/>">
+                    <i class="icon-headphones"></i>
+                    <span class="menu-text"> 抢购列表 </span>
+                </a>
+            </li>
+            <li id="menu-goodssaleadmin">
+                <a href="<c:url value="/html/security/goodssale"/>">
+                    <i class="icon-headphones"></i>
+                    <span class="menu-text"> 商品出售记录 </span>
+                </a>
+            </li>
+            <li id="menu-creditDetail">
+                <a href="<c:url value="/html/security/creditsDetail"/>">
+                    <i class="icon-headphones"></i>
+                    <span class="menu-text"> 金额操作记录 </span>
+                </a>
+            </li>
+            <li id="menu-appstore">
+                <a href="<c:url value="/html/security/appstore"/>">
+                    <i class="icon-headphones"></i>
+                    <span class="menu-text"> APP管理 </span>
+                </a>
+            </li>
+            <li id="menu-threegoodssale">
+                <a href="<c:url value="/html/security/threegoodssale"/>">
+                    <i class="icon-headphones"></i>
+                    <span class="menu-text"> 第三方商品出售记录 </span>
+                </a>
+            </li>
+
+
+
+
+
+
+
         </c:if>
         <c:if test="${userinfo.roleName eq 'ROLE_TENANT'}">
             <li class="active" id="menu-merchant">
@@ -97,15 +147,36 @@
                     <span class="menu-text"> 信息完善 </span>
                 </a>
             </li>
+            <li class="active" id="menu-shop">
+                <a href="<c:url value="/html/goods/tenant/shop"/>">
+                    <i class="icon-dashboard"></i>
+                    <span class="menu-text"> 营业员管理 </span>
+                </a>
+            </li>
+
             <li class="active" id="menu-goods">
                 <a href="<c:url value="/html/tenant/goods"/>">
                     <i class="icon-dashboard"></i>
                     <span class="menu-text"> 商品管理 </span>
                 </a>
             </li>
-
+            <li class="active" id="menu-goodssale">
+                <a href="<c:url value="/html/tenant/goodssale"/>">
+                    <i class="icon-dashboard"></i>
+                    <span class="menu-text"> 商品出售记录 </span>
+                </a>
+            </li>
 
         </c:if>
+        <c:if test="${userinfo.roleName eq 'ROLE_SHOP'}">
+            <li class="active" id="menu-cert">
+                <a href="<c:url value="/html/goodsCertificate/shop/index"/>">
+                    <i class="icon-dashboard"></i>
+                    <span class="menu-text"> 兑换券管理 </span>
+                </a>
+            </li>
+        </c:if>
+
 
 
 
@@ -118,7 +189,7 @@
     <script type="text/javascript">
         try{ace.settings.check('sidebar' , 'collapsed')}catch(e){}
         var changeNav=function(id){
-            $('ul > li[id!='+id+']').each(function(){
+            $('#sidebar ul > li[id!='+id+']').each(function(){
                 if($(this).hasClass('active')){
                     $(this).removeClass('active')
                 }

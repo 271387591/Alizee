@@ -21,10 +21,7 @@ var columns=[
             return '<a href="javascript:void(0);" onclick="detail('+rec.id+');">'+v+'</a>';
         }
     },
-    {
-        name:'contract',
-        width:200
-    },
+
     {
         name:'content',
         width:300

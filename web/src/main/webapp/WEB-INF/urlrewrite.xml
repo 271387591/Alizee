@@ -94,6 +94,11 @@
         <to>/html/goods/list</to>
     </rule>
     <rule>
+        <from>/app/purchaseGoods</from>
+        <to>/html/goods/web/purchaseGoods</to>
+    </rule>
+
+    <rule>
         <from>/app/purchase</from>
         <to>/html/goods/web/purchase</to>
     </rule>
@@ -105,6 +110,11 @@
         <from>/app/recharge</from>
         <to>/html/recharge/web/createOrder</to>
     </rule>
+    <rule>
+        <from>/app/getRecharge</from>
+        <to>/html/recharge/web/getRecharge</to>
+    </rule>
+
     <rule>
         <from>/app/mobilenotice</from>
         <to>/html/security/mobilenotice</to>
@@ -125,6 +135,42 @@
         <from>/app/getNotice</from>
         <to>/html/notice/list</to>
     </rule>
+    <rule>
+        <from>/app/getGoodsOrder</from>
+        <to>/html/goodsOrder/web/getGoodsOrder</to>
+    </rule>
+    <rule>
+        <from>/app/getCredits</from>
+        <to>/html/user/web/getCredits</to>
+    </rule>
+    <rule>
+        <from>/app/getUserCert</from>
+        <to>/html/goodsCertificate/web/list</to>
+    </rule>
+    <rule>
+        <from>/app/getLast</from>
+        <to>/html/appStore/web/getlast</to>
+    </rule>
+    <rule>
+        <from>/app/threeGoods</from>
+        <to>/html/threeGoods/web/save</to>
+    </rule>
+    <rule>
+        <from>/app/threeGoodsList</from>
+        <to>/html/threeGoods/web/getusergoods</to>
+    </rule>
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

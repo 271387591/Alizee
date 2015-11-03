@@ -1,6 +1,7 @@
 package com.ozstrategy.util;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFDataFormat;
@@ -15,6 +16,7 @@ import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -95,8 +97,8 @@ public class ExcelUtils {
         Rows rows=new Rows();
         rows.addRow(row2).addRow(row1);
 //        rows=createRosterRows();
-        List<Map<String,String>> data=new ArrayList<Map<String, String>>();
-        Map<String,String> map1=new HashMap<String, String>();
+        List<Map<String,Object>> data=new ArrayList<Map<String, Object>>();
+        Map<String,Object> map1=new HashMap<String, Object>();
         map1.put("name","133");
         map1.put("htStartDate","2014-01-23");
         map1.put("htEndDate","2014-01-24");
@@ -109,7 +111,7 @@ public class ExcelUtils {
         map1.put("jlStartDate3","2014-01-27");
         map1.put("jlContent3","333");
         data.add(map1);
-        Map<String,String> map2=new HashMap<String, String>();
+        Map<String,Object> map2=new HashMap<String, Object>();
         map2.put("name","134");
         map2.put("htStartDate","2014-01-23");
         map2.put("htEndDate","2014-01-24");
@@ -124,14 +126,14 @@ public class ExcelUtils {
         data.add(map2);
 
 
-//        HSSFWorkbook wb1 = export("导出排班信息", rows, data);
-//        FileOutputStream os1 = new FileOutputStream("/Users/lihao/Downloads/Roster.xls");
-//        wb1.write(os1);
-//        os1.close();
+        HSSFWorkbook wb1 = export("导出排班信息", rows, data);
+        FileOutputStream os1 = new FileOutputStream("/Users/lihao1/Downloads/Roster.xls");
+        wb1.write(os1);
+        os1.close();
 //        InputStream inputStream=new FileInputStream("/Users/lihao/Downloads/workbook.xls");
 //        readExcel(rows,inputStream,0);
     }
-    public static HSSFWorkbook export(String sheetName,Rows rows,  List<Map<String,String>> contexts ) throws IOException {
+    public static HSSFWorkbook export(String sheetName,Rows rows,  List<Map<String,Object>> contexts ) throws IOException {
         HSSFWorkbook wb = new HSSFWorkbook();
         HSSFSheet sheet = wb.createSheet(sheetName);
         Map<String,CellStyle> styleMap=createStyles(wb);
@@ -148,7 +150,7 @@ public class ExcelUtils {
                 int c_index=column.getIndex();
                 String header=column.getHeader();
                 cell = sheetRow.createCell(c_index);
-                sheet.setColumnWidth(c_index, 3500);
+                sheet.setColumnWidth(c_index, column.getWidth()==0?3500:column.getWidth());
                 cell.setCellStyle(styleMap.get("header"));
                 cell.setCellValue(header);
                 int colSpan=column.getColSpan();
@@ -174,7 +176,7 @@ public class ExcelUtils {
         HSSFCellStyle style1 = wb.createCellStyle();
         style1.setWrapText(true);// 自动换行
         for(int i=0;i<contexts.size();i++){
-            Map<String,String> data=contexts.get(i);
+            Map<String,Object> data=contexts.get(i);
             HSSFRow sheetRow = sheet.createRow(dataRow.getIndex()+i);
             sheetRow.setHeight((short)450);
             for(int j=0;j<dataColumns.size();j++){
@@ -183,7 +185,13 @@ public class ExcelUtils {
                 int c_index=column.getIndex();
                 cell=sheetRow.createCell(c_index);
                 cell.setCellStyle(styleMap.get("cell"));
-                cell.setCellValue(data.get(dataIndex));
+                ColumnRenderListener renderListener=column.getRenderListener();
+                if(renderListener!=null){
+                    String dd=renderListener.renderer(ObjectUtils.toString(data.get(dataIndex)));
+                    cell.setCellValue(ObjectUtils.toString(dd));
+                }else{
+                    cell.setCellValue(ObjectUtils.toString(data.get(dataIndex)));
+                }
             }
         }
         return wb;
@@ -304,19 +312,41 @@ public class ExcelUtils {
 
         return styles;
     }
-    private static class Column implements Comparable{
+    public static interface ColumnRenderListener{
+        String renderer(String data);
+    }
+
+    public static class Column implements Comparable{
         private int index;
         private String header;
         private int colSpan;
         private int cellSpan;
         private String dataIndex;
+        private int width;
+        private ColumnRenderListener renderListener;
 
+        public Column(int index, String header, int colSpan, int cellSpan,String dataIndex,int width) {
+            this.index = index;
+            this.header = header;
+            this.colSpan = colSpan;
+            this.cellSpan = cellSpan;
+            this.dataIndex=dataIndex;
+            this.width=width;
+        }
         public Column(int index, String header, int colSpan, int cellSpan,String dataIndex) {
             this.index = index;
             this.header = header;
             this.colSpan = colSpan;
             this.cellSpan = cellSpan;
             this.dataIndex=dataIndex;
+        }
+        public Column addColumnRenderListener(ColumnRenderListener listener){
+            this.renderListener=listener;
+            return this;
+        }
+
+        public ColumnRenderListener getRenderListener() {
+            return renderListener;
         }
 
         public int getIndex() {
@@ -359,6 +389,14 @@ public class ExcelUtils {
             this.dataIndex = dataIndex;
         }
 
+        public int getWidth() {
+            return width;
+        }
+
+        public void setWidth(int width) {
+            this.width = width;
+        }
+
         public int compareTo(Object o) {
             Column other=(Column)o;
             if(this.index>other.index){
@@ -369,7 +407,7 @@ public class ExcelUtils {
             return -1;
         }
     }
-    private static class Columns{
+    public static class Columns{
         private List<Column> columns=new ArrayList<Column>();
         public Columns addColumn(Column column){
             this.columns.add(column);
@@ -385,7 +423,7 @@ public class ExcelUtils {
             this.columns = columns;
         }
     }
-    private static class Row implements Comparable{
+    public static class Row implements Comparable{
         private int index;
         private Columns columns;
         public Row(int index,Columns columns){
@@ -418,7 +456,7 @@ public class ExcelUtils {
             return -1;
         }
     }
-    private static class Rows{
+    public static class Rows{
         List<Row> rows=new ArrayList<Row>();
         public Rows addRow(Row row){
             this.rows.add(row);

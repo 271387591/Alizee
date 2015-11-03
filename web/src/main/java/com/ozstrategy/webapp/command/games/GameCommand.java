@@ -23,6 +23,10 @@ public class GameCommand {
     private Integer popularity;
     private Integer comment;
     private Integer commend;
+    private String logoPath;
+    private String logoName;
+    private String logoUrl;
+    private String iosUrl;
     public GameCommand() {
     }
     public GameCommand(Game model) {
@@ -40,6 +44,10 @@ public class GameCommand {
         this.createDate=model.getCreateDate();
         this.picName=model.getPicName();
         this.popularity=model.getPopularity();
+        this.logoName=model.getLogoName();
+        this.logoPath=model.getLogoPath();
+        this.logoUrl=model.getLogoUrl();
+        this.iosUrl=model.getIosUrl();
     }
     public Integer getPlatform() {
         return platform;
@@ -140,5 +148,37 @@ public class GameCommand {
 
     public void setCommend(Integer commend) {
         this.commend = commend;
+    }
+
+    public String getLogoPath() {
+        return logoPath;
+    }
+
+    public void setLogoPath(String logoPath) {
+        this.logoPath = logoPath;
+    }
+
+    public String getLogoName() {
+        return logoName;
+    }
+
+    public void setLogoName(String logoName) {
+        this.logoName = logoName;
+    }
+
+    public String getLogoUrl() {
+        return logoUrl;
+    }
+
+    public void setLogoUrl(String logoUrl) {
+        this.logoUrl = logoUrl;
+    }
+
+    public String getIosUrl() {
+        return iosUrl;
+    }
+
+    public void setIosUrl(String iosUrl) {
+        this.iosUrl = iosUrl;
     }
 }

@@ -19,7 +19,7 @@ function saveAdvert(type){
     $.ajaxFileUpload({
         url: appPath + 'html/food/security/upload',
         secureuri:false,
-        fileElementId:'companyPhone',
+        fileElementId:['companyPhone','companyLogoPhone'],
         dataType: 'text/html',
         data: obj,
         error: function() {
@@ -117,7 +117,7 @@ function edit(id){
     }
 }
 function batchDelete(){
-    var ids=$('#gameTable').htable('getSelected');
+    var ids=$('#foodTable').htable('getSelected');
     if(ids.length<1){
         alertNotify('请选择数据');
         return;

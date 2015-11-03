@@ -170,6 +170,26 @@ public class ActivityController extends BaseController {
 
 
 
+
+        Activity advert=null;
+        if(StringUtils.isEmpty(id)){
+            advert=new Activity();
+            advert.setCreateDate(new Date());
+        }else{
+            advert=activityManager.get(parseLong(id));
+
+        }
+        advert.setTitle(title);
+        advert.setDescription(description);
+        advert.setMerchant(merchant);
+        advert.setMerchantPhone(merchantPhone);
+        advert.setMerchantAddress(merchantAddress);
+        advert.setStartDate(parseDate(startDate));
+        advert.setEndDate(parseDate(endDate));
+        advert.setPublished(BooleanUtils.toBoolean(publish));
+        if(advert.getPublished()){
+            advert.setLastUpdateDate(new Date());
+        }
         String attachFilesDirStr = request.getSession().getServletContext().getRealPath("/") + "/" + Constants.updloadActivity + "/";
         attachFilesDirStr = FilenameUtils.normalize(attachFilesDirStr);
 
@@ -180,51 +200,28 @@ public class ActivityController extends BaseController {
         if (fileDir.exists() == false) {
             fileDir.mkdirs();
         }
-
         File fileOnServer = null;
-        String fileName=null,str=null,ext=null;
+
         try {
             MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
             Iterator list             = multipartRequest.getFileNames();
             while (list.hasNext()) {
+                String fileName=null,str=null,ext=null;
                 String               controlName = list.next().toString();
                 MultipartFile file        = multipartRequest.getFile(controlName);
                 CommonsMultipartFile cmf         = (CommonsMultipartFile) file;
                 DiskFileItem fileItem    = (DiskFileItem) cmf.getFileItem();
                 str         = UUID.randomUUID().toString();
                 fileName    = fileItem.getName();
+                if(StringUtils.isEmpty(fileName))continue;
                 ext         = FilenameUtils.getExtension(fileName);
-                attachFilesDirStr = attachFilesDirStr + "/" + str + "." + ext;
-                attachFilesDirStr = FilenameUtils.normalize(attachFilesDirStr);
-                fileOnServer      = new File(attachFilesDirStr);
+                String attachFilesDir = attachFilesDirStr + "/" + str + "." + ext;
+                attachFilesDir = FilenameUtils.normalize(attachFilesDir);
+                fileOnServer      = new File(attachFilesDir);
 
-                if (fileOnServer.exists()) {
-                    str               = UUID.randomUUID().toString();
-                    attachFilesDirStr = attachFilesDirStr + "/" + str + "." + ext;
-                    attachFilesDirStr = FilenameUtils.normalize(attachFilesDirStr);
-                    fileOnServer      = new File(attachFilesDirStr);
-                }
                 fileItem.write(fileOnServer);
-                Activity advert=null;
-                if(StringUtils.isEmpty(id)){
-                    advert=new Activity();
-                    advert.setCreateDate(new Date());
-                }else{
-                    advert=activityManager.get(parseLong(id));
 
-                }
-                advert.setTitle(title);
-                advert.setDescription(description);
-                advert.setMerchant(merchant);
-                advert.setMerchantPhone(merchantPhone);
-                advert.setMerchantAddress(merchantAddress);
-                advert.setStartDate(DateUtils.parseDate(startDate, "yyyy-MM-dd HH:mm:ss"));
-                advert.setEndDate(DateUtils.parseDate(endDate, "yyyy-MM-dd HH:mm:ss"));
-                advert.setPublished(BooleanUtils.toBoolean(publish));
-                if(advert.getPublished()){
-                    advert.setLastUpdateDate(new Date());
-                }
-                if(StringUtils.isNotEmpty(fileName)){
+                if(StringUtils.equals(controlName,"picName")){
                     try{
                         FileUtils.forceDelete(new File(advert.getPicPath()));
                     }catch (Exception e){
@@ -233,10 +230,19 @@ public class ActivityController extends BaseController {
                     advert.setPicPath(fileOnServer.getAbsolutePath());
                     String httpPath=toHttpUrl(request,true)+Constants.updloadActivity+"/"+str+"."+ext;
                     advert.setUrl(httpPath);
+                }else if(StringUtils.equals(controlName,"logoName")){
+                    try{
+                        FileUtils.forceDelete(new File(advert.getLogoPath()));
+                    }catch (Exception e){
+                    }
+                    advert.setLogoName(fileName);
+                    advert.setLogoPath(fileOnServer.getAbsolutePath());
+                    String httpPath=toHttpUrl(request,true)+Constants.updloadActivity+"/"+str+"."+ext;
+                    advert.setLogoUrl(httpPath);
                 }
-                activityManager.saveOrUpdate(advert);
-                writer.print("{\"success\":true,\"msg\":\"\"}");
             }
+            activityManager.saveOrUpdate(advert);
+            writer.print("{\"success\":true,\"msg\":\"\"}");
 
         } catch (Exception e) {
             logger.error("upload activity fail", e);
@@ -317,6 +323,7 @@ public class ActivityController extends BaseController {
             ActivityUser activityUser=activityUserManager.get(id);
             if(activityUser!=null){
                 activityUser.setStatus(ActivityUserStatus.CompletePending.ordinal());
+                activityUser.setLastUpdateDate(new Date());
                 activityUserManager.update(activityUser);
             }
             return new JsonReaderSingleResponse("",Boolean.TRUE);
@@ -331,6 +338,7 @@ public class ActivityController extends BaseController {
             ActivityUser activityUser=activityUserManager.get(id);
             if(activityUser!=null){
                 activityUser.setStatus(ActivityUserStatus.CheckPending.ordinal());
+                activityUser.setLastUpdateDate(new Date());
                 activityUserManager.update(activityUser);
             }
             return new JsonReaderSingleResponse("",Boolean.TRUE);
@@ -361,6 +369,7 @@ public class ActivityController extends BaseController {
             activityUser.setCreateDate(new Date());
             activityUser.setActivityId(parseLong(id));
             activityUser.setUserId(user.getId());
+            activityUser.setLastUpdateDate(new Date());
             activityUserManager.save(activityUser);
             return new JsonReaderSingleResponse("",Boolean.TRUE);
         }catch (Exception e){

@@ -1,8 +1,8 @@
 package com.ozstrategy.alipay.util.httpClient;
 
+
 import com.ozstrategy.alipay.config.AlipayConfig;
 import org.apache.commons.httpclient.Header;
-
 import java.io.UnsupportedEncodingException;
 
 /* *

@@ -15,7 +15,7 @@ import java.util.Date;
  */
 @Table(name = "t_comment")
 @NamedQueries({
-        @NamedQuery(name = "getComments",query = "select r.*,u.mobile,u.portraitUrl from t_comment r join t_user u on r.userId=u.id where r.typeId=:typeId and r.itemId=:itemId"),
+        @NamedQuery(name = "getComments",query = "select r.*,u.mobile,u.portraitUrl,u.nickName from t_comment r join t_user u on r.userId=u.id where r.typeId=:typeId and r.itemId=:itemId"),
         @NamedQuery(name = "getCommentsCount",query = "select count(*) from t_comment r join t_user u on r.userId=u.id where r.typeId=:typeId and r.itemId=:itemId")
 })
 public class Comment extends BaseEntity {

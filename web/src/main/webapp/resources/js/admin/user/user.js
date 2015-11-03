@@ -58,6 +58,26 @@ function changeUserMobile(modal){
     }
     modal.modal('hide');
 }
+function changeUserMobile1(modal){
+    var form=$('#changeUserMobileModel1').find('#changeUserMobileForm1');
+    if(!checkForm(form)){
+        return;
+    }
+    var datas=form.serializeArray();
+    var obj={};
+    for(var i=0;i<datas.length;i++){
+        obj[datas[i].name]=datas[i].value;
+    }
+    var result = requestJSONData('html/user/security/changeUserMobile1',obj);
+    if(result.success){
+        alertSuccess('修改成功');
+        ajaxReloadPage('mainContent','html/user/security/userList');
+    }else{
+        alertError(result.message);
+    }
+    modal.modal('hide');
+}
+
 
 var columns=[
     {
@@ -70,6 +90,10 @@ var columns=[
     {
         width:200,
         name:'nickName'
+    },
+    {
+        width:80,
+        name:'credits'
     },
     {
         width:200,
@@ -93,10 +117,10 @@ var columns=[
         }
     },
     {
-        name:'credentialsExpired',
+        name:'enabled',
         width:140,
         renderer:function(v){
-            if(!v){
+            if(v==1){
                 return '<span class="label label-lg label-success">是</span>';
             }else{
                 return '<span class="label label-lg label-grey"">否</span>';
@@ -104,23 +128,31 @@ var columns=[
 
         }
     },
+    {
+        name:'channel'
+    },
 
     {
         width:120,
         renderer:function(v,rec){
+            var pTitle=(rec.enabled==1)?"'禁用用户'":"'启用用户'",pContent=(rec.enabled==1)?"'您确定要禁用该用户?'":"'您确定要启用该用户?'";
             return '<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">'+
                 '<a class="green" href="javascript:void(0);" data-rel="tooltip" title="编辑" onclick="edit('+rec.id+')">'+
                 '<i class="icon-pencil bigger-130"></i>'+
                 '</a>'+
-                '<a class="red" href="javascript:void(0);" data-rel="tooltip" title="删除" onclick="createDeleteModal('+rec.id+',null,removeUser)">'+
+                '<a class="red" href="javascript:void(0);" data-rel="tooltip" title="'+pTitle+'" onclick="createModal('+rec.id+','+pTitle+','+pContent+',removeUser);">'+
                 '<i class="icon-trash bigger-130"></i>'+
                 '</a>'+
                 '<a class="green" href="#changeUserPasswordModel" data-rel="tooltip" userId="'+rec.id+'" title="修改密码" data-toggle="modal" data-target="#changeUserPasswordModel">'+
                 '<i class="icon-edit bigger-130"></i>'+
                 '</a>'+
-                '<a class="blue" href="#changeUserMobileModel" userId="'+rec.id+'" mobile="'+rec.mobile+'" data-rel="tooltip" title="修改手机号码" data-toggle="modal" data-target="#changeUserMobileModel">'+
+                '<a class="blue" href="#changeUserMobileModel" userId="'+rec.id+'" mobile="'+rec.credits+'" data-rel="tooltip" title="修改游游币" data-toggle="modal" data-target="#changeUserMobileModel">'+
                 '<i class="icon-user-md bigger-130"></i>'+
                 '</a>'+
+                    '<a class="blue" href="#changeUserMobileModel" userId="'+rec.id+'" mobile="'+rec.mobile+'" data-rel="tooltip" title="更换手机号" data-toggle="modal" data-target="#changeUserMobileModel1">'+
+                '<i class="icon-phone bigger-130"></i>'+
+                '</a>'+
+
                 '</div>';
         }
     }

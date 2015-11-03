@@ -17,6 +17,8 @@ public class Merchant extends BaseEntity {
     private String phone;
     private String address;
     private Long userId;
+    private Double credits=new Double(0);
+    private String description;
 
     public Merchant() {
     }
@@ -59,6 +61,22 @@ public class Merchant extends BaseEntity {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public Double getCredits() {
+        return credits;
+    }
+
+    public void setCredits(Double credits) {
+        this.credits = credits;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override

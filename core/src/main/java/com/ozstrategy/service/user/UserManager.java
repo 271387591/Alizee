@@ -14,4 +14,6 @@ public interface UserManager extends BaseManager<User>,UserDetailsService {
     User saveUser(User user);
     boolean changePassword(User user,String newPassword,String oldPassword,boolean admin);
     void batchDeleteUser(List<User> users);
+    void deleteUser(User user);
+    void updateCridits(User user);
 }

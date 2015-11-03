@@ -52,6 +52,16 @@ function initPage(btn_choose1,btn_choose2){
     }).on('change', function(){
         $('#exsitGameShow').hide();
     });
+    $('#logoPicture').ace_file_input({
+        style:'well',
+        btn_choose:btn_choose2,
+        no_icon:'icon-cloud-upload',
+        droppable:true,
+        thumbnail:'small'
+    }).on('change', function(){
+        $('#exsitLogoShow').hide();
+    });
+
 }
 function saveAdvert(type,publish){
     var datas=$('#advertForm').serializeArray();
@@ -72,7 +82,7 @@ function saveAdvert(type,publish){
     $.ajaxFileUpload({
         url: appPath + 'html/game/security/upload',
         secureuri:false,
-        fileElementId:['activityPicture','gameName'],
+        fileElementId:['activityPicture','gameName','logoPicture'],
         dataType: 'text/html',
         data: obj,
         error: function() {

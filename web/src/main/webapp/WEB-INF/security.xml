@@ -14,6 +14,7 @@
         <intercept-url pattern="/html/**/security/**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/html/**/web/**" access="isAuthenticated()"/>
         <intercept-url pattern="/html/**/tenant/**" access="hasRole('ROLE_TENANT')"/>
+        <intercept-url pattern="/html/**/shop/**" access="hasRole('ROLE_SHOP')"/>
         <!--<intercept-url pattern="/service/user/mobileSave" access="n"/>-->
         <!--<intercept-url pattern="/app/signup*" access="ROLE_ANONYMOUS,ROLE_ADMIN,ROLE_USER"/>-->
         <!--<intercept-url pattern="/html/**" access="hasAnyRole('ROLE_ADMIN,ROLE_USER')"/>-->

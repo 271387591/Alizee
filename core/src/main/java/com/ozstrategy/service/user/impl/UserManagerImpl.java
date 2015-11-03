@@ -1,7 +1,10 @@
 package com.ozstrategy.service.user.impl;
 
 import com.ozstrategy.dao.BaseDao;
+import com.ozstrategy.dao.goods.MerchantDao;
 import com.ozstrategy.dao.user.UserDao;
+import com.ozstrategy.exception.UserNotAuthException;
+import com.ozstrategy.model.goods.Merchant;
 import com.ozstrategy.model.user.Role;
 import com.ozstrategy.model.user.User;
 import com.ozstrategy.service.impl.BaseManagerImpl;
@@ -25,6 +28,9 @@ public class UserManagerImpl extends BaseManagerImpl<User> implements UserManage
     private UserDao userDao;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private MerchantDao merchantDao;
+
 
     @Override
     public BaseDao<User> baseDao() {
@@ -34,21 +40,32 @@ public class UserManagerImpl extends BaseManagerImpl<User> implements UserManage
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Map<String,Object> map=new HashMap<String, Object>();
         map.put("Q_username_EQ",username);
+        map.put("Q_enabled_EQ",Boolean.TRUE);
         User user=getByParam(map);
         if(user==null){
             throw new UsernameNotFoundException("user not found");
         }
+
         map=new HashMap<String, Object>();
         map.put("userId",user.getId());
         List<Role> roles = userDao.findByNamedQuery("getRoles", Role.class,map);
         user.getRoles().clear();
         user.getRoles().addAll(roles);
+        Long parentId = user.getParentId();
+        if(parentId!=null){
+            User parent=userDao.get(parentId);
+            if(!parent.getEnabled()){
+                throw new UserNotAuthException("user not enable");
+            }
+        }
+
         return user;
     }
 
     public User getUserByUsername(String username) {
         Map<String,Object> map=new HashMap<String, Object>();
         map.put("Q_username_EQ",username);
+        map.put("Q_enabled_EQ",Boolean.TRUE);
         return getByParam(map);
     }
 
@@ -94,9 +111,29 @@ public class UserManagerImpl extends BaseManagerImpl<User> implements UserManage
 
     public void batchDeleteUser(List<User> users) {
         for(User user:users){
-            user.setEnabled(Boolean.FALSE);
+            if(user.getEnabled()){
+                user.setEnabled(Boolean.FALSE);
+            }else{
+                user.setEnabled(Boolean.TRUE);
+            }
             userDao.update(user);
         }
+    }
+
+    public void deleteUser(User user) {
+        userDao.deleteRoles(user);
+        userDao.delete(user);
+    }
+
+    public void updateCridits(User user) {
+        Map<String,Object> map=new HashMap<String, Object>();
+        map.put("Q_userId_EQ",user.getId());
+        Merchant merchant=merchantDao.getByParam(map);
+        if(merchant!=null){
+            merchant.setCredits(user.getCredits());
+            merchantDao.update(merchant);
+        }
+        userDao.update(user);
     }
 
 }

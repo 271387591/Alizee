@@ -75,7 +75,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title"><i class="icon-cog"></i>修改密码</h4>
+                <h4 class="modal-title"><i class="icon-cog"></i>修改游游币</h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
@@ -87,16 +87,16 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label">原手机:</label>
+                            <label class="control-label">原游游币:</label>
                             <div>
-                                <input type="text" class="form-control" id="changeUserOldMobile" placeholder="原手机">
+                                <input type="text" class="form-control" id="changeUserOldMobile" placeholder="原游游币">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="control-label">新手机:</label>
+                            <label class="control-label">新游游币:</label>
                             <div>
-                                <input type="text" name="mobile" class="form-control" data-validate="mobile" placeholder="新手机">
+                                <input type="text" name="credits" class="form-control" data-validate="integer" placeholder="新游游币">
                             </div>
                         </div>
                     </form>
@@ -109,6 +109,46 @@
         </div>
     </div>
 </div>
+<div id="changeUserMobileModel1" class="modal fade" role="dialog" aria-labelledby="gridSystemModalLabel" aria-hidden="true">
+    <div class="modal-dialog width-35">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"><i class="icon-cog"></i>更换手机号</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <form class="form-horizontal" id="changeUserMobileForm1">
+
+                        <div class="form-group">
+                            <div>
+                                <input type="hidden" name="id" id="changeUserMobileId1">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">原手机号:</label>
+                            <div>
+                                <input type="text" class="form-control" id="changeUserOldMobile1" placeholder="原手机号">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label">新手机号:</label>
+                            <div>
+                                <input type="text" name="mobile" class="form-control" data-validate="mobile" placeholder="新手机号">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="changeUserMobile1($('#changeUserMobileModel1'))">确定</button>
+                <button type="button" class="btn" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <script type="text/javascript" src="<c:url value="/resources/js/admin/user/user.js"/>"></script>
 <script type="text/javascript">
@@ -126,6 +166,13 @@
             $('#changeUserOldMobile').val($(event.relatedTarget).attr('mobile'));
             $('#changeUserOldMobile').attr('readOnly',true);
         });
+        $('#changeUserMobileModel1').on('show.bs.modal', function (event) {
+            clearForm($('#changeUserMobileForm1'));
+            $('#changeUserMobileId1').val($(event.relatedTarget).attr('userId'));
+            $('#changeUserOldMobile1').val($(event.relatedTarget).attr('mobile'));
+            $('#changeUserOldMobile1').attr('readOnly',true);
+        });
+
 
     });
 

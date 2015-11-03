@@ -20,6 +20,17 @@ public class GoodsCommand {
     private String picPath;
     private String picName;
     private String url;
+    private Boolean purchase=Boolean.FALSE;
+
+    private Date endDate;
+    private Date currentDate;
+    private Date fixedDate;
+    private Integer trends;
+    private String fixedDateStr;
+    private String logoPath;
+    private String logoUrl;
+    private String logoName;
+
     public GoodsCommand() {
     }
     public GoodsCommand(Goods model) {
@@ -36,6 +47,12 @@ public class GoodsCommand {
         this.picPath=model.getPicPath();
         this.picName=model.getPicName();
         this.url=model.getUrl();
+        this.purchase=model.getPurchase();
+        this.trends=model.getTrends();
+        this.fixedDate=model.getFixedDate();
+        this.logoName=model.getLogoName();
+        this.logoPath=model.getLogoPath();
+        this.logoUrl=model.getLogoUrl();
     }
     public Long getId() {
         return id;
@@ -120,5 +137,77 @@ public class GoodsCommand {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public Boolean getPurchase() {
+        return purchase;
+    }
+
+    public void setPurchase(Boolean purchase) {
+        this.purchase = purchase;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    public Date getCurrentDate() {
+        return currentDate;
+    }
+
+    public void setCurrentDate(Date currentDate) {
+        this.currentDate = currentDate;
+    }
+
+    public Date getFixedDate() {
+        return fixedDate;
+    }
+
+    public void setFixedDate(Date fixedDate) {
+        this.fixedDate = fixedDate;
+    }
+
+    public Integer getTrends() {
+        return trends;
+    }
+
+    public void setTrends(Integer trends) {
+        this.trends = trends;
+    }
+
+    public String getFixedDateStr() {
+        return fixedDateStr;
+    }
+
+    public void setFixedDateStr(String fixedDateStr) {
+        this.fixedDateStr = fixedDateStr;
+    }
+
+    public String getLogoPath() {
+        return logoPath;
+    }
+
+    public void setLogoPath(String logoPath) {
+        this.logoPath = logoPath;
+    }
+
+    public String getLogoUrl() {
+        return logoUrl;
+    }
+
+    public void setLogoUrl(String logoUrl) {
+        this.logoUrl = logoUrl;
+    }
+
+    public String getLogoName() {
+        return logoName;
+    }
+
+    public void setLogoName(String logoName) {
+        this.logoName = logoName;
     }
 }

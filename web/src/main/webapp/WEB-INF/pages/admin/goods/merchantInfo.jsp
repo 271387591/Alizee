@@ -55,6 +55,20 @@
                                 <textarea name="address" class="width-100 autosize-transition limited" data-validate="required" maxlength="1000" id="companyInfo" placeholder="商家地址">${command.address}</textarea>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label class="col-sm-1 control-label no-padding-right" for="companyInfo">商家描述</label>
+                            <div class="col-sm-4">
+                                <textarea name="description" class="width-100 autosize-transition limited" data-validate="required" maxlength="1000" placeholder="商家描述">${command.description}</textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-1 control-label no-padding-right" for="companyInfo">商家总积分</label>
+                            <div class="col-sm-4">
+                                <span class="width-100 label-success label label-xlg">${command.credits}(游游币)</span>
+                            </div>
+                        </div>
+
                         <div class="clearfix form-actions">
                             <div class="col-md-offset-3 col-md-9">
                                 <button class="btn btn-info" type="button" id="saveBtn" >

@@ -1,14 +1,16 @@
 package com.ozstrategy.alipay.util;
 
-
 import com.ozstrategy.alipay.config.AlipayConfig;
-import com.ozstrategy.alipay.sign.MD5;
+import com.ozstrategy.alipay.sign.RSA;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Map;
+
 
 /* *
  *类名：AlipayNotify
@@ -24,6 +26,7 @@ import java.util.Map;
  *调试通知返回时，可查看或改写log日志的写入TXT里的数据，来检查通知返回是否正常
  */
 public class AlipayNotify {
+    static private Log log= LogFactory.getLog(AlipayNotify.class);
 
     /**
      * 支付宝消息验证地址
@@ -35,7 +38,7 @@ public class AlipayNotify {
      * @param params 通知返回来的参数数组
      * @return 验证结果
      */
-    public static boolean verify(Map<String, String> params,String partner,String key) {
+    public static boolean verify(Map<String, String> params,String ali_public_key,String partner) {
 
         //判断responsetTxt是否为true，isSign是否为true
         //responsetTxt的结果不是true，与服务器设置问题、合作身份者ID、notify_id一分钟失效有关
@@ -47,11 +50,12 @@ public class AlipayNotify {
 		}
 	    String sign = "";
 	    if(params.get("sign") != null) {sign = params.get("sign");}
-	    boolean isSign = getSignVeryfy(params, sign,key);
+	    boolean isSign = getSignVeryfy(params, sign,ali_public_key);
 
         //写日志记录（若要调试，请取消下面两行注释）
-        //String sWord = "responseTxt=" + responseTxt + "\n isSign=" + isSign + "\n 返回回来的参数：" + AlipayCore.createLinkString(params);
+        String sWord = "responseTxt=" + responseTxt + "\n isSign=" + isSign + "\n 返回回来的参数：" + AlipayCore.createLinkString(params);
 	    //AlipayCore.logResult(sWord);
+        log.info("verify=="+sWord);
 
         if (isSign && responseTxt.equals("true")) {
             return true;
@@ -66,16 +70,16 @@ public class AlipayNotify {
      * @param sign 比对的签名结果
      * @return 生成的签名结果
      */
-	private static boolean getSignVeryfy(Map<String, String> Params, String sign,String key) {
+	private static boolean getSignVeryfy(Map<String, String> Params, String sign,String ali_public_key) {
+        sign=sign.replaceAll(" ","");
     	//过滤空值、sign与sign_type参数
     	Map<String, String> sParaNew = AlipayCore.paraFilter(Params);
         //获取待签名字符串
         String preSignStr = AlipayCore.createLinkString(sParaNew);
         //获得签名验证结果
         boolean isSign = false;
-        if(AlipayConfig.sign_type.equals("MD5") ) {
-//        	isSign = MD5.verify(preSignStr, sign, AlipayConfig.key, AlipayConfig.input_charset);
-        	isSign = MD5.verify(preSignStr, sign, key, AlipayConfig.input_charset);
+        if(AlipayConfig.sign_type.equals("RSA")){
+        	isSign = RSA.verify(preSignStr, sign, ali_public_key, AlipayConfig.input_charset);
         }
         return isSign;
     }

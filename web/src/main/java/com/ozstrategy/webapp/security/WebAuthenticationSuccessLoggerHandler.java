@@ -6,7 +6,9 @@ import com.ozstrategy.webapp.command.JsonReaderSingleResponse;
 import com.ozstrategy.webapp.command.user.UserCommand;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -37,21 +39,31 @@ public class WebAuthenticationSuccessLoggerHandler extends WebAuthenticationLogg
           return;
       }
       UserCommand userCommand=new UserCommand(user);
+      Role role=roleManager.get(user.getRoleId());
+      if(role!=null){
+          userCommand.setRoleName(role.getName());
+      }
       if(StringUtils.equals(PLATFORM, platform)){
-          Role role=roleManager.get(user.getRoleId());
-          if(role!=null){
-              userCommand.setRoleName(role.getName());
-          }
           request.getSession().setAttribute("userinfo",userCommand);
           if(StringUtils.equals("ROLE_ADMIN",userCommand.getRoleName())){
-              response.sendRedirect("html/security/about");
+              response.sendRedirect("html/goodsSetting/security/goodsset");
           }else if(StringUtils.equals("ROLE_TENANT",userCommand.getRoleName())){
               response.sendRedirect("html/tenant/merchantinfo");
+          }else if(StringUtils.equals("ROLE_SHOP",userCommand.getRoleName())){
+              response.sendRedirect("html/goodsCertificate/shop/index");
           }
           return;
       }
+      if(StringUtils.equals("ROLE_USER",userCommand.getRoleName())){
+          String result=objectMapper.writeValueAsString(new JsonReaderSingleResponse<UserCommand>(userCommand));
+          response.getWriter().print(result);
+      }else{
+//          SecurityContextHolder.getContext().setAuthentication(null);
+//          request.getSession().removeAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY);
+          String result=objectMapper.writeValueAsString(new JsonReaderSingleResponse(null,false,"不支持该账号登录"));
+          response.getWriter().print(result);
+      }
 
-      String result=objectMapper.writeValueAsString(new JsonReaderSingleResponse<UserCommand>(userCommand));
-      response.getWriter().print(result);
+
   }
 }

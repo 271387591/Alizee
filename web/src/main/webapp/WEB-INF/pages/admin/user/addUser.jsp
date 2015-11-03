@@ -87,7 +87,7 @@
 </div>
 <script type="text/javascript">
     jQuery(function(){
-        initComboData($("#roleSelector"),'html/role/security/list',{start:0,limit:20},'id','displayName','${command.roleId}');
+        initComboData($("#roleSelector"),'html/role/security/list',{start:0,limit:20,Q_name_NEQ:'ROLE_SHOP'},'id','displayName','${command.roleId}');
         $("#roleSelector").chosen();
         if(${command.id!=null}){
             $('#userForm').find('input[name=mobile]').attr('readOnly',true);

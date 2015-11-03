@@ -20,6 +20,8 @@ import com.ozstrategy.util.RSAUtils;
 import com.ozstrategy.util.ThreeDESUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,6 +42,7 @@ public class RechargeManagerImpl extends BaseManagerImpl<Recharge> implements Re
     private UserDao userDao;
     @Autowired
     private ConsumeDetailDao consumeDetailDao;
+    Log log= LogFactory.getLog(RechargeManagerImpl.class);
 
 
 
@@ -72,7 +75,7 @@ public class RechargeManagerImpl extends BaseManagerImpl<Recharge> implements Re
             String pid=applicationConfigDao.getValue("pid");
             String seller_email=applicationConfigDao.getValue("seller_email");
             String mobile_rsa=applicationConfigDao.getValue("mobile_rsa");
-            map.put("publicKey",publicKey);
+//            map.put("publicKey",publicKey);
             Map<String,Object> data=new HashMap<String, Object>();
             data.put("id",recharge.getId());
             data.put("orderNo",recharge.getRechargeNo());
@@ -81,10 +84,12 @@ public class RechargeManagerImpl extends BaseManagerImpl<Recharge> implements Re
             data.put("seller_email",seller_email);
             data.put("mobile_rsa",mobile_rsa);
             data.put("pid",pid);
-            String dataStr=new ObjectMapper().writeValueAsString(data);
-            byte[] dataStrData = dataStr.getBytes();
-            byte[] encodedData = RSAUtils.encryptByPrivateKey(dataStrData, privateKey);
-            map.put("bills", Base64Utils.encode(encodedData));
+//            String dataStr=new ObjectMapper().writeValueAsString(data);
+            byte[] databyte=new ObjectMapper().writeValueAsBytes(data);
+//            byte[] dataStrData = dataStr.getBytes();
+//            byte[] encodedData = RSAUtils.encryptByPrivateKey(dataStrData, privateKey);
+            map.put("bills", Base64Utils.encode(databyte));
+//            map.put("bills", dataStr);
 
             byte[] retByte=new ObjectMapper().writeValueAsBytes(map);
 
@@ -105,12 +110,15 @@ public class RechargeManagerImpl extends BaseManagerImpl<Recharge> implements Re
     public void mobileNoticeSuccess(Map<String, String> map) {
         String out_trade_no= map.get("out_trade_no");
         String trade_no= map.get("trade_no");
-        String trade_status= map.get("trade_status");
+        log.info("mobileNoticeFail==="+out_trade_no+",trade_no=="+trade_no);
+        for(String key:map.keySet()){
+            log.info("mobileNoticeSuccess::"+key+"=="+map.get(key));
+        }
         if(StringUtils.isNotEmpty(out_trade_no)){
             Map<String,Object> orderMap=new HashMap<String, Object>();
             orderMap.put("Q_rechargeNo_EQ",out_trade_no);
             Recharge recharge=rechargeDao.getByParam(orderMap);
-            if(recharge!=null && recharge.getStatus()!=RechargeStatus.NoPay.ordinal()){
+            if(recharge!=null && recharge.getStatus()!=RechargeStatus.Pay.ordinal()){
                 recharge.setStatus(RechargeStatus.Pay.ordinal());
                 recharge.setLastUpdateDate(new Date());
                 rechargeDao.update(recharge);
@@ -133,6 +141,10 @@ public class RechargeManagerImpl extends BaseManagerImpl<Recharge> implements Re
         String trade_no= map.get("trade_no");
         String trade_status= map.get("trade_status");
         String fail_details=map.get("fail_details");
+        for(String key:map.keySet()){
+            log.info("mobileNoticeFail::"+key+"=="+map.get(key));
+        }
+
         if(StringUtils.isNotEmpty(out_trade_no)){
             Map<String,Object> orderMap=new HashMap<String, Object>();
             orderMap.put("Q_rechargeNo_EQ",out_trade_no);
@@ -140,7 +152,7 @@ public class RechargeManagerImpl extends BaseManagerImpl<Recharge> implements Re
             if(recharge!=null){
                 recharge.setStatus(RechargeStatus.Fail.ordinal());
                 recharge.setLastUpdateDate(new Date());
-                recharge.setDetails(fail_details);
+                recharge.setDetails(trade_status);
                 rechargeDao.update(recharge);
             }
         }

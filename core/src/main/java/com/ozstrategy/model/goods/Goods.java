@@ -1,6 +1,8 @@
 package com.ozstrategy.model.goods;
 
 import com.ozstrategy.annotations.Id;
+import com.ozstrategy.annotations.NamedQueries;
+import com.ozstrategy.annotations.NamedQuery;
 import com.ozstrategy.annotations.Table;
 import com.ozstrategy.model.BaseEntity;
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -12,6 +14,10 @@ import java.util.Date;
  * Created by lihao1 on 6/30/15.
  */
 @Table(name = "t_goods")
+@NamedQueries({
+        @NamedQuery(name = "getGoods",query = "select r.*,ur.name as merchantName,ur.description as merchantDes,ur.phone,ur.address from t_goods r join t_merchant ur on r.merchantId=ur.id join t_user us on us.id=r.userId  where r.enabled=1 AND us.enabled=1 "),
+        @NamedQuery(name = "getGoodsCount",query = "select count(*) from t_goods r join t_merchant ur on r.merchantId=ur.id join t_user us on us.id=r.userId  where r.enabled=1 AND us.enabled=1 ")
+})
 public class Goods extends BaseEntity {
     @Id
     private Long id;
@@ -27,6 +33,12 @@ public class Goods extends BaseEntity {
     private String picName;
     private String url;
     private Date lastUpdateDate;
+    private Boolean purchase=Boolean.FALSE;
+    private Date fixedDate;
+    private Integer trends;
+    private String logoPath;
+    private String logoUrl;
+    private String logoName;
 
     public Goods() {
     }
@@ -133,6 +145,54 @@ public class Goods extends BaseEntity {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public Boolean getPurchase() {
+        return purchase;
+    }
+
+    public void setPurchase(Boolean purchase) {
+        this.purchase = purchase;
+    }
+
+    public Date getFixedDate() {
+        return fixedDate;
+    }
+
+    public void setFixedDate(Date fixedDate) {
+        this.fixedDate = fixedDate;
+    }
+
+    public Integer getTrends() {
+        return trends;
+    }
+
+    public void setTrends(Integer trends) {
+        this.trends = trends;
+    }
+
+    public String getLogoPath() {
+        return logoPath;
+    }
+
+    public void setLogoPath(String logoPath) {
+        this.logoPath = logoPath;
+    }
+
+    public String getLogoUrl() {
+        return logoUrl;
+    }
+
+    public void setLogoUrl(String logoUrl) {
+        this.logoUrl = logoUrl;
+    }
+
+    public String getLogoName() {
+        return logoName;
+    }
+
+    public void setLogoName(String logoName) {
+        this.logoName = logoName;
     }
 
     @Override

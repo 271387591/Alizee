@@ -42,6 +42,8 @@
                     <div class="col-sm-4">
                         <select id="gamePlatform" class="width-90 chosen-select" name="platform" data-validate="required" data-placeholder="适用平台">
                             <option value="Android">Android</option>
+                            <option value="IOS">IOS</option>
+                            <option value="ALL">IOS&Android</option>
                         </select>
                     </div>
                 </div>
@@ -71,6 +73,26 @@
                 </div>
 
                 <div class="form-group">
+                    <label class="col-sm-1 control-label no-padding-right" for="logoPicture">游戏Logo图片</label>
+                    <div class="col-sm-4">
+                        <input multiple="" type="file" name="logoName" id="logoPicture" />
+                        <span class="lbl"></span>
+                    </div>
+                    <div class="col-sm-reset inline" style="color: #d16e6c">
+                        <i class="icon-warning-sign">仅支持jpeg、jpg、gif、png格式的图片，且大小不能超过1M,请选择合适的图片上传</i>
+                    </div>
+                </div>
+                <c:if test="${command.id!=null}">
+                    <div class="form-group" id="exsitLogoShow">
+                        <label class="col-sm-1 control-label no-padding-right">预览图片</label>
+                        <div class="col-sm-4">
+                            <span><a target="_blank" href="${command.logoUrl}">${command.logoName}</a></span>
+                            <span class="lbl"></span>
+                        </div>
+
+                    </div>
+                </c:if>
+                <div class="form-group">
                     <label class="col-sm-1 control-label no-padding-right" for="activityPicture">游戏图片</label>
                     <div class="col-sm-4">
                         <input multiple="" type="file" name="picName" id="activityPicture" />
@@ -90,6 +112,7 @@
 
                     </div>
                 </c:if>
+
                 <div class="form-group">
                     <label class="col-sm-1 control-label no-padding-right" for="activityPicture">游戏安装包</label>
                     <div class="col-sm-4">
@@ -109,6 +132,12 @@
 
                     </div>
                 </c:if>
+                <div class="form-group">
+                    <label class="col-sm-1 control-label no-padding-right">IOS下载地址</label>
+                    <div class="col-sm-4">
+                        <input type="text" name="iosUrl" value="${command.iosUrl}" placeholder="IOS下载地址"  class="width-100" />
+                    </div>
+                </div>
                 <div class="clearfix form-actions">
                     <div class="col-md-offset-3 col-md-9">
                         <button class="btn btn-info" type="button" id="saveBtn" onclick="saveAdvert(${command.id!=null?"'edit'":"'save'"},'N');" >

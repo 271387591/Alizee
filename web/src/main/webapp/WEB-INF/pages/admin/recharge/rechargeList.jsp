@@ -33,8 +33,41 @@
                         <div class="query-content">
                             <ul class="query-form" id="rechargeSucSearch">
                                 <li>
+                                    <label class="control-label">充值编号</label>
+                                    <input type="text" name="advert.Q_a.rechargeNo_LK"/>
+                                </li>
+                                <li>
+                                    <label class="control-label">用户昵称</label>
+                                    <input type="text" name="advert.Q_u.nickName_LK"/>
+                                </li>
+                                <li>
                                     <label class="control-label">用户手机</label>
-                                    <input type="text" name="advert.Q_u.username_EQ"/>
+                                    <input type="text" name="advert.Q_u.username_LK"/>
+                                </li>
+                                <li>
+                                    <label class="control-label">渠道来源</label>
+                                    <input type="text" name="advert.Q_a.channel_LK"/>
+                                </li>
+                                <li>
+                                    <label class="control-label">充值金额</label>
+                                    <input type="text" name="advert.Q_a.money_GE" style="width:100px;"/>
+                                    <input type="text" name="advert.Q_a.money_LE" style="width:100px;"/>
+                                </li>
+
+
+                                <li style="width: 600px;">
+                                    <label class="form-horizontal">充值时间</label>
+                                    <div class="input-group" style="width: 500px;float: left">
+                                        <span class="input-icon input-icon-right" style="float: left">
+                                            <input type="text" readonly name="advert.Q_a.createDate_GE" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn'})"/>
+                                            <i class="icon-calendar green"></i>
+                                        </span>
+                                        <span class="ig-txt">至</span>
+                                        <span class="input-icon input-icon-right">
+                                            <input type="text" readonly name="advert.Q_a.createDate_LE" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn'})"/>
+                                            <i class="icon-calendar green"></i>
+                                        </span>
+                                    </div>
                                 </li>
                             </ul>
                             <div class="btn-query">
@@ -44,6 +77,12 @@
                         </div>
                     </div>
                     <div class="table-responsive">
+                        <div class="table-title">
+                            <span style="margin-left: 10px" class="green">充值成功</span>
+                            <div class="pull-right" style="margin-right: 10px;">
+                                <a class="btn btn-sm btn-primary" target="_blank" href="<c:url value="/html/recharge/security/exportExcel/1"/>"><i class="icon-angle-down"></i>导出</a>
+                            </div>
+                        </div>
                         <table class="table table-bordered table-hover" style="margin-bottom: 2px;" id="rechargeSucTable">
                             <thead>
                             <tr>
@@ -52,6 +91,7 @@
                                 <th>用户昵称</th>
                                 <th>充值金额</th>
                                 <th>充值时间</th>
+                                <th>渠道来源</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -67,8 +107,35 @@
                         <div class="query-content">
                             <ul class="query-form" id="rechargeFailSearch">
                                 <li>
-                                    <label>用户手机</label>
-                                    <input type="text" name="advert.Q_u.username_EQ"/>
+                                    <label class="control-label">充值编号</label>
+                                    <input type="text" name="advert.Q_a.rechargeNo_LK"/>
+                                </li>
+                                <li>
+                                    <label class="control-label">用户昵称</label>
+                                    <input type="text" name="advert.Q_u.nickName_LK"/>
+                                </li>
+                                <li>
+                                    <label class="control-label">用户手机</label>
+                                    <input type="text" name="advert.Q_u.username_LK"/>
+                                </li>
+                                <li>
+                                    <label class="control-label">充值金额</label>
+                                    <input type="text" name="advert.Q_a.money_GE" style="width:100px;"/>
+                                    <input type="text" name="advert.Q_a.money_LE" style="width:100px;"/>
+                                </li>
+                                <li style="width: 600px;">
+                                    <label class="form-horizontal">充值时间</label>
+                                    <div class="input-group" style="width: 500px;float: left">
+                                        <span class="input-icon input-icon-right" style="float: left">
+                                            <input type="text" readonly name="advert.Q_a.createDate_GE" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn'})"/>
+                                            <i class="icon-calendar green"></i>
+                                        </span>
+                                        <span class="ig-txt">至</span>
+                                        <span class="input-icon input-icon-right">
+                                            <input type="text" readonly name="advert.Q_a.createDate_LE" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn'})"/>
+                                            <i class="icon-calendar green"></i>
+                                        </span>
+                                    </div>
                                 </li>
                             </ul>
                             <div class="btn-query">
@@ -78,6 +145,12 @@
                         </div>
                     </div>
                     <div class="table-responsive" style="">
+                        <div class="table-title">
+                            <span style="margin-left: 10px" class="green">充值失败</span>
+                            <div class="pull-right" style="margin-right: 10px;">
+                                <a class="btn btn-sm btn-primary" target="_blank" href="<c:url value="/html/recharge/security/exportExcel/2"/>"><i class="icon-angle-down"></i>导出</a>
+                            </div>
+                        </div>
                         <table class="table table-bordered table-hover" style="margin-bottom: 2px;" id="rechargeFailTable">
                             <thead>
                             <tr>
@@ -87,6 +160,7 @@
                                 <th>充值金额</th>
                                 <th>充值时间</th>
                                 <th>失败信息</th>
+                                <th>渠道来源</th>
                             </tr>
                             </thead>
                             <tbody>

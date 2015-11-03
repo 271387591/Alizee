@@ -17,131 +17,65 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="<c:url value="/resources/images/favicon.ico"/> ">
+    <%@ include file="/common/taglibs.jsp"%>
 
-    <link href="<c:url value="/resources/css/bootstrap.min.css"/> " rel="stylesheet" />
-    <link href="<c:url value="/resources/css/simplePagination.css"/> " rel="stylesheet" />
-    <link rel="stylesheet" href="<c:url value="/resources/css/font-awesome.min.css"/>" />
-
-
-    <link href="<c:url value="/resources/css/style.css"/> " rel="stylesheet" />
-
-
-    <!--[if lt IE 9]><script src="<c:url value="/resources/assets/ie8-responsive-file-warning.js"/>"></script><![endif]-->
-    <script src="<c:url value="/resources/assets/ie-emulation-modes-warning.js"/> "></script>
-    <!--[if lt IE 9]>
-         <script src="<c:url value="/resources/lib/ie/html5shiv.js"/>"></script>
-         <script src="<c:url value=" / resources / lib / ie / respond.min.js
-         "/>"></script>
-    <![endif]-->
-    <script src="<c:url value="/resources/lib/jquery/jquery-2.0.3.min.js"/>"></script>
-    <script src="<c:url value="/resources/lib/bootstrap/bootstrap.min.js"/>"></script>
-    <script src="<c:url value="/resources/lib/jplugin/jquery.simplePagination.js"/>"></script>
-
-
-
-    <script src="<c:url value="/resources/lib/jplugin/common.js"/>"></script>
 
 </head>
 <body>
-<%@ include file="header.jsp"%>
-<script type="text/javascript">
-//    $('#nav_index').addClass('active');
-    changeNav('nav_index');
-</script>
-
-<%--<div class="container-fluid">--%>
-
-    <%--<!-- Main component for a primary marketing message or call to action -->--%>
-    <%--<div class="jumbotron">--%>
-        <%--<h1>Navbar example</h1>--%>
-        <%--<p>This example is a quick exercise to illustrate how the default, static and fixed to top navbar work. It includes the responsive CSS and HTML, so it also adapts to your viewport and device.</p>--%>
-        <%--<p>To see the difference between static and fixed top navbars, just scroll.</p>--%>
-        <%--<p>--%>
-            <%--<a class="btn btn-lg btn-primary" href="../../components/#navbar" role="button">View navbar docs &raquo;</a>--%>
-        <%--</p>--%>
-    <%--</div>--%>
-
-<%--</div>--%>
 <div class="container">
     <div>
         <h3 class="page-header">
-            <span>ddddd</span><span class="text-success">(2.2.22)</span>
+            <span>一、技术支持</span>
         </h3>
         <div class="row">
-            <div class="col-xs-1"><img src="<c:url value="/resources/images/user.jpg"/>"></div>
-            <div class="col-xs-10">sdasdfsafsafasfasf阿斯顿发送到发饰发斯蒂芬撒的发生 撒发生大发撒地方撒发生大发收费撒旦发生的发顺丰是打发撒的发生发送阿萨德发生的撒旦撒旦饰发斯蒂芬撒的发生 撒发生大发撒地方撒发生大发收费撒旦发生的发顺丰是打发撒的发生发送阿萨德发生的撒旦撒旦饰发斯蒂芬撒的发生 撒发生大发撒地方撒发生大发收费撒旦发生的发顺丰是打发撒的发生发送阿萨德发生的撒旦撒旦fsfsd</div>
+            <div class="col-xs-10">电话：18780217480</div>
+            <div class="col-xs-10">邮箱：<span class=" ">mingjikaoyu@qq.com</span></div>
         </div>
-        <a class="btn btn-success pull-right" href="#">免费下载</a>
-        <p class="text text-warning col-md-offset-1"><span class="offset10">2013-03-23发布</span><span class="col-md-offset-1">适合2.2及以上固件</span></p>
         <hr class="featurette-divider">
     </div>
     <div>
         <h3 class="page-header">
-            <span>ddddd</span><span class="text-success">(2.2.22)</span>
+            <span>二、产品介绍</span>
         </h3>
         <div class="row">
-            <div class="col-xs-1"><img src="<c:url value="/resources/images/user.jpg"/>"></div>
-            <div class="col-xs-10">sdasdfsafsafasfasf阿斯顿发送到发饰发斯蒂芬撒的发生 撒发生大发撒地方撒发生大发收费撒旦发生的发顺丰是打发撒的发生发送阿萨德发生的撒旦撒旦饰发斯蒂芬撒的发生 撒发生大发撒地方撒发生大发收费撒旦发生的发顺丰是打发撒的发生发送阿萨德发生的撒旦撒旦饰发斯蒂芬撒的发生 撒发生大发撒地方撒发生大发收费撒旦发生的发顺丰是打发撒的发生发送阿萨德发生的撒旦撒旦fsfsd</div>
-        </div>
-        <a class="btn btn-success pull-right" href="#">免费下载</a>
-        <p class="text text-warning col-md-offset-1"><span class="offset10">2013-03-23发布</span><span class="col-md-offset-1">适合2.2及以上固件</span></p>
-        <hr class="featurette-divider">
-    </div>
-    <div>
-        <h3 class="page-header">
-            <span>ddddd</span><span class="text-success">(2.2.22)</span>
-        </h3>
-        <div class="row">
-            <div class="col-xs-1"><img src="<c:url value="/resources/images/type-48.png"/>"></div>
-            <div class="col-xs-10">sdasdfsafsafasfasf阿斯顿发送到发饰发斯蒂芬撒的发生 撒发生大发撒地方撒发生大发收费撒旦发生的发顺丰是打发撒的发生发送阿萨德发生的撒旦撒旦饰发斯蒂芬撒的发生 撒发生大发撒地方撒发生大发收费撒旦发生的发顺丰是打发撒的发生发送阿萨德发生的撒旦撒旦饰发斯蒂芬撒的发生 撒发生大发撒地方撒发生大发收费撒旦发生的发顺丰是打发撒的发生发送阿萨德发生的撒旦撒旦fsfsd</div>
-        </div>
-        <a class="btn btn-success pull-right" href="#">免费下载</a>
-        <p class="text text-warning col-md-offset-1"><span class="offset10">2013-03-23发布</span><span class="col-md-offset-1">适合2.2及以上固件</span></p>
-        <hr class="featurette-divider">
-    </div>
-    <div>
-        <h3 class="page-header">
-            <span>ddddd</span><span class="text-success">(2.2.22)</span>
-        </h3>
-        <div class="row">
-            <div class="col-xs-1"><img src="<c:url value="/resources/images/type-48.png"/>"></div>
-            <div class="col-xs-10">sdasdfsafsafasfasf阿斯顿发送到发饰发斯蒂芬撒的发生 撒发生大发撒地方撒发生大发收费撒旦发生的发顺丰是打发撒的发生发送阿萨德发生的撒旦撒旦饰发斯蒂芬撒的发生 撒发生大发撒地方撒发生大发收费撒旦发生的发顺丰是打发撒的发生发送阿萨德发生的撒旦撒旦饰发斯蒂芬撒的发生 撒发生大发撒地方撒发生大发收费撒旦发生的发顺丰是打发撒的发生发送阿萨德发生的撒旦撒旦fsfsd</div>
-        </div>
-        <a class="btn btn-success pull-right" href="#">免费下载</a>
-        <p class="text text-warning col-md-offset-1"><span class="offset10">2013-03-23发布</span><span class="col-md-offset-1">适合2.2及以上固件</span></p>
-        <hr class="featurette-divider">
-    </div>
-    <div>
-        <h3 class="page-header">
-            <span>ddddd</span><span class="text-success">(2.2.22)</span>
-        </h3>
-        <div class="row">
-            <div class="col-xs-1"><img src="<c:url value="/resources/images/type-48.png"/>"></div>
-            <div class="col-xs-10">sdasdfsafsafasfasf阿斯顿发送到发饰发斯蒂芬撒的发生 撒发生大发撒地方撒发生大发收费撒旦发生的发顺丰是打发撒的发生发送阿萨德发生的撒旦撒旦饰发斯蒂芬撒的发生 撒发生大发撒地方撒发生大发收费撒旦发生的发顺丰是打发撒的发生发送阿萨德发生的撒旦撒旦饰发斯蒂芬撒的发生 撒发生大发撒地方撒发生大发收费撒旦发生的发顺丰是打发撒的发生发送阿萨德发生的撒旦撒旦fsfsd</div>
-        </div>
-        <a class="btn btn-success pull-right" href="#">免费下载</a>
-        <p class="text text-warning col-md-offset-1"><span class="offset10">2013-03-23发布</span><span class="col-md-offset-1">适合2.2及以上固件</span></p>
-        <hr class="featurette-divider">
-    </div>
+            <div class="col-xs-10" style="font-weight: 400;font-size: 18px">
+                1.产品名称
+            </div>
+            <div class="col-xs-10">
+                &nbsp;&nbsp;&nbsp;&nbsp; 鱼乐
+            </div>
+            <div class="col-xs-10" style="font-weight: 400;font-size: 18px">
+                2.产品介绍
+            </div>
+            <div class="col-xs-10">
+                内容简介：</br>
+                让爱吃爱喝的你，在这里可以一边玩游戏，还可以赚取礼品，邀朋友一起活动，分享属于你们的美食故事。</br>
 
-    <div id="paging1" class="page pull-right"></div>
-    <!-- Modal -->
-    
+                无需跨越多个app，您只需要这一款app，即可实现邀约朋友一起吃饭，一起运动，一起参加各种活动，还可以在这里找到属于你的游戏，在玩游戏的同时，你还可以时不时能获取到合作商家商品的兑换券，兑换你喜欢的商品。玩游戏赞积分，用积分到积分商城兑换合作商家的商品，也可以每天参与商品抢购活动。</br>
+
+                主要功能：</br>
+
+                -置顶活动介绍：展示平台最新最有吸引力的活动，资讯。</br>
+                -抢购活动：每天到点抢购我们合作商家的抢购商品。</br>
+                -最新活动：在这里可以参与你感兴趣的各种活动，活动报名，为活动发表你的评论。</br>
+                -美食故事：各种美食的做法，故事，由来，燃起你对美食的欲望，健康饮食。</br>
+                -游戏：在这里可以下载你感兴趣的游戏,给出你对游戏的评论</br>
+                -行业联盟：为你提供更多我们合作商家的服务</br>
+                -积分商城：在这里你可以兑换我们合作商家发布的各种物品</br>
+                -评一评：为您提供我们合作餐厅的评价入口，让您有vip的超级待遇</br>
+                -兑换券：在这里你可以管理你的商品兑换券</br>
+                -积分管理，支付宝充值：利用支付宝对积分进行充值</br>
+                -消息中心：让你及时接收到我们对您的广播信息</br>
+                -反馈：您可以对我们的产品进行实时反馈，我们会及时处理</br>
+
+                产品特色：</br>
+                集生活、美食、乐趣和游戏为一体，让生活不再平淡，让游戏不再是一种堕落的行为，健康游戏，健康生活</br>
+            </div>
 
 
+        </div>
+        <hr class="featurette-divider">
+    </div>
 </div>
-<%@ include file="footer.jsp"%>
-
-<script src="<c:url value="/resources/lib/bootstrap/typeahead-bs2.min.js"/>"></script>
-<script src="<c:url value="/resources/assets/ie10-viewport-bug-workaround.js"/>"></script>
-<script type="text/javascript">
-    $(function(){
-        $("#paging1").pagination({
-            items: 100,
-            itemsOnPage: 10,
-            cssStyle: 'light-theme'
-        });
-    });
-</script>
 </body>
 </html>

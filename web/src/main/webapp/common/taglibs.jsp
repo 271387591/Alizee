@@ -58,6 +58,7 @@
 <script src="<c:url value="/resources/lib/jplugin/jquery.knob.min.js"/>"></script>
 <script src="<c:url value="/resources/lib/jplugin/ajaxfileupload.js"/>"></script>
 <script src="<c:url value="/resources/lib/jplugin/chosen.jquery.min.js"/>"></script>
+<script src="<c:url value="/resources/lib/jplugin/jquery.form.min.js"/>"></script>
 
 
 <script src="<c:url value="/resources/lib/ace/ace-extra.min.js"/>"></script>

@@ -46,6 +46,8 @@ public class User extends BaseEntity implements UserDetails {
     private String country;
     private String postalCode;
     private String province;
+    private Long parentId;
+    private String channel;
 
     @Transient
     private Set<Role> roles              = new HashSet<Role>();
@@ -268,6 +270,22 @@ public class User extends BaseEntity implements UserDetails {
 
     public void setProvince(String province) {
         this.province = province;
+    }
+
+    public Long getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Long parentId) {
+        this.parentId = parentId;
+    }
+
+    public String getChannel() {
+        return channel;
+    }
+
+    public void setChannel(String channel) {
+        this.channel = channel;
     }
 
     @Override

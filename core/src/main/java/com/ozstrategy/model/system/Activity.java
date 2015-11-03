@@ -30,6 +30,9 @@ public class Activity extends BaseEntity {
     private String picName;
     private String url;
     private Boolean published=false;
+    private String logoName;
+    private String logoPath;
+    private String logoUrl;
 
 
     public Activity() {
@@ -145,6 +148,30 @@ public class Activity extends BaseEntity {
 
     public void setLastUpdateDate(Date lastUpdateDate) {
         this.lastUpdateDate = lastUpdateDate;
+    }
+
+    public String getLogoName() {
+        return logoName;
+    }
+
+    public void setLogoName(String logoName) {
+        this.logoName = logoName;
+    }
+
+    public String getLogoPath() {
+        return logoPath;
+    }
+
+    public void setLogoPath(String logoPath) {
+        this.logoPath = logoPath;
+    }
+
+    public String getLogoUrl() {
+        return logoUrl;
+    }
+
+    public void setLogoUrl(String logoUrl) {
+        this.logoUrl = logoUrl;
     }
 
     @Override

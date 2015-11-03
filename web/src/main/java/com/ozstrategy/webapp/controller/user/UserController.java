@@ -1,16 +1,24 @@
 package com.ozstrategy.webapp.controller.user;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ozstrategy.Constants;
+import com.ozstrategy.model.goods.Merchant;
 import com.ozstrategy.model.system.Activity;
+import com.ozstrategy.model.system.Channel;
 import com.ozstrategy.model.system.Food;
+import com.ozstrategy.model.user.CreditsDetail;
 import com.ozstrategy.model.user.Role;
 import com.ozstrategy.model.user.User;
 import com.ozstrategy.model.user.ValidateCode;
 import com.ozstrategy.model.user.ValidateCodeType;
+import com.ozstrategy.service.goods.MerchantManager;
+import com.ozstrategy.service.system.ChannelManager;
+import com.ozstrategy.service.user.CreditsDetailManager;
 import com.ozstrategy.service.user.RoleManager;
 import com.ozstrategy.service.user.UserManager;
 import com.ozstrategy.service.user.ValidateCodeManager;
+import com.ozstrategy.util.Base64Utils;
 import com.ozstrategy.webapp.command.JsonReaderResponse;
 import com.ozstrategy.webapp.command.JsonReaderSingleResponse;
 import com.ozstrategy.webapp.command.system.AdvertCommand;
@@ -20,6 +28,7 @@ import com.ozstrategy.webapp.controller.BaseController;
 import org.apache.commons.fileupload.disk.DiskFileItem;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
@@ -36,6 +45,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
@@ -54,13 +64,27 @@ public class UserController extends BaseController {
 
     @Autowired
     private ValidateCodeManager validateCodeManager;
+    @Autowired
+    private MerchantManager merchantManager;
+    @Autowired
+    private ChannelManager channelManager;
+    @Autowired
+    private CreditsDetailManager creditsDetailManager;
+
+
+
 
     @RequestMapping("security/list")
     public JsonReaderResponse<UserCommand> list(HttpServletRequest request){
         List<UserCommand> commands=new ArrayList<UserCommand>();
             Map<String,Object> map=requestMap(request);
-        map.put("Q_enabled_EQ",Boolean.TRUE);
+//        map.put("Q_enabled_EQ",Boolean.TRUE);
         map.put("Q_username_NEQ","admin");
+        Map<String,Object> shopMap=new HashMap<String, Object>();
+        shopMap.put("Q_name_EQ","ROLE_SHOP");
+
+        Role shoprole=roleManager.getByParam(shopMap);
+        map.put("Q_roleId_NEQ",shoprole.getId());
             try{
             List<User> models= userManager.list(map,obtainStart(request),obtainLimit(request));
                 if(models!=null && models.size()>0){
@@ -118,6 +142,7 @@ public class UserController extends BaseController {
             if(userCommand.getId()==null){
                 Map<String,Object> map=new HashMap<String, Object>();
                 map.put("Q_mobile_EQ",userCommand.getMobile());
+//                map.put("Q_enabled_EQ",Boolean.TRUE);
                 user=userManager.getByParam(map);
                 if(user!=null){
                     return new JsonReaderSingleResponse(null,false,"该用户已存在");
@@ -145,8 +170,14 @@ public class UserController extends BaseController {
             }
             user.getRoles().clear();
             user.getRoles().addAll(roles);
-            userManager.saveUser(user);
 
+            Map<String,Object> objectMap=new HashMap<String, Object>();
+            objectMap.put("Q_type_EQ",1);
+            Channel channel=channelManager.getByParam(objectMap);
+            if(channel!=null){
+                user.setChannel(channel.getName());
+            }
+            userManager.saveUser(user);
             return new JsonReaderSingleResponse(true);
         }catch (Exception e){
             logger.error("save fail",e);
@@ -197,17 +228,45 @@ public class UserController extends BaseController {
         return new JsonReaderSingleResponse(null,false,"修改失败");
     }
     @RequestMapping("security/changeUserMobile")
-    public JsonReaderSingleResponse<UserCommand> changeUserMobile(@RequestBody UserCommand userCommand){
+    public JsonReaderSingleResponse<UserCommand> changeUserMobile(@RequestBody UserCommand userCommand,HttpServletRequest re){
         try{
-            Map<String,Object> map=new HashMap<String, Object>();
-            map.put("Q_mobile_EQ",userCommand.getMobile());
-            User oldUser=userManager.getByParam(map);
-            if(oldUser!=null){
-                return new JsonReaderSingleResponse(null,false,"手机号已存在");
-            }
+            User user=userManager.get(userCommand.getId());
+            user.setLastUpdateDate(new Date());
+            user.setCredits(userCommand.getCredits());
+            userManager.updateCridits(user);
+            CreditsDetail creditsDetail=new CreditsDetail();
+            creditsDetail.setCreateDate(new Date());
+            creditsDetail.setMobile(user.getMobile());
+            creditsDetail.setNum(userCommand.getCredits());
+            creditsDetail.setNickName(user.getNickName());
+            creditsDetail.setMobile(user.getMobile());
+            creditsDetail.setOldNum(user.getCredits());
+            User opt=userManager.getUserByUsername(re.getRemoteUser());
+            creditsDetail.setOptId(opt.getId());
+            creditsDetail.setOptMobile(opt.getMobile());
+            creditsDetail.setOptNickName(opt.getNickName());
+            creditsDetail.setUserId(user.getId());
+            creditsDetailManager.saveOrUpdate(creditsDetail);
+            return new JsonReaderSingleResponse(true);
+        }catch (Exception e){
+            logger.error("delete fail",e);
+        }
+        return new JsonReaderSingleResponse(null,false,"修改失败");
+    }
+    @RequestMapping("security/changeUserMobile1")
+    public JsonReaderSingleResponse<UserCommand> changeUserMobile1(@RequestBody UserCommand userCommand){
+        try{
             User user=userManager.get(userCommand.getId());
             user.setLastUpdateDate(new Date());
             user.setMobile(userCommand.getMobile());
+            user.setUsername(userCommand.getMobile());
+            Map<String,Object> map=new HashMap<String, Object>();
+            map.put("Q_mobile_EQ",userCommand.getMobile());
+//            map.put("Q_enabled_EQ",Boolean.TRUE);
+            User exuser=userManager.getByParam(map);
+            if(exuser!=null && exuser.getId()!=user.getId()){
+                return new JsonReaderSingleResponse(null,false,"该手机号已存在");
+            }
             userManager.update(user);
             return new JsonReaderSingleResponse(true);
         }catch (Exception e){
@@ -216,19 +275,27 @@ public class UserController extends BaseController {
         return new JsonReaderSingleResponse(null,false,"修改失败");
     }
 
-
-
-
-
     @RequestMapping("register")
     public JsonReaderSingleResponse<UserCommand> register(HttpServletRequest request){
         try{
+            String channel=obtain(request,"channel");
+            if(StringUtils.isEmpty(channel)){
+                return new JsonReaderSingleResponse(null,false,"渠道不能为空");
+            }
+            Map<String,Object> cmap=new HashMap<String, Object>();
+            cmap.put("Q_channelNo_EQ",channel);
+
+            Channel channel1=channelManager.getByParam(cmap);
+            if(channel1==null){
+                return new JsonReaderSingleResponse(null,false,"未找到该渠道");
+            }
             String mobile=obtain(request,"mobile");
             String password=obtain(request,"password");
             String nickName=obtain(request,"nickName");
             String validateCode=obtain(request,"validateCode");
             Map<String,Object> map=new HashMap<String, Object>();
             map.put("Q_mobile_EQ",mobile);
+//            map.put("Q_enabled_EQ",Boolean.TRUE);
             User user=userManager.getByParam(map);
             if(user!=null){
                 return new JsonReaderSingleResponse(null,false,"该用户已存在");
@@ -252,6 +319,7 @@ public class UserController extends BaseController {
             user.setRoleId(role.getId());
             user.getRoles().clear();
             user.getRoles().add(role);
+            user.setChannel(channel1.getName());
             userManager.saveUser(user);
             return new JsonReaderSingleResponse(true);
         }catch (Exception e){
@@ -259,9 +327,21 @@ public class UserController extends BaseController {
         }
         return new JsonReaderSingleResponse(null,false,"删除失败");
     }
+
     @RequestMapping("getBackPwd")
     public JsonReaderSingleResponse<UserCommand> getBackPwd(HttpServletRequest request){
         try{
+            String channel=obtain(request,"channel");
+            if(StringUtils.isEmpty(channel)){
+                return new JsonReaderSingleResponse(null,false,"渠道不能为空");
+            }
+            Map<String,Object> cmap=new HashMap<String, Object>();
+            cmap.put("Q_channelNo_EQ",channel);
+
+            Channel channel1=channelManager.getByParam(cmap);
+            if(channel1==null){
+                return new JsonReaderSingleResponse(null,false,"未找到该渠道");
+            }
             String mobile=obtain(request,"mobile");
             String password=obtain(request,"password");
             String validateCode=obtain(request,"validateCode");
@@ -281,9 +361,20 @@ public class UserController extends BaseController {
         }
         return new JsonReaderSingleResponse(null,false,"参数错误");
     }
+
     @RequestMapping("web/update")
     public JsonReaderSingleResponse<UserCommand> update(HttpServletRequest request){
         try{
+            String channel=obtain(request,"channel");
+            if(StringUtils.isEmpty(channel)){
+                return new JsonReaderSingleResponse(null,false,"渠道不能为空");
+            }
+            Map<String,Object> cmap=new HashMap<String, Object>();
+            cmap.put("Q_channelNo_EQ",channel);
+            Channel channel1=channelManager.getByParam(cmap);
+            if(channel1==null){
+                return new JsonReaderSingleResponse(null,false,"未找到该渠道");
+            }
             String username=request.getRemoteUser();
             User user=userManager.getUserByUsername(username);
             String nickName=request.getParameter("nickName");
@@ -305,27 +396,35 @@ public class UserController extends BaseController {
             user.setPostalCode(postalCode);
             user.setProvince(province);
             userManager.update(user);
-            return new JsonReaderSingleResponse(true);
+            return new JsonReaderSingleResponse(new UserCommand(user),true,"");
         }catch (Exception e){
             logger.error("update fail",e);
         }
         return new JsonReaderSingleResponse(null,false,"参数错误");
     }
 
+
+    @RequestMapping("web/getCredits")
+    public JsonReaderSingleResponse<UserCommand> getCredits(HttpServletRequest request){
+        try{
+            String username=request.getRemoteUser();
+            User user=userManager.getUserByUsername(username);
+            return new JsonReaderSingleResponse(new UserCommand(user),true,"");
+        }catch (Exception e){
+            logger.error("update fail",e);
+        }
+        return new JsonReaderSingleResponse(null,false,"参数错误");
+    }
+
+
     @RequestMapping(value = "web/portrait")
     public ModelAndView portrait(HttpServletRequest request, HttpServletResponse response) {
         String username    = request.getRemoteUser();
         User user=userManager.getUserByUsername(username);
-        String attachFilesDirStr = request.getSession().getServletContext().getRealPath("/") + "/" + Constants.updloadPortrait + "/";
-        attachFilesDirStr = FilenameUtils.normalize(attachFilesDirStr);
-
-        File fileDir = new File(attachFilesDirStr);
-
-        if (fileDir.exists() == false) {
-            fileDir.mkdirs();
-        }
+        String attachFilesDirStr = randomAbsolutePath(request, Constants.updloadPortrait);
+        response.setContentType("text/html;charset=utf-8");
+        response.setHeader("X-Frame-Options", "SAMEORIGIN");
         PrintWriter writer = null;
-
         try {
             writer = response.getWriter();
         } catch (IOException e) { }
@@ -333,30 +432,39 @@ public class UserController extends BaseController {
         if (writer == null) {
             return null;
         }
-        File fileOnServer = null;
-        String fileName=null,str=null,ext=null;
-        try {
-            MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
-            Iterator list             = multipartRequest.getFileNames();
-            while (list.hasNext()) {
-                String               controlName = list.next().toString();
-                MultipartFile file        = multipartRequest.getFile(controlName);
-                CommonsMultipartFile cmf         = (CommonsMultipartFile) file;
-                DiskFileItem fileItem    = (DiskFileItem) cmf.getFileItem();
-                str         = UUID.randomUUID().toString();
-                fileName    = fileItem.getName();
-                ext         = FilenameUtils.getExtension(fileName);
-                attachFilesDirStr = attachFilesDirStr + "/" + str + "." + ext;
-                attachFilesDirStr = FilenameUtils.normalize(attachFilesDirStr);
-                fileOnServer      = new File(attachFilesDirStr);
+        try{
+            String channel=obtain(request,"channel");
+            if(StringUtils.isEmpty(channel)){
+                writer.print(new ObjectMapper().writeValueAsString(new JsonReaderSingleResponse(null,false,"渠道不能为空")));
+                return null;
+            }
+            Map<String,Object> cmap=new HashMap<String, Object>();
+            cmap.put("Q_channelNo_EQ",channel);
 
-                if (fileOnServer.exists()) {
-                    str               = UUID.randomUUID().toString();
-                    attachFilesDirStr = attachFilesDirStr + "/" + str + "." + ext;
-                    attachFilesDirStr = FilenameUtils.normalize(attachFilesDirStr);
-                    fileOnServer      = new File(attachFilesDirStr);
+            Channel channel1=channelManager.getByParam(cmap);
+            if(channel1==null){
+                writer.print(new ObjectMapper().writeValueAsString(new JsonReaderSingleResponse(null,false,"未找到该渠道")));
+                return null;
+            }
+        }catch (Exception e){
+            return null;
+        }
+        String file = request.getParameter("file");
+        String fileName=request.getParameter("fileName");
+        if(StringUtils.isNotEmpty(file)){
+            byte[] fileb= Base64Utils.decode(file);
+            String str=randomName(fileName);
+            File fileOnServer = new File(attachFilesDirStr,str);
+            try{
+                FileOutputStream outputStream=new FileOutputStream(fileOnServer);
+                IOUtils.write(fileb, outputStream);
+                if(fileOnServer.length()>200*1024){
+                    try {
+                        writer.print(new ObjectMapper().writeValueAsString(new JsonReaderSingleResponse(new UserCommand(user), false, "文件过大")));
+                        FileUtils.forceDelete(fileOnServer);
+                    } catch (IOException e1) { }
+                    return null;
                 }
-                fileItem.write(fileOnServer);
                 if(StringUtils.isNotEmpty(fileName)){
                     try{
                         FileUtils.forceDelete(new File(user.getPortraitPath()));
@@ -364,25 +472,26 @@ public class UserController extends BaseController {
                     }
                     user.setPortraitName(fileName);
                     user.setPortraitPath(fileOnServer.getAbsolutePath());
-                    String httpPath=toHttpUrl(request,true)+Constants.updloadPortrait+"/"+str+"."+ext;
+                    String httpPath=toHttpUrl(request,true)+Constants.updloadPortrait+"/"+str;
                     user.setPortraitUrl(httpPath);
+                    userManager.update(user);
                 }
-                userManager.saveOrUpdate(user);
-                writer.print(new ObjectMapper().writeValueAsString(new JsonReaderSingleResponse(null,true,"")));
+            }catch (Exception e){
+                logger.error("upload portrait fail", e);
+                e.printStackTrace();
+                try {
+                    writer.print(new ObjectMapper().writeValueAsString(new JsonReaderSingleResponse(new UserCommand(user), false, "上传失败")));
+                    FileUtils.forceDelete(fileOnServer);
+                } catch (IOException e1) { }
             }
-
-        } catch (Exception e) {
-            logger.error("upload activity fail", e);
-            e.printStackTrace();
-            try {
-                writer.print(new ObjectMapper().writeValueAsString(new JsonReaderSingleResponse(null, false, "上传失败")));
-                FileUtils.forceDelete(fileOnServer);
-            } catch (IOException e1) { }
         }
-
-        writer.close();
+        try {
+            writer.print(new ObjectMapper().writeValueAsString(new JsonReaderSingleResponse(new UserCommand(user), true, "")));
+        } catch (JsonProcessingException e) {
+        }
 
         return null;
     }
+
 
 }

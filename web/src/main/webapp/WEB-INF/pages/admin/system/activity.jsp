@@ -31,7 +31,7 @@
         <i class="icon-double-angle-up icon-only bigger-110"></i>
     </a>
 </div>
-<script type="text/javascript" src="<c:url value="/resources/js/admin/system/activity.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/resources/js/admin/appstore/appstore.js"/>"></script>
 <script type="text/javascript">
 
     jQuery(function($) {

@@ -34,6 +34,7 @@ public class UserCommand implements Serializable {
     private String country;
     private String postalCode;
     private String province;
+    private String channel;
     private List<RoleCommand> roles=new ArrayList<RoleCommand>();
     public UserCommand() {
     }
@@ -60,6 +61,7 @@ public class UserCommand implements Serializable {
         this.country=model.getCountry();
         this.postalCode=model.getPostalCode();
         this.province= model.getProvince();
+        this.channel=model.getChannel();
     }
     public Boolean getEnabled() {
         return enabled;
@@ -234,5 +236,13 @@ public class UserCommand implements Serializable {
 
     public void setProvince(String province) {
         this.province = province;
+    }
+
+    public String getChannel() {
+        return channel;
+    }
+
+    public void setChannel(String channel) {
+        this.channel = channel;
     }
 }

@@ -21,6 +21,9 @@ public class Food extends BaseEntity {
     private String picPath;
     private String picName;
     private String url;
+    private String logoPath;
+    private String logoUrl;
+    private String logoName;
 
     public Food() {
     }
@@ -80,6 +83,31 @@ public class Food extends BaseEntity {
     public void setUrl(String url) {
         this.url = url;
     }
+
+    public String getLogoPath() {
+        return logoPath;
+    }
+
+    public void setLogoPath(String logoPath) {
+        this.logoPath = logoPath;
+    }
+
+    public String getLogoUrl() {
+        return logoUrl;
+    }
+
+    public void setLogoUrl(String logoUrl) {
+        this.logoUrl = logoUrl;
+    }
+
+    public String getLogoName() {
+        return logoName;
+    }
+
+    public void setLogoName(String logoName) {
+        this.logoName = logoName;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

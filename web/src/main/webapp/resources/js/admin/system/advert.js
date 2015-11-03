@@ -2,6 +2,7 @@
  * Created by lihao1 on 6/20/15.
  */
 function saveAdvert(type){
+
     var datas=$('#advertForm').serializeArray();
     var obj={};
     for(var i=0;i<datas.length;i++){

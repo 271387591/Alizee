@@ -139,6 +139,13 @@
                                 <img src="${command.url}"/>
                             </div>
                         </div>
+                        <div class="profile-info-row">
+                            <div class="profile-info-name">活动Logo</div>
+                            <div class="profile-info-value">
+                                <img src="${command.logoUrl}"/>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
                 <div class="tab-pane in" id="noPenddingDiv">

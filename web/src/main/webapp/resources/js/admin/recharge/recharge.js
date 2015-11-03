@@ -29,6 +29,9 @@ var sucColumns=[
         renderer:function(v){
             return new Date(v).format("yyyy-MM-dd hh:mm:ss");
         }
+    },
+    {
+        name:'channel'
     }
 ];
 var failColumns=[
@@ -63,6 +66,9 @@ var failColumns=[
     {
         name:'details',
         width:140
+    },
+    {
+        name:'channel'
     }
 
 ];

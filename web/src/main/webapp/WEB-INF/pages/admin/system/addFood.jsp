@@ -48,13 +48,13 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-1 control-label no-padding-right" for="companyPhone">美食图片</label>
+                    <label class="col-sm-1 control-label no-padding-right" for="companyPhone">详情图片</label>
                     <div class="col-sm-4">
                         <input multiple="" type="file" name="picName" id="companyPhone" />
                         <span class="lbl"></span>
                     </div>
                     <div class="col-sm-reset inline" style="color: #d16e6c">
-                        <i class="icon-warning-sign">仅支持jpeg、jpg、gif、png格式的图片，且大小不能超过1M,请选择合适的图片上传</i>
+                        <i class="icon-warning-sign">仅支持jpeg、jpg、gif、png格式的图片，且大小不能超过1M,2:1的长方形比例</i>
                     </div>
                 </div>
                 <c:if test="${command.id!=null}">
@@ -67,6 +67,27 @@
 
                     </div>
                 </c:if>
+                <div class="form-group">
+                    <label class="col-sm-1 control-label no-padding-right" for="companyPhone">图标图片</label>
+                    <div class="col-sm-4">
+                        <input multiple="" type="file" name="logoName" id="companyLogoPhone" />
+                        <span class="lbl"></span>
+                    </div>
+                    <div class="col-sm-reset inline" style="color: #d16e6c">
+                        <i class="icon-warning-sign">仅支持jpeg、jpg、gif、png格式的图片，且大小不能超过1M,请选择合适的图片上传</i>
+                    </div>
+                </div>
+                <c:if test="${command.id!=null}">
+                    <div class="form-group" id="exsitPicLogoShow">
+                        <label class="col-sm-1 control-label no-padding-right" for="companyPhone">预览图片</label>
+                        <div class="col-sm-4">
+                            <span><a target="_blank" href="${command.url}">${command.logoName}</a></span>
+                            <span class="lbl"></span>
+                        </div>
+
+                    </div>
+                </c:if>
+
                 <div class="clearfix form-actions">
                     <div class="col-md-offset-3 col-md-9">
                         <button class="btn btn-info" type="button" id="saveBtn" onclick="saveAdvert(${command.id!=null?"'edit'":"'save'"});" >
@@ -129,6 +150,43 @@
         }).on('change', function(){
             $('#exsitPicShow').hide();
         });
+        $('#companyLogoPhone').ace_file_input({
+            style:'well',
+            btn_choose:'${command.id!=null?command.logoName:"拖拽或点击此区域上传文件"}',
+            btn_change:null,
+            no_icon:'icon-cloud-upload',
+            droppable:true,
+            thumbnail:'small',
+            before_change:function(files, dropped) {
+                var allowed_files = [];
+                for(var i = 0 ; i < files.length; i++) {
+                    var file = files[i];
+                    if(file.size>1024*1024){
+                        return allowed_files;
+                    }
+                    if(typeof file === "string") {
+                        if(! (/\.(jpe?g|png|gif|bmp)$/i).test(file) ) return false;
+                    }
+                    else {
+                        var type = $.trim(file.type);
+                        if( ( type.length > 0 && ! (/^image\/(jpe?g|png|gif)$/i).test(type) )
+                                || ( type.length == 0 && ! (/\.(jpe?g|png|gif)$/i).test(file.name) )
+                        ) continue;
+                    }
+
+                    allowed_files.push(file);
+                }
+                if(allowed_files.length == 0) return false;
+
+                return allowed_files;
+            },
+            preview_error : function(filename, error_code) {
+            }
+
+        }).on('change', function(){
+            $('#exsitPicLogoShow').hide();
+        });
+
     });
 
 </script>
