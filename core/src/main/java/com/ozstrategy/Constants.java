@@ -20,6 +20,7 @@ public final class Constants {
     public static final String messageContent="messageContent";
     public static final String messageSign="messageSign";
     public static final String messageUsername="messageUsername";
+    public static final String messageUrl="messageUrl";
     public static final String messagePwd="messagePwd";
     public static final String updloadAdvert="updload/advert";
     public static final String updloadFood="updload/food";
@@ -31,4 +32,4 @@ public final class Constants {
 
 
 
-} 
+}
